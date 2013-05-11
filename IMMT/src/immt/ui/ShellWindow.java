@@ -105,9 +105,7 @@ public class ShellWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void openMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMenuItemActionPerformed
-        final JFileChooser fc = new JFileChooser("C:\\Users\\Gaston\\Desktop\\Imágenes de prueba");
-        
-        //In response to a button click:
+        final JFileChooser fc = new JFileChooser("./Images/");
         int returnVal = fc.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION){
             ImagePlus originalImage = new ImagePlus(fc.getSelectedFile().getAbsolutePath());
