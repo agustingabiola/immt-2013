@@ -4,10 +4,6 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
 
-/**
- *
- * @author Gaston
- */
 public class ImagePanel extends JPanel {
     
     private BufferedImage image;
@@ -29,7 +25,7 @@ public class ImagePanel extends JPanel {
     
     /**
      * Returns the BufferedImage inside the panel
-     * @return 
+     * @return Return the buffered image
      */
     public BufferedImage getImage() {
         return image;
