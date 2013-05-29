@@ -1,43 +1,35 @@
 package immt.ui;
 
+import ij.ImagePlus;
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
 
 public class ImagePanel extends JPanel {
     
-    private BufferedImage image;
+    private ImagePlus image;
     
-    /**
-    * Creates an ImagePanel which extends from JPanel
-    */
+
     public ImagePanel(){
     
     }
     
-    /**
-     * Creates an ImagePanel which extends from JPanel
-     * @param image Image to set inside the panel
-     */
-    public ImagePanel(BufferedImage image) {
+    public ImagePanel(ImagePlus image) {
         this.image = image;
     }
-    
-    /**
-     * Returns the BufferedImage inside the panel
-     * @return Return the buffered image
-     */
-    public BufferedImage getImage() {
+
+    public ImagePlus getImage() {
         return image;
     }
     
-    public void setImage(BufferedImage image){
+    public void setImage(ImagePlus image){
         this.image = image; 
     }
     
     @Override
     protected void paintComponent(Graphics g) {
-        g.drawImage(image, 0, 0, getSize().width, getSize().height, this);
+        if (image != null){
+            g.drawImage(image.getBufferedImage(), 0, 0, getSize().width, getSize().height, this);
+        }
     }
 
 }
