@@ -3,43 +3,88 @@ package immt.ui;
 import ij.ImagePlus;
 import immt.algorithms.Algorithm;
 import immt.algorithms.MeanFilter;
+import immt.ui.parameters.BaseParams;
+import immt.ui.parameters.MeanFilterParams;
+import java.awt.BorderLayout;
+import java.awt.Component;
 import javax.swing.JFileChooser;
-
 
 public class ShellWindow extends javax.swing.JFrame {
 
     private Algorithm algorithms[];
-    
+    private BaseParams p_BaseParams;
+
     public ShellWindow() {
         loadPreProcessingAlgorithms();
-        initComponents();        
+        initComponents();
     }
 
-    private void loadPreProcessingAlgorithms(){
-        // Read from an XML? Maybe do something flexible
+    /*
+     * Loads the algorithms implemented into an array.
+     */
+    private void loadPreProcessingAlgorithms() {
         int numberAlgorithms = 2;
         algorithms = new Algorithm[numberAlgorithms];
-        for (int i=0 ; i < numberAlgorithms ; i++){
+        for (int i = 0; i < numberAlgorithms; i++) {
             algorithms[i] = new MeanFilter();
         }
     }
-    
-    private void createNewTab(Algorithm currentAlgorithm){
-        // Control repeated Tabs
-        jTabbedPane1.add(currentAlgorithm.getName(), new ImagePanel(currentAlgorithm.getResultingImage()));
+
+    /*
+     * Creates a new Tab with the result of the algorithm selected.
+     * If that algorithm was already run before, it only changes de 
+     * image of the tab with the name of the algorithm.
+     */
+    public void createNewTab(Algorithm currentAlgorithm) {
+        ImagePanel tab = (ImagePanel) getTab(currentAlgorithm.getName());
+        if (tab == null) {
+            tp_Images.add(currentAlgorithm.getName(), new ImagePanel(currentAlgorithm.getResultingImage()));
+        } else {
+            tab.setImage(currentAlgorithm.getResultingImage());
+        }
     }
-    
-    
+
+    /*
+     * Displays the options of the algorithm chosen.
+     * @param selectedAlgorithm the chosen algorithm
+     */
+    private void showAlgorithmOptions(Algorithm selectedAlgorithm) {
+        ImagePlus image = p_OriginalImage.getImage();
+        if (p_BaseParams == null) {
+            p_BaseParams = new BaseParams();
+        }
+        p_Options.add(p_BaseParams);
+        if (selectedAlgorithm.getName().equals("Mean Filter")) {
+            MeanFilterParams p_MeanFilterParams = new MeanFilterParams(this, image, (MeanFilter) selectedAlgorithm);
+            p_BaseParams.add(p_MeanFilterParams, BorderLayout.NORTH);
+        }
+        p_BaseParams.revalidate();
+    }
+
+    /*
+     * Gets the tab from the pane that matches that name.
+     * In case it doesn´t exist, it returns null.
+     * @param tabName name of the tab to look for
+     * @return the component (Tab) that matches the tabName
+     */
+    private Component getTab(String tabName) {
+        int index = tp_Images.indexOfTab(tabName);
+        if (index != -1) {
+            return tp_Images.getComponentAt(index);
+        }
+        return null;
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        mainPanel = new javax.swing.JPanel();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
-        originalImagePanel = new immt.ui.ImagePanel();
+        p_Main = new javax.swing.JPanel();
+        tp_Images = new javax.swing.JTabbedPane();
+        p_OriginalImage = new immt.ui.ImagePanel();
+        p_Options = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        algorithmList = new javax.swing.JList(algorithms);
-        jLabel1 = new javax.swing.JLabel();
+        li_Algorithms = new javax.swing.JList(algorithms);
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
@@ -47,49 +92,66 @@ public class ShellWindow extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Intima-Media Measurment Tool");
+        getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
 
-        jTabbedPane1.setToolTipText("");
+        tp_Images.setToolTipText("");
 
-        originalImagePanel.setPreferredSize(new java.awt.Dimension(800, 652));
+        p_OriginalImage.setPreferredSize(new java.awt.Dimension(800, 652));
 
-        javax.swing.GroupLayout originalImagePanelLayout = new javax.swing.GroupLayout(originalImagePanel);
-        originalImagePanel.setLayout(originalImagePanelLayout);
-        originalImagePanelLayout.setHorizontalGroup(
-            originalImagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout p_OriginalImageLayout = new javax.swing.GroupLayout(p_OriginalImage);
+        p_OriginalImage.setLayout(p_OriginalImageLayout);
+        p_OriginalImageLayout.setHorizontalGroup(
+            p_OriginalImageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 911, Short.MAX_VALUE)
         );
-        originalImagePanelLayout.setVerticalGroup(
-            originalImagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        p_OriginalImageLayout.setVerticalGroup(
+            p_OriginalImageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 652, Short.MAX_VALUE)
         );
 
-        jTabbedPane1.addTab("Original Image", originalImagePanel);
+        tp_Images.addTab("Original Image", p_OriginalImage);
 
-        javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
-        mainPanel.setLayout(mainPanelLayout);
-        mainPanelLayout.setHorizontalGroup(
-            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mainPanelLayout.createSequentialGroup()
+        p_Options.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        p_Options.setMaximumSize(new java.awt.Dimension(32773, 593));
+        p_Options.setLayout(new javax.swing.BoxLayout(p_Options, javax.swing.BoxLayout.PAGE_AXIS));
+
+        jScrollPane1.setMaximumSize(new java.awt.Dimension(32767, 150));
+
+        li_Algorithms.setBorder(javax.swing.BorderFactory.createTitledBorder("Algorithms"));
+        li_Algorithms.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        li_Algorithms.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                li_AlgorithmsMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(li_Algorithms);
+
+        p_Options.add(jScrollPane1);
+
+        javax.swing.GroupLayout p_MainLayout = new javax.swing.GroupLayout(p_Main);
+        p_Main.setLayout(p_MainLayout);
+        p_MainLayout.setHorizontalGroup(
+            p_MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(p_MainLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 916, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addComponent(tp_Images, javax.swing.GroupLayout.PREFERRED_SIZE, 916, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(p_Options, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(163, Short.MAX_VALUE))
         );
-        mainPanelLayout.setVerticalGroup(
-            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mainPanelLayout.createSequentialGroup()
+        p_MainLayout.setVerticalGroup(
+            p_MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(p_MainLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tp_Images, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, p_MainLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(p_Options, javax.swing.GroupLayout.PREFERRED_SIZE, 575, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        algorithmList.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                algorithmListMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(algorithmList);
-
-        jLabel1.setText("Algorthms:");
+        getContentPane().add(p_Main);
 
         jMenu1.setText("File");
 
@@ -109,58 +171,33 @@ public class ShellWindow extends javax.swing.JFrame {
 
         setJMenuBar(jMenuBar1);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void openMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMenuItemActionPerformed
         final JFileChooser fc = new JFileChooser("./Images/");
         int returnVal = fc.showOpenDialog(this);
-        if (returnVal == JFileChooser.APPROVE_OPTION){
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
             ImagePlus originalImage = new ImagePlus(fc.getSelectedFile().getAbsolutePath());
-            originalImagePanel.setImage(originalImage);
-            originalImagePanel.repaint();
-            
-        } 
+            p_OriginalImage.setImage(originalImage);
+            p_OriginalImage.repaint();
+
+        }
     }//GEN-LAST:event_openMenuItemActionPerformed
 
-    private void algorithmListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_algorithmListMouseClicked
-        ImagePlus image = originalImagePanel.getImage();
-        if (image != null){
-            if (evt.getClickCount() == 2){
-                int clickIndex = algorithmList.locationToIndex(evt.getPoint());
-                Algorithm selectedAlgorithm = (Algorithm)algorithmList.getModel().getElementAt(clickIndex);
-                selectedAlgorithm.run(originalImagePanel.getImage());
-                createNewTab(selectedAlgorithm);
-            }
-        }        
-    }//GEN-LAST:event_algorithmListMouseClicked
+    /**
+     * Function that shows the options of the selected algorithm.
+     *
+     * @param evt
+     */
+    private void li_AlgorithmsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_li_AlgorithmsMouseClicked
+        ImagePlus image = p_OriginalImage.getImage();
+        if (image != null) {
+            int clickIndex = li_Algorithms.locationToIndex(evt.getPoint());
+            Algorithm selectedAlgorithm = (Algorithm) li_Algorithms.getModel().getElementAt(clickIndex);
+            showAlgorithmOptions(selectedAlgorithm);
+        }
+    }//GEN-LAST:event_li_AlgorithmsMouseClicked
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -170,15 +207,15 @@ public class ShellWindow extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JList algorithmList;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JPanel mainPanel;
+    private javax.swing.JList li_Algorithms;
     private javax.swing.JMenuItem openMenuItem;
-    private immt.ui.ImagePanel originalImagePanel;
+    private javax.swing.JPanel p_Main;
+    private javax.swing.JPanel p_Options;
+    private immt.ui.ImagePanel p_OriginalImage;
+    private javax.swing.JTabbedPane tp_Images;
     // End of variables declaration//GEN-END:variables
 }

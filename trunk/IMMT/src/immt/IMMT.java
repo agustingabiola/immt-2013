@@ -6,7 +6,7 @@ public class IMMT {
 
     public static void main(String[] args) {        
         ShellWindow shell = new ShellWindow();
-        shell.show();
+        shell.setVisible(true);
     }
 
 }
