@@ -8,7 +8,6 @@ public class ImagePanel extends JPanel {
     
     private ImagePlus image;
     
-
     public ImagePanel(){
     
     }
