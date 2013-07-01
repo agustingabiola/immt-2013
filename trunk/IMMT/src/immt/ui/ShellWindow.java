@@ -41,6 +41,7 @@ public class ShellWindow extends javax.swing.JFrame {
             tp_Images.add(currentAlgorithm.getName(), new ImagePanel(currentAlgorithm.getResultingImage()));
         } else {
             tab.setImage(currentAlgorithm.getResultingImage());
+            tab.repaint();
         }
     }
 
