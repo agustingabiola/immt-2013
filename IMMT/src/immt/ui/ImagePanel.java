@@ -4,14 +4,16 @@ import ij.ImagePlus;
 import java.awt.Graphics;
 import javax.swing.JPanel;
 
+/**
+ * Panel to paint an image of type Imageplus 
+ */
 public class ImagePanel extends JPanel {
-    
+
     private ImagePlus image;
-    
-    public ImagePanel(){
-    
+
+    public ImagePanel() {
     }
-    
+
     public ImagePanel(ImagePlus image) {
         this.image = image;
     }
@@ -19,16 +21,15 @@ public class ImagePanel extends JPanel {
     public ImagePlus getImage() {
         return image;
     }
-    
-    public void setImage(ImagePlus image){
-        this.image = image; 
+
+    public void setImage(ImagePlus image) {
+        this.image = image;
     }
-    
+
     @Override
     protected void paintComponent(Graphics g) {
-        if (image != null){
+        if (image != null) {
             g.drawImage(image.getBufferedImage(), 0, 0, getSize().width, getSize().height, this);
         }
     }
-
 }

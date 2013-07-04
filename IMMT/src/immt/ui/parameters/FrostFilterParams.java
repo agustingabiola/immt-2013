@@ -1,14 +1,14 @@
 package immt.ui.parameters;
 
-import immt.algorithms.MeanFilter;
+import immt.algorithms.FrostFilter;
 import immt.ui.ShellWindow;
 
-public class MeanFilterParams extends javax.swing.JPanel {
+public class FrostFilterParams extends javax.swing.JPanel {
 
     private ShellWindow parent;
-    private MeanFilter algorithm;
+    private FrostFilter algorithm;
     
-    public MeanFilterParams(ShellWindow parent, MeanFilter algorithm) {
+    public FrostFilterParams(ShellWindow parent, FrostFilter algorithm) {
         initComponents();
         this.parent = parent;
         this.algorithm = algorithm;
@@ -65,6 +65,7 @@ public class MeanFilterParams extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void b_ExecuteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_ExecuteActionPerformed
+
         algorithm.setRadio(Integer.parseInt(tf_Radio.getText()));
         algorithm.setOriginalImage(parent.getOriginalImage());
 
