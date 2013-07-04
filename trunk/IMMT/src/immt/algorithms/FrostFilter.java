@@ -34,7 +34,7 @@ public class FrostFilter extends Algorithm {
         double variance = Functions.VarianceOfPixels(imagePixels, width, heigth, mean);
         setProgress(4);
 
-        double deviation = Functions.StandarDeviationCoefficient(variance);
+        double deviation = Functions.StandardDeviationCoefficient(variance);
         setProgress(6);
 
         double variationCoefficient = Functions.CoefficientOfVariation(deviation, mean);
