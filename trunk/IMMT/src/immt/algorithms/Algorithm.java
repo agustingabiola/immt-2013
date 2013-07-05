@@ -63,6 +63,13 @@ public abstract class Algorithm extends SwingWorker<Boolean, String> {
     }
 
     /**
+     * This method should return a new instance of an Algorithm, 
+     * with all the parameters & images set.
+     */
+    @Override
+    public abstract Algorithm clone();
+    
+    /**
      * Sets the originalImage to the parameters value. So the originalImage is
      * not modified, it makes a duplicate.
      * 

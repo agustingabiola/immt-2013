@@ -228,15 +228,19 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
      * If that algorithm was already run before, it only changes de 
      * image of the tab with the name of the algorithm.
      */
-    public void createNewTab(Algorithm currentAlgorithm) {
-        ImagePanel tab = (ImagePanel) getTab(currentAlgorithm.getName());
-        if (tab == null) {
+    public void createNewTab(Algorithm currentAlgorithm) {;
+        String name = currentAlgorithm.getName();
+        int index = tp_Images.indexOfTab(name);
+        if (index == -1) {
             tp_Images.add(currentAlgorithm.getName(), new ImagePanel(currentAlgorithm.getResultingImage()));
+            index = tp_Images.indexOfTab(name);
+            
         } else {
-            // TODO: Swingworker doesn't allow multiple runs. This is not working properly
+            ImagePanel tab = (ImagePanel) tp_Images.getComponentAt(index);
             tab.setImage(currentAlgorithm.getResultingImage());
             tab.repaint();
-        }
+        }        
+        tp_Images.setSelectedIndex(index);
     }
 
     /**
@@ -265,21 +269,6 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
         }
         // Recalculates space in the component.    
         p_BaseParams.revalidate();
-    }
-
-    /**
-     * Gets the tab from the pane that matches the given name.
-     * In case it doesn´t exist, it returns null.
-     * 
-     * @param tabName name of the tab to look for
-     * @return the component (Tab) that matches the tabName
-     */
-    private Component getTab(String tabName) {
-        int index = tp_Images.indexOfTab(tabName);
-        if (index != -1) {
-            return tp_Images.getComponentAt(index);
-        }
-        return null;
     }
 
     /**

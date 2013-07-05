@@ -85,4 +85,12 @@ public class FrostFilter extends Algorithm {
     public void setRadio(int radio) {
         this.radio = radio;
     }
+
+    @Override
+    public Algorithm clone() {
+        FrostFilter newAlgorithm = new FrostFilter(getParent());
+        newAlgorithm.setRadio(radio);
+        newAlgorithm.setOriginalImage(getOriginalImage());
+        return newAlgorithm;
+    }
 }
