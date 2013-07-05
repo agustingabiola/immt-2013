@@ -65,6 +65,12 @@ public class MeanFilterParams extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void b_ExecuteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_ExecuteActionPerformed
+        
+        // If it was processed before, create a new SwingWorker
+        if(algorithm.getResultingImage() != null){
+            algorithm = (MeanFilter) algorithm.clone();
+        }
+        
         algorithm.setRadio(Integer.parseInt(tf_Radio.getText()));
         algorithm.setOriginalImage(parent.getOriginalImage());
 

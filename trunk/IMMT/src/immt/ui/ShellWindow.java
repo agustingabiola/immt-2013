@@ -249,11 +249,12 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
      * @param selectedAlgorithm the chosen algorithm
      */
     private void showAlgorithmOptions(Algorithm selectedAlgorithm) {            
-        // TODO: See multiple instances of options being shown
-        if (p_BaseParams == null) {
-            p_BaseParams = new BaseParams();
-        }
         
+        if(p_BaseParams != null){
+            p_Options.remove(p_BaseParams);            
+        }       
+        
+        p_BaseParams = new BaseParams(); 
         p_Options.add(p_BaseParams);
         switch (selectedAlgorithm.getName()) {
             case "Mean Filter": {
@@ -287,7 +288,7 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if ("progress" == evt.getPropertyName()) {
+        if (evt.getPropertyName().equals("progress")) {
             int progress = (Integer) evt.getNewValue();
             pb_Status.setValue(progress);
         }
