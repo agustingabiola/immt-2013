@@ -25,4 +25,12 @@ public class MeanFilter extends Algorithm {
     public void setRadio(int radio) {
         this.radio = radio;
     }
+    
+    @Override
+    public Algorithm clone() {
+        MeanFilter newAlgorithm = new MeanFilter(getParent());
+        newAlgorithm.setRadio(radio);
+        newAlgorithm.setOriginalImage(getOriginalImage());
+        return newAlgorithm;
+    }
 }
