@@ -3,6 +3,8 @@ package immt.util;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Singleton class to manage the configurations of the application.
@@ -10,6 +12,7 @@ import java.util.Properties;
 public class ConfigurationManager {
 
     private static Properties properties = null;
+    private static Logger logger = LoggerFactory.getLogger(ConfigurationManager.class);
 
     private static Properties getInstance() {
         if (properties == null) {
@@ -17,7 +20,7 @@ public class ConfigurationManager {
             try {
                 properties.load(new FileInputStream("config.properties"));
             } catch (IOException ex) {
-                System.out.println("Error retrieving config file.");
+                logger.error("Error retrieving config file.");
             }
         }
         return properties;

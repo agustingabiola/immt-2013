@@ -2,11 +2,14 @@ package immt.ui.parameters;
 
 import immt.algorithms.MeanFilter;
 import immt.ui.ShellWindow;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class MeanFilterParams extends javax.swing.JPanel {
 
     private ShellWindow parent;
     private MeanFilter algorithm;
+    private final Logger logger = LoggerFactory.getLogger(MeanFilterParams.class);
     
     public MeanFilterParams(ShellWindow parent, MeanFilter algorithm) {
         initComponents();
@@ -65,19 +68,24 @@ public class MeanFilterParams extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void b_ExecuteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_ExecuteActionPerformed
-        
-        // If it was processed before, create a new SwingWorker
-        if(algorithm.getResultingImage() != null){
-            algorithm = (MeanFilter) algorithm.clone();
+        String radioInput = tf_Radio.getText();
+        try {
+            // If it was processed before, create a new SwingWorker
+            if (algorithm.getResultingImage() != null) {
+                algorithm = (MeanFilter) algorithm.clone();
+            }
+
+            algorithm.setRadio(Integer.parseInt(radioInput));
+            algorithm.setOriginalImage(parent.getOriginalImage());
+
+            // The ShellWindow listens for updates of progress
+            algorithm.addPropertyChangeListener(parent);
+
+            algorithm.execute();
+        } catch (Exception ex) {
+            logger.error(ex.getMessage(), ex);
+            parent.setStatus(radioInput + " cannot be used as a radio!");
         }
-        
-        algorithm.setRadio(Integer.parseInt(tf_Radio.getText()));
-        algorithm.setOriginalImage(parent.getOriginalImage());
-
-        // The ShellWindow listens for updates of progress
-        algorithm.addPropertyChangeListener(parent);
-
-        algorithm.execute();
     }//GEN-LAST:event_b_ExecuteActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
