@@ -2,11 +2,14 @@ package immt.ui.parameters;
 
 import immt.algorithms.FrostFilter;
 import immt.ui.ShellWindow;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class FrostFilterParams extends javax.swing.JPanel {
 
     private ShellWindow parent;
     private FrostFilter algorithm;
+    private final Logger logger = LoggerFactory.getLogger(FrostFilterParams.class);
     
     public FrostFilterParams(ShellWindow parent, FrostFilter algorithm) {
         initComponents();
@@ -65,19 +68,26 @@ public class FrostFilterParams extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void b_ExecuteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_ExecuteActionPerformed
-        
-        // If it was processed before, create a new SwingWorker
-        if(algorithm.getResultingImage() != null){
-            algorithm = (FrostFilter) algorithm.clone();
+        String radioInput = tf_Radio.getText();
+        try {
+            algorithm.setRadio(Integer.parseInt(radioInput));
+            
+            // If it was processed before, create a new SwingWorker
+            if (algorithm.getResultingImage() != null) {
+                algorithm = (FrostFilter) algorithm.clone();
+            }
+
+            algorithm.setOriginalImage(parent.getOriginalImage());
+
+            // The ShellWindow listens for updates of progress
+            algorithm.addPropertyChangeListener(parent);
+
+            algorithm.execute();
+        } catch (Exception ex) {
+            logger.error(ex.getMessage(), ex);
+            parent.setStatus(radioInput + " cannot be used as a radio!");
         }
-        
-        algorithm.setRadio(Integer.parseInt(tf_Radio.getText()));
-        algorithm.setOriginalImage(parent.getOriginalImage());
 
-        // The ShellWindow listens for updates of progress
-        algorithm.addPropertyChangeListener(parent);
-
-        algorithm.execute();
     }//GEN-LAST:event_b_ExecuteActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
