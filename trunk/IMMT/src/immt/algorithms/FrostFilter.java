@@ -12,8 +12,8 @@ public class FrostFilter extends Algorithm {
     private int radio;
 
     public FrostFilter(ShellWindow parent) {
-        super("Frost Filter", "The Frost Filter replaces the pixel of interest with \n"
-                +"a weighted sum of the values within the NxN kernel. The weighting \n"
+        super("Frost Filter", "The Frost Filter Noise Reduction replaces the pixel of interest with \n"
+                +"a weighted sum of the values within the M*M kernel. The weighting \n"
                 +"factors decrease with distance from the pixel of interest. The \n"
                 +"weighting factors increase for the central pixels as variance within \n"
                 +"the kernel increases. This filter assumes multiplicative noise and \n"

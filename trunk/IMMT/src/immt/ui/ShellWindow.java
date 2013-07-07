@@ -37,6 +37,9 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
             public String getToolTipText(MouseEvent evt) {
                 int index = locationToIndex(evt.getPoint());
                 String toolTip=((Algorithm) this.getModel().getElementAt(index)).getDescription();
+                toolTip= toolTip.replaceAll("\n", "<br>");
+                System.out.print(toolTip);
+                toolTip="<html>"+toolTip+"</html>";
                 return toolTip;
             }
         };
@@ -182,7 +185,6 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
             ImagePlus originalImage = new ImagePlus(fc.getSelectedFile().getAbsolutePath());
             p_OriginalImage.setImage(originalImage);
             p_OriginalImage.repaint();
-
         }
     }//GEN-LAST:event_openMenuItemActionPerformed
 
