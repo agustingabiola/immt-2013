@@ -12,7 +12,12 @@ public class FrostFilter extends Algorithm {
     private int radio;
 
     public FrostFilter(ShellWindow parent) {
-        super("Frost Filter", "this is the description for frost filter", parent);
+        super("Frost Filter", "The Frost Filter replaces the pixel of interest with \n"
+                +"a weighted sum of the values within the NxN kernel. The weighting \n"
+                +"factors decrease with distance from the pixel of interest. The \n"
+                +"weighting factors increase for the central pixels as variance within \n"
+                +"the kernel increases. This filter assumes multiplicative noise and \n"
+                + "stationary noise statistics and follows the following formula: \n", parent);
     }
 
     @Override
@@ -44,7 +49,7 @@ public class FrostFilter extends Algorithm {
         setProgress(10);
 
         // Normalization constant
-        float k = (float) 1 / (float) (2 * radio + 1); 
+        float k = (float) 1 / (float) (2 * radio + 1);
 
 
         double localMean;
@@ -66,7 +71,7 @@ public class FrostFilter extends Algorithm {
                 localVariance = Functions.VarianceOfPixelsWithRadio(imagePixels, x, y, localMean, radio, width);
 
                 double alpha = (4 / (localSize * variantionSquared)) * ((localVariance * localVariance) / (localMean * localMean + 0.00000000001));
-                
+
                 for (int ry = y - radio; ry < y + radio + 1; ry++) {
                     for (int rx = x - radio; rx < x + radio + 1; rx++) {
                         int distanceX = Math.abs(x - rx);

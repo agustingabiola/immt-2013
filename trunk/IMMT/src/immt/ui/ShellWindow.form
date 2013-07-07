@@ -171,7 +171,7 @@
                     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="li_AlgorithmsMouseClicked"/>
                   </Events>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JList(algorithms)"/>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JList(algorithms){&#xa;    @Override&#xa;    public String getToolTipText(MouseEvent evt) {&#xa;        int index = locationToIndex(evt.getPoint());&#xa;        String toolTip=((Algorithm) this.getModel().getElementAt(index)).getDescription();&#xa;        return toolTip;&#xa;    }&#xa;}"/>
                   </AuxValues>
                 </Component>
               </SubComponents>
