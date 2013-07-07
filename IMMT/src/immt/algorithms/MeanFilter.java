@@ -12,7 +12,12 @@ public class MeanFilter extends Algorithm {
     private int radio;
 
     public MeanFilter(ShellWindow parent) {
-        super("Mean Filter", "this is the description", parent);
+        super("Mean Filter", "The Mean Filter is a simple one, and does \n"
+                + "not remove the speckles but averages it into the data. Generally \n"
+                + "speaking, this is the least satisfactory method of speckle noise \n"
+                + "reduction as it results in loss of detail and resolution. However, \n"
+                + "it can be used for applications where resolution is not the first \n"
+                + "concern.", parent);
     }
 
     @Override
@@ -25,7 +30,7 @@ public class MeanFilter extends Algorithm {
     public void setRadio(int radio) {
         this.radio = radio;
     }
-    
+
     @Override
     public Algorithm clone() {
         MeanFilter newAlgorithm = new MeanFilter(getParent());

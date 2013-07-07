@@ -8,12 +8,12 @@ import immt.ui.parameters.BaseParams;
 import immt.ui.parameters.FrostFilterParams;
 import immt.ui.parameters.MeanFilterParams;
 import java.awt.BorderLayout;
-import java.awt.Component;
+import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.JFileChooser;
 
-public class ShellWindow extends javax.swing.JFrame implements PropertyChangeListener{
+public class ShellWindow extends javax.swing.JFrame implements PropertyChangeListener {
 
     private Algorithm algorithms[];
     private BaseParams p_BaseParams;
@@ -22,7 +22,7 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
         loadPreProcessingAlgorithms();
         initComponents();
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -32,7 +32,14 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
         p_OriginalImage = new immt.ui.ImagePanel();
         p_Options = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        li_Algorithms = new javax.swing.JList(algorithms);
+        li_Algorithms = new javax.swing.JList(algorithms){
+            @Override
+            public String getToolTipText(MouseEvent evt) {
+                int index = locationToIndex(evt.getPoint());
+                String toolTip=((Algorithm) this.getModel().getElementAt(index)).getDescription();
+                return toolTip;
+            }
+        };
         p_StatusBar = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
         l_StatusTitle = new javax.swing.JLabel();
@@ -122,10 +129,7 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(p_Options, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(p_MainLayout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(p_StatusBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(p_StatusBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         p_MainLayout.setVerticalGroup(
             p_MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -166,10 +170,10 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     * Opens the menu to select an image.
-     * By default, it opens to project root / Images
-     * 
-     * @param evt 
+     * Opens the menu to select an image. By default, it opens to project root /
+     * Images
+     *
+     * @param evt
      */
     private void openMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMenuItemActionPerformed
         final JFileChooser fc = new JFileChooser("./Images/");
@@ -183,9 +187,9 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
     }//GEN-LAST:event_openMenuItemActionPerformed
 
     /**
-     * Shows the options of the selected algorithm.
-     * Only works if an image is previously opened.
-     * 
+     * Shows the options of the selected algorithm. Only works if an image is
+     * previously opened.
+     *
      * @param evt
      */
     private void li_AlgorithmsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_li_AlgorithmsMouseClicked
@@ -204,8 +208,8 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
             }
         });
     }
-    
-     /**
+
+    /**
      * Loads the algorithms implemented into an array.
      */
     private void loadPreProcessingAlgorithms() {
@@ -213,20 +217,20 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
         algorithms = new Algorithm[numberAlgorithms];
         algorithms[0] = new MeanFilter(this);
         algorithms[1] = new FrostFilter(this);
-        
+
     }
-    
+
     /**
      * Updates the status label.
      */
-    public void setStatus(String status){
+    public void setStatus(String status) {
         l_Status.setText(status);
     }
 
     /**
-     * Creates a new Tab with the result of the algorithm selected.
-     * If that algorithm was already run before, it only changes de 
-     * image of the tab with the name of the algorithm.
+     * Creates a new Tab with the result of the algorithm selected. If that
+     * algorithm was already run before, it only changes de image of the tab
+     * with the name of the algorithm.
      */
     public void createNewTab(Algorithm currentAlgorithm) {;
         String name = currentAlgorithm.getName();
@@ -234,27 +238,27 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
         if (index == -1) {
             tp_Images.add(currentAlgorithm.getName(), new ImagePanel(currentAlgorithm.getResultingImage()));
             index = tp_Images.indexOfTab(name);
-            
+
         } else {
             ImagePanel tab = (ImagePanel) tp_Images.getComponentAt(index);
             tab.setImage(currentAlgorithm.getResultingImage());
             tab.repaint();
-        }        
+        }
         tp_Images.setSelectedIndex(index);
     }
 
     /**
      * Displays the options of the algorithm chosen.
-     * 
+     *
      * @param selectedAlgorithm the chosen algorithm
      */
-    private void showAlgorithmOptions(Algorithm selectedAlgorithm) {            
-        
-        if(p_BaseParams != null){
-            p_Options.remove(p_BaseParams);            
-        }       
-        
-        p_BaseParams = new BaseParams(); 
+    private void showAlgorithmOptions(Algorithm selectedAlgorithm) {
+
+        if (p_BaseParams != null) {
+            p_Options.remove(p_BaseParams);
+        }
+
+        p_BaseParams = new BaseParams();
         p_Options.add(p_BaseParams);
         switch (selectedAlgorithm.getName()) {
             case "Mean Filter": {
@@ -274,17 +278,17 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
 
     /**
      * Obtain the original image opened by the user.
-     * 
+     *
      * @return Original Image opened.
      */
-    public ImagePlus getOriginalImage(){
-        return p_OriginalImage.getImage();    
+    public ImagePlus getOriginalImage() {
+        return p_OriginalImage.getImage();
     }
-    
+
     /**
      * Updates progress bar, while algorithm is being run.
-     * 
-     * @param evt 
+     *
+     * @param evt
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
@@ -293,7 +297,6 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
             pb_Status.setValue(progress);
         }
     }
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
@@ -311,6 +314,4 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
     private javax.swing.JProgressBar pb_Status;
     private javax.swing.JTabbedPane tp_Images;
     // End of variables declaration//GEN-END:variables
-
-
 }
