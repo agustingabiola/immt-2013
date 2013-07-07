@@ -171,7 +171,7 @@
                     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="li_AlgorithmsMouseClicked"/>
                   </Events>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JList(algorithms){&#xa;    @Override&#xa;    public String getToolTipText(MouseEvent evt) {&#xa;        int index = locationToIndex(evt.getPoint());&#xa;        String toolTip=((Algorithm) this.getModel().getElementAt(index)).getDescription();&#xa;        toolTip= toolTip.replaceAll(&quot;\n&quot;, &quot;&lt;br&gt;&quot;);&#xa;        System.out.print(toolTip);&#xa;        toolTip=&quot;&lt;html&gt;&quot;+toolTip+&quot;&lt;/html&gt;&quot;;&#xa;        return toolTip;&#xa;    }&#xa;}"/>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JList(algorithms){&#xa;    @Override&#xa;    public String getToolTipText(MouseEvent evt) {&#xa;        int index = locationToIndex(evt.getPoint());&#xa;        String toolTip=((Algorithm) this.getModel().getElementAt(index)).getDescription();&#xa;        toolTip= toolTip.replaceAll(&quot;\n&quot;, &quot;&lt;br&gt;&quot;);&#xa;        toolTip=&quot;&lt;html&gt;&quot;+toolTip+&quot;&lt;/html&gt;&quot;;&#xa;        return toolTip;&#xa;    }&#xa;}"/>
                   </AuxValues>
                 </Component>
               </SubComponents>

@@ -38,7 +38,6 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
                 int index = locationToIndex(evt.getPoint());
                 String toolTip=((Algorithm) this.getModel().getElementAt(index)).getDescription();
                 toolTip= toolTip.replaceAll("\n", "<br>");
-                System.out.print(toolTip);
                 toolTip="<html>"+toolTip+"</html>";
                 return toolTip;
             }
