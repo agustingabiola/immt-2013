@@ -3,6 +3,9 @@ package immt.algorithms;
 import ij.IJ;
 import ij.ImagePlus;
 import immt.ui.ShellWindow;
+import immt.util.Functions;
+import immt.util.Matrix;
+import immt.util.Point;
 
 public class MeanFilter extends Algorithm {
 
@@ -22,11 +25,72 @@ public class MeanFilter extends Algorithm {
 
     @Override
     public void runAlgorithm() {
-        ImagePlus result = getOriginalImage().duplicate();
-        IJ.run(result, "Mean...", "radius=" + radio);
-        setResultingImage(result);
+        //ImagePlus result = getOriginalImage().duplicate();
+                
+        //IJ.run(result, "Mean...", "radius=" + radio);
+        /*
+        Matrix newMatrix = new Matrix(5,5);
+        newMatrix.setElementAt(0, 0, 5);        
+        Matrix window = Functions.GetWindow(newMatrix, new Point(0,0), 3);        
+        float[] row = window.getColumn(1);        
+        window.print();
+        */     
+        
+        int sizeWindow = 3;
+        
+        ImagePlus image = getOriginalImage();
+
+        image.setProcessor(image.getProcessor().convertToFloat());
+
+        float[] imagePixels = (float[]) image.getProcessor().getPixelsCopy();             
+        
+        int heigth = image.getHeight();
+        int width = image.getWidth();
+        
+        float[] result = new float[imagePixels.length];
+        
+        double meanOfWholeImage = Functions.MeanOfPixels(imagePixels, width, heigth);
+        double varianceOfWholeImage = Functions.VarianceOfPixels(imagePixels,  width,  heigth,  meanOfWholeImage);
+        
+        Matrix window;
+        Matrix imageMatrix = new Matrix(heigth, width, imagePixels);
+        double localVariance;
+        double localMean;
+        double kFactor;
+        for(int i= 0 ; i < width ; i++)
+        {
+            for(int j= 0 ; j < heigth ; j++)
+            {
+                if(i == 651 && j==0)
+                {
+                    int b = 3;
+                }
+      
+                window = Functions.GetWindow(imageMatrix, new Point(i,j), sizeWindow);
+          
+                localMean = Functions.MeanOfPixels(window.getMatrixData(), window.getWidth(), window.getHeight());
+
+                localVariance = Functions.VarianceOfPixels(window.getMatrixData(), window.getWidth(), window.getHeight(), localMean);
+       
+                kFactor = getKFactor(varianceOfWholeImage, localVariance, localMean);
+          
+                result[width * i + j] = (float)(localMean + kFactor * (imageMatrix.getElementAt(i, j) - localMean));
+             
+                System.out.println(i + "," + j);
+                //System.out.println(result[width * i + j]);
+            }
+        }
+        
+        image.getProcessor().setPixels(result);
+        setResultingImage(image);
     }
 
+    private double getKFactor(double globalVariance, double localVariance, double localMean){
+        return ( 1 - (Math.sqrt(localMean) * globalVariance)) / (globalVariance * (1 + localVariance));
+        //return Math.sqrt(localVariance) / () (Math.sqrt(localMean) * Math.sqrt(globalVariance)) + 
+    }
+            
+    
     public void setRadio(int radio) {
         this.radio = radio;
     }

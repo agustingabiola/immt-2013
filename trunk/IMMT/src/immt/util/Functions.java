@@ -1,5 +1,7 @@
 package immt.util;
 
+import javax.security.sasl.Sasl;
+
 /**
  * Functions that may be of transversal use * 
  */
@@ -107,4 +109,49 @@ public class Functions {
         }
         return sum / (localSize - 1);
     }
+    
+    public static float[] GetNeighborhoodOfAnImage(int xStart, int xFinish, int yStart, int yFinish, float[] originalImage, int widthOriginalImage)
+    {
+        int sizeOfResult = (xFinish - xStart + 1) * (yFinish - yStart +1);
+        float[] result = new float[sizeOfResult];
+        int currentPosition = 0;
+        for(int y = yStart ; y <= yFinish; y++)
+        {
+            for(int x = xStart; x <= xFinish ; x++)
+            {
+                result[currentPosition] = originalImage[widthOriginalImage * y + x];
+                currentPosition++;
+            }            
+        }   
+        return result;    
+    }
+
+    public static Matrix GetWindow(Matrix image, Point center, int sizeOfWindow)
+    {
+        Matrix result = new Matrix(sizeOfWindow, sizeOfWindow);
+        
+        int offsetOfWindow = (int) Math.floor(sizeOfWindow / 2);
+        int resultX = 0;
+        int resultY = 0;        
+        
+        for(int i= center.getxCoord() - offsetOfWindow ; i <= center.getxCoord() + offsetOfWindow ; i++)
+        {
+            for(int j= center.getyCoord() - offsetOfWindow ; j <= center.getyCoord() + offsetOfWindow ; j++)
+            {
+                if((i >= 0 && j >= 0) && (i < image.getWidth() && j < image.getHeight()))
+                {
+                    result.setElementAt(resultX, resultY, image.getElementAt(i, j));
+                }
+                else
+                {
+                    result.setElementAt(resultX, resultY, 0);
+                }
+                resultY++;
+            }
+            resultY = 0;
+            resultX++;
+        }
+        return result;
+    }
+
 }

@@ -33,6 +33,77 @@ public class FrostFilter extends Algorithm {
         int heigth = image.getHeight();
         int width = image.getWidth();
 
+        int mask = radio;
+        
+        /*
+        float[] imageTest = new float[16];
+        for(int i = 0; i < 16; i++)
+            imageTest[i] = i;
+        
+        Functions.GetNeighborhoodOfAnImage(1, 2, 1, 2, imageTest, 4);
+        
+        */
+        
+        int floorOfMask = (int)Math.floor(mask / 2);
+        int sizeOfRow = (floorOfMask * 2) + 1;        
+        int[] row = new int[sizeOfRow];
+        
+        int index = 0;
+        for(int x = floorOfMask * -1; x<=floorOfMask ;x++)
+        {
+            row[index] = x;
+            index++;
+        }
+        
+        float[][] matrix = new float[sizeOfRow][sizeOfRow];
+        for(int a = 0; a< sizeOfRow ; a++)
+        {
+            for(int b=0; b<sizeOfRow;b++)
+            {
+                matrix[a][b] = row[b];
+            }
+        }
+        
+        float[][] matrixSquared = new float[sizeOfRow][sizeOfRow];
+        for(int a = 0; a< sizeOfRow ; a++)
+        {
+            for(int b=0; b<sizeOfRow;b++)
+            {
+                matrixSquared[a][b] = -1 *((matrix[a][b] * matrix[a][b]) + (matrix[a][b] * matrix[a][b])) ;
+            }
+        }
+        /*
+        float[][] matrixSquared = new float[sizeOfRow][sizeOfRow];
+        for(int a = 0; a< sizeOfRow ; a++)
+        {
+            for(int b=0; b<sizeOfRow;b++)
+            {
+                matrixSquared[a][b] = -1 *((matrix[a][b] * matrix[a][b]) + (matrix[a][b] * matrix[a][b])) ;
+            }
+        }
+                */
+        double localMean;
+        double localVariance;        
+        double alpha;
+        
+        for(int i= (int)Math.ceil(mask/2) ; i <= width - Math.floor(mask/2) ; i++)
+        {
+            for(int j= (int)Math.ceil(mask/2) ; i <= heigth - Math.floor(mask/2) ; j++)
+            {
+                float[] localNeigh = Functions.GetNeighborhoodOfAnImage(i - floorOfMask , i + floorOfMask, j - floorOfMask, j + floorOfMask, imagePixels, mask);
+                
+                localMean = Functions.MeanOfPixels(localNeigh, mask, mask);
+                
+                localVariance = Functions.VarianceOfPixels(localNeigh, mask, mask, localMean);
+                
+                alpha = Math.sqrt(localVariance) / localMean;
+                        
+            
+            }
+        }
+            
+        
+        /*
         double mean = Functions.MeanOfPixels(imagePixels, width, heigth);
         setProgress(2);
 
@@ -83,6 +154,8 @@ public class FrostFilter extends Algorithm {
                 result[x + y * width] = (float) pixel;
             }
         }
+                
+                */
         image.getProcessor().setPixels(result);
         setResultingImage(image);
     }
