@@ -39,7 +39,6 @@ public class Matrix {
 
     public float getElementAt(int row, int column) {
         int position = numColumns * row + column;
-        System.out.println("GET: " + position);
         return data[position];
     }
 

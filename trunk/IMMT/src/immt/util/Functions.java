@@ -138,7 +138,7 @@ public class Functions {
         {
             for(int j= center.getyCoord() - offsetOfWindow ; j <= center.getyCoord() + offsetOfWindow ; j++)
             {
-                if((i >= 0 && j >= 0) && (i < image.getWidth() && j < image.getHeight()))
+                if((i >= 0 && j >= 0) && (j < image.getWidth() && i < image.getHeight()))
                 {
                     result.setElementAt(resultX, resultY, image.getElementAt(i, j));
                 }
