@@ -36,7 +36,7 @@ public class MeanFilter extends Algorithm {
         window.print();
         */     
         
-        int sizeWindow = 3;
+        int sizeWindow = 5;
         
         ImagePlus image = getOriginalImage();
 
@@ -47,7 +47,7 @@ public class MeanFilter extends Algorithm {
         int heigth = image.getHeight();
         int width = image.getWidth();
         
-        float[] result = new float[imagePixels.length];
+        float[] result = new float[width * heigth];
         
         double meanOfWholeImage = Functions.MeanOfPixels(imagePixels, width, heigth);
         double varianceOfWholeImage = Functions.VarianceOfPixels(imagePixels,  width,  heigth,  meanOfWholeImage);
@@ -57,15 +57,15 @@ public class MeanFilter extends Algorithm {
         double localVariance;
         double localMean;
         double kFactor;
-        for(int i= 0 ; i < width ; i++)
+        
+        for(int i = 0 ; i < heigth ; i++)
         {
-            for(int j= 0 ; j < heigth ; j++)
+            for(int j = 0 ; j < width ; j++)
             {
-                if(i == 651 && j==0)
+                if(j == 0 && i == 651)
                 {
-                    int b = 3;
+                    int b = 0;
                 }
-      
                 window = Functions.GetWindow(imageMatrix, new Point(i,j), sizeWindow);
           
                 localMean = Functions.MeanOfPixels(window.getMatrixData(), window.getWidth(), window.getHeight());
@@ -76,7 +76,7 @@ public class MeanFilter extends Algorithm {
           
                 result[width * i + j] = (float)(localMean + kFactor * (imageMatrix.getElementAt(i, j) - localMean));
              
-                System.out.println(i + "," + j);
+                //System.out.println(i + "," + j);
                 //System.out.println(result[width * i + j]);
             }
         }
