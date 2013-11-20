@@ -1,6 +1,5 @@
 package immt.algorithms;
 
-import ij.IJ;
 import ij.ImagePlus;
 import immt.ui.ShellWindow;
 import immt.util.Functions;
@@ -36,16 +35,16 @@ public class MeanFilter extends Algorithm {
         window.print();
         */     
         
-        int sizeWindow = 5;
+        int sizeWindow = 3;
         
         ImagePlus image = getOriginalImage();
 
         image.setProcessor(image.getProcessor().convertToFloat());
-
-        float[] imagePixels = (float[]) image.getProcessor().getPixelsCopy();             
         
         int heigth = image.getHeight();
-        int width = image.getWidth();
+        int width = image.getWidth();        
+
+        float[] imagePixels = (float[]) image.getProcessor().getPixelsCopy();   
         
         float[] result = new float[width * heigth];
         

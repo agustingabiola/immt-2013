@@ -3,9 +3,11 @@ package immt.ui;
 import ij.ImagePlus;
 import immt.algorithms.Algorithm;
 import immt.algorithms.FrostFilter;
+import immt.algorithms.LinearScalingFilter;
 import immt.algorithms.MeanFilter;
 import immt.ui.parameters.BaseParams;
 import immt.ui.parameters.FrostFilterParams;
+import immt.ui.parameters.LinearScalingFilterParams;
 import immt.ui.parameters.MeanFilterParams;
 import java.awt.BorderLayout;
 import java.awt.event.MouseEvent;
@@ -214,10 +216,11 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
      * Loads the algorithms implemented into an array.
      */
     private void loadPreProcessingAlgorithms() {
-        int numberAlgorithms = 2;
+        int numberAlgorithms = 3;
         algorithms = new Algorithm[numberAlgorithms];
         algorithms[0] = new MeanFilter(this);
         algorithms[1] = new FrostFilter(this);
+        algorithms[2] = new LinearScalingFilter(this);
 
     }
 
@@ -269,6 +272,11 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
             }
             case "Frost Filter": {
                 FrostFilterParams p_FrostFilterParams = new FrostFilterParams(this, (FrostFilter) selectedAlgorithm);
+                p_BaseParams.add(p_FrostFilterParams, BorderLayout.NORTH);
+                break;
+            }
+            case "Linear Scaling Filter": {
+                LinearScalingFilterParams p_FrostFilterParams = new LinearScalingFilterParams(this, (LinearScalingFilter) selectedAlgorithm);
                 p_BaseParams.add(p_FrostFilterParams, BorderLayout.NORTH);
                 break;
             }
