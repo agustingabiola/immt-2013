@@ -1,16 +1,23 @@
 package immt.ui;
 
 import ij.ImagePlus;
+import ij.plugin.frame.RoiManager;
 import immt.algorithms.Algorithm;
 import immt.algorithms.FrostFilter;
 import immt.algorithms.LinearScalingFilter;
-import immt.algorithms.MeanFilter;
+import immt.algorithms.GeometricFilter;
 import immt.ui.parameters.BaseParams;
 import immt.ui.parameters.FrostFilterParams;
 import immt.ui.parameters.LinearScalingFilterParams;
-import immt.ui.parameters.MeanFilterParams;
+import immt.ui.parameters.GeometricFilterParams;
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.JFileChooser;
@@ -19,10 +26,18 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
 
     private Algorithm algorithms[];
     private BaseParams p_BaseParams;
+    
+    
+    Rectangle captureRect;
+    Point start;
+    BufferedImage imageCopy;
+    BufferedImage image;
+    boolean imageLoaded = false;
 
     public ShellWindow() {
         loadPreProcessingAlgorithms();
         initComponents();
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -183,9 +198,15 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
         final JFileChooser fc = new JFileChooser("./Images/");
         int returnVal = fc.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
+            imageLoaded = true;
             ImagePlus originalImage = new ImagePlus(fc.getSelectedFile().getAbsolutePath());
             p_OriginalImage.setImage(originalImage);
             p_OriginalImage.repaint();
+            image = originalImage.getBufferedImage();
+            imageCopy = new BufferedImage(
+                image.getWidth(),
+                image.getHeight(),
+                image.getType());
         }
     }//GEN-LAST:event_openMenuItemActionPerformed
 
@@ -218,11 +239,17 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
     private void loadPreProcessingAlgorithms() {
         int numberAlgorithms = 3;
         algorithms = new Algorithm[numberAlgorithms];
-        algorithms[0] = new MeanFilter(this);
+        algorithms[0] = new GeometricFilter(this);
         algorithms[1] = new FrostFilter(this);
         algorithms[2] = new LinearScalingFilter(this);
-
     }
+    
+    public Rectangle getROISelected(){
+        return captureRect;
+    }
+            
+
+
 
     /**
      * Updates the status label.
@@ -265,8 +292,8 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
         p_BaseParams = new BaseParams();
         p_Options.add(p_BaseParams);
         switch (selectedAlgorithm.getName()) {
-            case "Mean Filter": {
-                MeanFilterParams p_MeanFilterParams = new MeanFilterParams(this, (MeanFilter) selectedAlgorithm);
+            case "Filtro Geometrico": {
+                GeometricFilterParams p_MeanFilterParams = new GeometricFilterParams(this, (GeometricFilter) selectedAlgorithm);
                 p_BaseParams.add(p_MeanFilterParams, BorderLayout.NORTH);
                 break;
             }

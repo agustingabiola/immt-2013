@@ -6,6 +6,7 @@ import immt.ui.ShellWindow;
 import immt.util.Functions;
 import immt.util.Matrix;
 import immt.util.Point;
+import java.awt.Rectangle;
 
 public class LinearScalingFilter extends Algorithm {
     
@@ -18,7 +19,7 @@ public class LinearScalingFilter extends Algorithm {
             
             
     @Override
-    public void runAlgorithm() {
+    public void runAlgorithm(Rectangle roi) {
         ImagePlus originalImage = getOriginalImage();
         
         originalImage.setProcessor(originalImage.getProcessor().convertToFloat());
