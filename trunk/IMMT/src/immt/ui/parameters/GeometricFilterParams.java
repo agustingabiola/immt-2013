@@ -1,17 +1,17 @@
 package immt.ui.parameters;
 
-import immt.algorithms.MeanFilter;
+import immt.algorithms.GeometricFilter;
 import immt.ui.ShellWindow;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class MeanFilterParams extends javax.swing.JPanel {
+public class GeometricFilterParams extends javax.swing.JPanel {
 
     private ShellWindow parent;
-    private MeanFilter algorithm;
-    private final Logger logger = LoggerFactory.getLogger(MeanFilterParams.class);
+    private GeometricFilter algorithm;
+    private final Logger logger = LoggerFactory.getLogger(GeometricFilterParams.class);
     
-    public MeanFilterParams(ShellWindow parent, MeanFilter algorithm) {
+    public GeometricFilterParams(ShellWindow parent, GeometricFilter algorithm) {
         initComponents();
         this.parent = parent;
         this.algorithm = algorithm;
@@ -26,11 +26,11 @@ public class MeanFilterParams extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        l_Radio = new javax.swing.JLabel();
-        tf_Radio = new javax.swing.JTextField();
+        l_Iterations = new javax.swing.JLabel();
+        tf_Iterations = new javax.swing.JTextField();
         b_Execute = new javax.swing.JButton();
 
-        l_Radio.setText("Radio:");
+        l_Iterations.setText("# Iterations:");
 
         b_Execute.setText("Execute");
         b_Execute.addActionListener(new java.awt.event.ActionListener() {
@@ -48,10 +48,10 @@ public class MeanFilterParams extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(b_Execute, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(l_Radio)
+                        .addComponent(l_Iterations)
                         .addGap(18, 18, 18)
-                        .addComponent(tf_Radio, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 50, Short.MAX_VALUE)))
+                        .addComponent(tf_Iterations, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 19, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -59,8 +59,8 @@ public class MeanFilterParams extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(l_Radio)
-                    .addComponent(tf_Radio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(l_Iterations)
+                    .addComponent(tf_Iterations, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(b_Execute)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -68,14 +68,14 @@ public class MeanFilterParams extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void b_ExecuteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_ExecuteActionPerformed
-        String radioInput = tf_Radio.getText();
+        String iterations = tf_Iterations.getText();
         try {
             // If it was processed before, create a new SwingWorker
             if (algorithm.getResultingImage() != null) {
-                algorithm = (MeanFilter) algorithm.clone();
+                algorithm = (GeometricFilter) algorithm.clone();
             }
 
-            algorithm.setRadio(Integer.parseInt(radioInput));
+            algorithm.setIterations(Integer.parseInt(iterations));
             algorithm.setOriginalImage(parent.getOriginalImage());
 
             // The ShellWindow listens for updates of progress
@@ -84,13 +84,13 @@ public class MeanFilterParams extends javax.swing.JPanel {
             algorithm.execute();
         } catch (Exception ex) {
             logger.error(ex.getMessage(), ex);
-            parent.setStatus(radioInput + " cannot be used as a radio!");
+            parent.setStatus("Se ha producido un error. Por favor, intente de vuelta.");
         }
     }//GEN-LAST:event_b_ExecuteActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton b_Execute;
-    private javax.swing.JLabel l_Radio;
-    private javax.swing.JTextField tf_Radio;
+    private javax.swing.JLabel l_Iterations;
+    private javax.swing.JTextField tf_Iterations;
     // End of variables declaration//GEN-END:variables
 }

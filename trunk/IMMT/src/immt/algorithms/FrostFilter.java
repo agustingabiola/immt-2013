@@ -3,6 +3,7 @@ package immt.algorithms;
 import ij.ImagePlus;
 import immt.ui.ShellWindow;
 import immt.util.Functions;
+import java.awt.Rectangle;
 
 public class FrostFilter extends Algorithm {
 
@@ -21,7 +22,7 @@ public class FrostFilter extends Algorithm {
     }
 
     @Override
-    public void runAlgorithm() {
+    public void runAlgorithm(Rectangle roi) {
 
         ImagePlus image = getOriginalImage();
 

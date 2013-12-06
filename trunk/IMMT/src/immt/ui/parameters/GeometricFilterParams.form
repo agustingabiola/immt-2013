@@ -21,10 +21,10 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="b_Execute" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
-                      <Component id="l_Radio" min="-2" max="-2" attributes="0"/>
+                      <Component id="l_Iterations" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="tf_Radio" min="-2" pref="50" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="50" max="32767" attributes="0"/>
+                      <Component id="tf_Iterations" min="-2" pref="50" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="19" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -36,8 +36,8 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="l_Radio" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="tf_Radio" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="l_Iterations" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="tf_Iterations" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="b_Execute" min="-2" max="-2" attributes="0"/>
@@ -47,12 +47,12 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JLabel" name="l_Radio">
+    <Component class="javax.swing.JLabel" name="l_Iterations">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Radio:"/>
+        <Property name="text" type="java.lang.String" value="# Iterations:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="tf_Radio">
+    <Component class="javax.swing.JTextField" name="tf_Iterations">
     </Component>
     <Component class="javax.swing.JButton" name="b_Execute">
       <Properties>
