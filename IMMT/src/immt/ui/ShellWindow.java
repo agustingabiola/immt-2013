@@ -157,7 +157,7 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
                     .addGroup(p_MainLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(tp_Images, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, p_MainLayout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(p_Options, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -319,6 +319,16 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
      */
     public ImagePlus getOriginalImage() {
         return p_OriginalImage.getImage();
+    }
+    
+    public ImagePlus getImageFromTab(String tabName)
+    {
+        int index = tp_Images.indexOfTab(tabName);
+        if(index != -1) {
+            ImagePanel tab = (ImagePanel) tp_Images.getComponentAt(index);
+            return tab.getImage();
+        }
+        return null;
     }
 
     /**
