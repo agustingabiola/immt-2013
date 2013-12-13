@@ -6,10 +6,12 @@ import immt.algorithms.Algorithm;
 import immt.algorithms.FrostFilter;
 import immt.algorithms.LinearScalingFilter;
 import immt.algorithms.GeometricFilter;
+import immt.algorithms.MeanFilter;
 import immt.ui.parameters.BaseParams;
 import immt.ui.parameters.FrostFilterParams;
 import immt.ui.parameters.LinearScalingFilterParams;
 import immt.ui.parameters.GeometricFilterParams;
+import immt.ui.parameters.MeanFilterParams;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -237,11 +239,12 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
      * Loads the algorithms implemented into an array.
      */
     private void loadPreProcessingAlgorithms() {
-        int numberAlgorithms = 3;
+        int numberAlgorithms = 4;
         algorithms = new Algorithm[numberAlgorithms];
-        algorithms[0] = new GeometricFilter(this);
-        algorithms[1] = new FrostFilter(this);
-        algorithms[2] = new LinearScalingFilter(this);
+        algorithms[0] = new MeanFilter(this);
+        algorithms[1] = new GeometricFilter(this);
+        algorithms[2] = new FrostFilter(this);
+        algorithms[3] = new LinearScalingFilter(this);
     }
     
     public Rectangle getROISelected(){
@@ -292,6 +295,11 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
         p_BaseParams = new BaseParams();
         p_Options.add(p_BaseParams);
         switch (selectedAlgorithm.getName()) {
+            case "Media": {
+                MeanFilterParams p_MeanFilterParams = new MeanFilterParams(this, (MeanFilter) selectedAlgorithm);
+                p_BaseParams.add(p_MeanFilterParams, BorderLayout.NORTH);
+                break;
+            }
             case "Filtro Geometrico": {
                 GeometricFilterParams p_MeanFilterParams = new GeometricFilterParams(this, (GeometricFilter) selectedAlgorithm);
                 p_BaseParams.add(p_MeanFilterParams, BorderLayout.NORTH);
