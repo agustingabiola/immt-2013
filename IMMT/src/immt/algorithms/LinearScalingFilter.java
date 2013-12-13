@@ -11,13 +11,22 @@ import java.awt.Rectangle;
 public class LinearScalingFilter extends Algorithm {
     
     private int sizeWindow;
+   
     
+   
+    /****
+     * 
+     * @param parent 
+     */  
     public LinearScalingFilter(ShellWindow parent){
         super("Linear Scaling Filter", "this is the description", parent);
         sizeWindow = 3;
     }
             
-            
+    /***
+     * 
+     * @param roi 
+     */       
     @Override
     public void runAlgorithm(Rectangle roi) {
         ImagePlus originalImage = getOriginalImage();
