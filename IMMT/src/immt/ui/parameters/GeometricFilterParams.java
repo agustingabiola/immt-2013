@@ -4,7 +4,6 @@ import ij.ImagePlus;
 import immt.algorithms.GeometricFilter;
 import immt.ui.ShellWindow;
 import immt.util.Compare;
-import java.awt.image.BufferedImage;
 import javax.swing.JFileChooser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +13,14 @@ public class GeometricFilterParams extends javax.swing.JPanel {
     private ShellWindow parent;
     private GeometricFilter algorithm;
     private final Logger logger = LoggerFactory.getLogger(GeometricFilterParams.class);
-    
+
+    /**
+     * *
+     * Parameters for the Geometric Filter
+     *
+     * @param parent parent of the window
+     * @param algorithm geometric filter algorithm to apply
+     */
     public GeometricFilterParams(ShellWindow parent, GeometricFilter algorithm) {
         initComponents();
         this.parent = parent;
@@ -83,6 +89,12 @@ public class GeometricFilterParams extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * *
+     * Execute the algorithm selected
+     *
+     * @param evt
+     */
     private void b_ExecuteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_ExecuteActionPerformed
         String iterations = tf_Iterations.getText();
         try {
@@ -98,7 +110,7 @@ public class GeometricFilterParams extends javax.swing.JPanel {
             algorithm.addPropertyChangeListener(parent);
 
             algorithm.execute();
-            
+
             b_Compare.setVisible(true);
         } catch (Exception ex) {
             logger.error(ex.getMessage(), ex);
@@ -106,6 +118,12 @@ public class GeometricFilterParams extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_b_ExecuteActionPerformed
 
+    /**
+     * *
+     * Compares the image with one selected from the file system
+     *
+     * @param evt
+     */
     private void b_CompareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_CompareActionPerformed
         final JFileChooser fc = new JFileChooser("./Images/");
         int returnVal = fc.showOpenDialog(this);
