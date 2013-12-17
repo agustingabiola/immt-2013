@@ -10,10 +10,17 @@ import org.slf4j.LoggerFactory;
 
 public class MeanFilterParams extends javax.swing.JPanel {
 
-    private ShellWindow parent;
+    private final ShellWindow parent;
     private MeanFilter algorithm;
     private final Logger logger = LoggerFactory.getLogger(MeanFilterParams.class);
-    
+
+    /**
+     * *
+     * Parameters for the Mean Filter
+     *
+     * @param parent parent of the window
+     * @param algorithm mean filter algorithm to apply
+     */
     public MeanFilterParams(ShellWindow parent, MeanFilter algorithm) {
         initComponents();
         this.parent = parent;
@@ -82,6 +89,12 @@ public class MeanFilterParams extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * *
+     * Execute the algorithm selected
+     *
+     * @param evt
+     */
     private void b_ExecuteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_ExecuteActionPerformed
         String size = tf_Size.getText();
         try {
@@ -97,7 +110,7 @@ public class MeanFilterParams extends javax.swing.JPanel {
             algorithm.addPropertyChangeListener(parent);
 
             algorithm.execute();
-            
+
             b_Compare.setVisible(true);
         } catch (Exception ex) {
             logger.error(ex.getMessage(), ex);
@@ -105,6 +118,12 @@ public class MeanFilterParams extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_b_ExecuteActionPerformed
 
+    /**
+     * *
+     * Compares the image with one selected from the file system
+     *
+     * @param evt
+     */
     private void b_CompareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_CompareActionPerformed
         final JFileChooser fc = new JFileChooser("./Images/");
         int returnVal = fc.showOpenDialog(this);
