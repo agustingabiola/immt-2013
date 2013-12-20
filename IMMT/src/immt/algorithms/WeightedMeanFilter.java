@@ -7,42 +7,40 @@ import immt.util.Matrix;
 import immt.util.Point;
 import java.awt.Rectangle;
 
-public class MeanFilter extends Algorithm {
+public class WeightedMeanFilter extends Algorithm {
 
     /**
      * *
-     * The window will be squared
+     * The weighted kernel
      */
-    private int windowSize;
+    private int[] kernel;
 
     /**
      * *
-     * Mean Filter
+     * The size of the window
+     */
+    private final int windowSize;
+
+    /**
+     * *
+     * Weighted Mean Filter
      *
      * @param parent The main window of the application
      */
-    public MeanFilter(ShellWindow parent) {
-        super("Media", "Se le asigna al píxel central la media de todos los píxeles incluidos en la ventana", parent);
+    public WeightedMeanFilter(ShellWindow parent) {
+        super("Media Ponderada", "Se le asigna al píxel central la media de todos los píxeles incluidos en la ventana \n"
+                + ", pero el peso de cada vecino es ponderado con un kernel del [3x3]", parent);
+        windowSize = 3;
     }
 
     /**
      * *
      * Set the size of the window. It will be a window of [size, size]
      *
-     * @param size size of the window
+     * @param kernel kernel to use
      */
-    public void setWindowSize(int size) {
-        windowSize = size;
-    }
-
-    /**
-     * *
-     * Get the size of the window
-     *
-     * @return size of the window
-     */
-    public int getWindowSize() {
-        return windowSize;
+    public void setKernel(int[] kernel) {
+        this.kernel = kernel;
     }
 
     /**
@@ -60,12 +58,6 @@ public class MeanFilter extends Algorithm {
         // Parameters of the original image
         int imageWidth = originalImage.getWidth();
         int imageHeight = originalImage.getHeight();
-
-        // Kernell 
-        int[] kernel = new int[windowSize * windowSize];
-        for (int i = 0; i < (windowSize * windowSize) - 1; i++) {
-            kernel[i] = 1;
-        }
 
         // Original image array
         float[] imagePixels = (float[]) originalImage.getProcessor().getPixelsCopy();
@@ -109,15 +101,20 @@ public class MeanFilter extends Algorithm {
         float sum = 0;
         for (int i = 0; i < windowSize - 1; i++) {
             for (int j = 0; j < windowSize - 1; j++) {
-                System.out.println(kernel[j * (windowSize - 1) + i] + " * " + image.getElementAt(i, j) );
                 sum += kernel[j * (windowSize - 1) + i] * image.getElementAt(i, j);
             }
         }
-        System.out.println(sum);
-        System.out.println("");
-        return (int) (sum / Math.pow(windowSize, 2));
+        return (int) (sum / getKernelTotalWeight());
     }
 
+    public int getKernelTotalWeight(){
+        int sum = 0;
+        for(int i = 0; i < kernel.length; i++){
+            sum += kernel[i];
+        }
+        return sum;
+    }
+    
     /**
      * *
      * Returns a copy of the Mean Algorithm
@@ -126,10 +123,9 @@ public class MeanFilter extends Algorithm {
      */
     @Override
     public Algorithm clone() {
-        MeanFilter newAlgorithm = new MeanFilter(getParent());
-        newAlgorithm.setWindowSize(windowSize);
+        WeightedMeanFilter newAlgorithm = new WeightedMeanFilter(getParent());
+        newAlgorithm.setKernel(kernel);
         newAlgorithm.setOriginalImage(getOriginalImage());
         return newAlgorithm;
     }
-
 }

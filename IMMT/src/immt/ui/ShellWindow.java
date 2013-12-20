@@ -1,21 +1,17 @@
 package immt.ui;
 
 import ij.ImagePlus;
-import ij.plugin.frame.RoiManager;
 import immt.algorithms.Algorithm;
-import immt.algorithms.FrostFilter;
+import immt.algorithms.WeightedMeanFilter;
 import immt.algorithms.LinearScalingFilter;
 import immt.algorithms.GeometricFilter;
 import immt.algorithms.MeanFilter;
 import immt.ui.parameters.BaseParams;
-import immt.ui.parameters.FrostFilterParams;
+import immt.ui.parameters.WeightedMeanFilterParams;
 import immt.ui.parameters.LinearScalingFilterParams;
 import immt.ui.parameters.GeometricFilterParams;
 import immt.ui.parameters.MeanFilterParams;
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
@@ -241,9 +237,9 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
     private void loadPreProcessingAlgorithms() {
         int numberAlgorithms = 4;
         algorithms = new Algorithm[numberAlgorithms];
-        algorithms[0] = new MeanFilter(this);
-        algorithms[1] = new GeometricFilter(this);
-        algorithms[2] = new FrostFilter(this);
+        algorithms[0] = new MeanFilter(this);        
+        algorithms[1] = new WeightedMeanFilter(this);
+        algorithms[2] = new GeometricFilter(this);
         algorithms[3] = new LinearScalingFilter(this);
     }
     
@@ -300,16 +296,16 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
                 p_BaseParams.add(p_MeanFilterParams, BorderLayout.NORTH);
                 break;
             }
+            case "Media Ponderada": {
+                WeightedMeanFilterParams p_FrostFilterParams = new WeightedMeanFilterParams(this, (WeightedMeanFilter) selectedAlgorithm);
+                p_BaseParams.add(p_FrostFilterParams, BorderLayout.NORTH);
+                break;
+            }
             case "Filtro Geometrico": {
                 GeometricFilterParams p_MeanFilterParams = new GeometricFilterParams(this, (GeometricFilter) selectedAlgorithm);
                 p_BaseParams.add(p_MeanFilterParams, BorderLayout.NORTH);
                 break;
-            }
-            case "Frost Filter": {
-                FrostFilterParams p_FrostFilterParams = new FrostFilterParams(this, (FrostFilter) selectedAlgorithm);
-                p_BaseParams.add(p_FrostFilterParams, BorderLayout.NORTH);
-                break;
-            }
+            }            
             case "Linear Scaling Filter": {
                 LinearScalingFilterParams p_FrostFilterParams = new LinearScalingFilterParams(this, (LinearScalingFilter) selectedAlgorithm);
                 p_BaseParams.add(p_FrostFilterParams, BorderLayout.NORTH);
