@@ -77,7 +77,7 @@ public class WeightedMeanFilter extends Algorithm {
 
                 window = Functions.GetWindow(imageMatrix, new Point(j, i), windowSize);
 
-                resultingImage[imageWidth * j + 1] = applyFilter(window, i, j, kernel);
+                resultingImage[imageWidth * j + i] = applyFilter(window, i, j, kernel);
             }
         }
 
@@ -107,14 +107,20 @@ public class WeightedMeanFilter extends Algorithm {
         return (int) (sum / getKernelTotalWeight());
     }
 
-    public int getKernelTotalWeight(){
+    /**
+     * *
+     * Returns the sum of all the elements in the kernel
+     *
+     * @return the sum of the kernel
+     */
+    public int getKernelTotalWeight() {
         int sum = 0;
-        for(int i = 0; i < kernel.length; i++){
+        for (int i = 0; i < kernel.length; i++) {
             sum += kernel[i];
         }
         return sum;
     }
-    
+
     /**
      * *
      * Returns a copy of the Mean Algorithm
