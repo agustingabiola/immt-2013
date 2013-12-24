@@ -63,7 +63,7 @@ public class MeanFilter extends Algorithm {
 
         // Kernell 
         int[] kernel = new int[windowSize * windowSize];
-        for (int i = 0; i < (windowSize * windowSize) - 1; i++) {
+        for (int i = 0; i < (windowSize * windowSize); i++) {
             kernel[i] = 1;
         }
 
@@ -85,7 +85,7 @@ public class MeanFilter extends Algorithm {
 
                 window = Functions.GetWindow(imageMatrix, new Point(j, i), windowSize);
 
-                resultingImage[imageWidth * j + 1] = applyFilter(window, i, j, kernel);
+                resultingImage[imageWidth * j + i] = applyFilter(window, kernel);
             }
         }
 
@@ -100,21 +100,16 @@ public class MeanFilter extends Algorithm {
      * account the weights of the kernel
      *
      * @param image matrix of the window
-     * @param x x position
-     * @param y y position
      * @param kernel kernel which contains the weights
      * @return
      */
-    public int applyFilter(Matrix image, int x, int y, int[] kernel) {
+    public int applyFilter(Matrix image, int[] kernel) {
         float sum = 0;
-        for (int i = 0; i < windowSize - 1; i++) {
-            for (int j = 0; j < windowSize - 1; j++) {
-                System.out.println(kernel[j * (windowSize - 1) + i] + " * " + image.getElementAt(i, j) );
+        for (int i = 0; i < windowSize ; i++) {
+            for (int j = 0; j < windowSize ; j++) {
                 sum += kernel[j * (windowSize - 1) + i] * image.getElementAt(i, j);
             }
         }
-        System.out.println(sum);
-        System.out.println("");
         return (int) (sum / Math.pow(windowSize, 2));
     }
 

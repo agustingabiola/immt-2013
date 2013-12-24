@@ -38,9 +38,9 @@ public class MeanFilterParams extends javax.swing.JPanel {
     private void initComponents() {
 
         l_Size = new javax.swing.JLabel();
-        tf_Size = new javax.swing.JTextField();
         b_Execute = new javax.swing.JButton();
         b_Compare = new javax.swing.JButton();
+        cb_radio = new javax.swing.JComboBox();
 
         l_Size.setText("Size of window");
 
@@ -58,6 +58,8 @@ public class MeanFilterParams extends javax.swing.JPanel {
             }
         });
 
+        cb_radio.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1x1", "3x3", "5x5", "7x7", "9x9", "11x11", "13x13" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -69,9 +71,9 @@ public class MeanFilterParams extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(l_Size)
                         .addGap(18, 18, 18)
-                        .addComponent(tf_Size, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 10, Short.MAX_VALUE))
-                    .addComponent(b_Compare, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(cb_radio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(b_Compare, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -80,7 +82,7 @@ public class MeanFilterParams extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(l_Size)
-                    .addComponent(tf_Size, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cb_radio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(b_Execute)
                 .addGap(18, 18, 18)
@@ -96,14 +98,14 @@ public class MeanFilterParams extends javax.swing.JPanel {
      * @param evt
      */
     private void b_ExecuteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_ExecuteActionPerformed
-        String size = tf_Size.getText();
+        int size = (cb_radio.getSelectedIndex() * 2) + 1;
         try {
             // If it was processed before, create a new SwingWorker
             if (algorithm.getResultingImage() != null) {
                 algorithm = (MeanFilter) algorithm.clone();
             }
 
-            algorithm.setWindowSize(Integer.parseInt(size));
+            algorithm.setWindowSize(size);
             algorithm.setOriginalImage(parent.getOriginalImage());
 
             // The ShellWindow listens for updates of progress
@@ -136,7 +138,7 @@ public class MeanFilterParams extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton b_Compare;
     private javax.swing.JButton b_Execute;
+    private javax.swing.JComboBox cb_radio;
     private javax.swing.JLabel l_Size;
-    private javax.swing.JTextField tf_Size;
     // End of variables declaration//GEN-END:variables
 }
