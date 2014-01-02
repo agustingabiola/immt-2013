@@ -1,10 +1,7 @@
 package immt.ui.parameters;
 
-import ij.ImagePlus;
 import immt.algorithms.MeanFilter;
 import immt.ui.ShellWindow;
-import immt.util.Compare;
-import javax.swing.JFileChooser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +22,6 @@ public class MeanFilterParams extends javax.swing.JPanel {
         initComponents();
         this.parent = parent;
         this.algorithm = algorithm;
-        b_Compare.setVisible(false);
     }
 
     /**
@@ -39,7 +35,6 @@ public class MeanFilterParams extends javax.swing.JPanel {
 
         l_Size = new javax.swing.JLabel();
         b_Execute = new javax.swing.JButton();
-        b_Compare = new javax.swing.JButton();
         cb_radio = new javax.swing.JComboBox();
 
         l_Size.setText("Size of window");
@@ -48,13 +43,6 @@ public class MeanFilterParams extends javax.swing.JPanel {
         b_Execute.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 b_ExecuteActionPerformed(evt);
-            }
-        });
-
-        b_Compare.setText("Compare with...");
-        b_Compare.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                b_CompareActionPerformed(evt);
             }
         });
 
@@ -72,8 +60,7 @@ public class MeanFilterParams extends javax.swing.JPanel {
                         .addComponent(l_Size)
                         .addGap(18, 18, 18)
                         .addComponent(cb_radio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(b_Compare, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE))
+                        .addGap(0, 5, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -85,9 +72,7 @@ public class MeanFilterParams extends javax.swing.JPanel {
                     .addComponent(cb_radio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(b_Execute)
-                .addGap(18, 18, 18)
-                .addComponent(b_Compare)
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(70, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -112,31 +97,13 @@ public class MeanFilterParams extends javax.swing.JPanel {
             algorithm.addPropertyChangeListener(parent);
 
             algorithm.execute();
-
-            b_Compare.setVisible(true);
         } catch (Exception ex) {
             logger.error(ex.getMessage(), ex);
             parent.setStatus("Se ha producido un error. Por favor, intente de vuelta.");
         }
     }//GEN-LAST:event_b_ExecuteActionPerformed
 
-    /**
-     * *
-     * Compares the image with one selected from the file system
-     *
-     * @param evt
-     */
-    private void b_CompareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_CompareActionPerformed
-        final JFileChooser fc = new JFileChooser("./Images/");
-        int returnVal = fc.showOpenDialog(this);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            ImagePlus secondImage = new ImagePlus(fc.getSelectedFile().getAbsolutePath());
-            System.out.println(Compare.pearsonCorrelation(parent.getImageFromTab(algorithm.getName()), secondImage));
-        }
-    }//GEN-LAST:event_b_CompareActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton b_Compare;
     private javax.swing.JButton b_Execute;
     private javax.swing.JComboBox cb_radio;
     private javax.swing.JLabel l_Size;
