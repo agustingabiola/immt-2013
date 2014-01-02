@@ -3,15 +3,17 @@ package immt.ui;
 import ij.ImagePlus;
 import immt.algorithms.Algorithm;
 import immt.algorithms.WeightedMeanFilter;
-import immt.algorithms.LinearScalingFilter;
 import immt.algorithms.GeometricFilter;
 import immt.algorithms.MeanFilter;
+import immt.edge.EdgeOperator;
+import immt.edge.Sobel;
 import immt.ui.parameters.BaseParams;
 import immt.ui.parameters.WeightedMeanFilterParams;
-import immt.ui.parameters.LinearScalingFilterParams;
 import immt.ui.parameters.GeometricFilterParams;
 import immt.ui.parameters.MeanFilterParams;
+import immt.util.Compare;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
@@ -19,12 +21,12 @@ import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 
 public class ShellWindow extends javax.swing.JFrame implements PropertyChangeListener {
 
     private Algorithm algorithms[];
     private BaseParams p_BaseParams;
-    
     
     Rectangle captureRect;
     Point start;
@@ -35,7 +37,14 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
     public ShellWindow() {
         loadPreProcessingAlgorithms();
         initComponents();
-        
+        changeButtonsEnabled(false);
+        loadEdgeOperators();
+    }
+    
+    public void changeButtonsEnabled(boolean value){        
+        b_filter.setEnabled(value);
+        cb_filter.setEnabled(value);
+        b_compare.setEnabled(value);
     }
 
     @SuppressWarnings("unchecked")
@@ -62,6 +71,10 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
         l_StatusTitle = new javax.swing.JLabel();
         l_Status = new javax.swing.JLabel();
         pb_Status = new javax.swing.JProgressBar();
+        p_actions = new javax.swing.JPanel();
+        b_compare = new javax.swing.JButton();
+        b_filter = new javax.swing.JButton();
+        cb_filter = new javax.swing.JComboBox();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
@@ -136,6 +149,46 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
                 .addContainerGap())
         );
 
+        p_actions.setBorder(javax.swing.BorderFactory.createTitledBorder("Actions"));
+
+        b_compare.setText("Compare with...");
+        b_compare.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b_compareActionPerformed(evt);
+            }
+        });
+
+        b_filter.setText("Apply Filter");
+        b_filter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b_filterActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout p_actionsLayout = new javax.swing.GroupLayout(p_actions);
+        p_actions.setLayout(p_actionsLayout);
+        p_actionsLayout.setHorizontalGroup(
+            p_actionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(p_actionsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(p_actionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(b_compare, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(b_filter, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cb_filter, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        p_actionsLayout.setVerticalGroup(
+            p_actionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(p_actionsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(b_compare)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addComponent(cb_filter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(b_filter)
+                .addGap(23, 23, 23))
+        );
+
         javax.swing.GroupLayout p_MainLayout = new javax.swing.GroupLayout(p_Main);
         p_Main.setLayout(p_MainLayout);
         p_MainLayout.setHorizontalGroup(
@@ -144,7 +197,9 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
                 .addContainerGap()
                 .addComponent(tp_Images, javax.swing.GroupLayout.PREFERRED_SIZE, 916, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(p_Options, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(p_MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(p_Options, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                    .addComponent(p_actions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(p_StatusBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -155,10 +210,12 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
                     .addGroup(p_MainLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(tp_Images, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, p_MainLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(p_MainLayout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(p_Options, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(p_actions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(50, 50, 50)
+                        .addComponent(p_Options, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(p_StatusBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -205,6 +262,7 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
                 image.getWidth(),
                 image.getHeight(),
                 image.getType());
+            changeButtonsEnabled(true);
         }
     }//GEN-LAST:event_openMenuItemActionPerformed
 
@@ -223,6 +281,43 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
         }
     }//GEN-LAST:event_li_AlgorithmsMouseClicked
 
+    private void b_compareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_compareActionPerformed
+        
+    final JFileChooser fc = new JFileChooser("./Images/");
+            int returnVal = fc.showOpenDialog(this);
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                ImagePlus imageFromTab = getCurrentImageInTab();
+                imageFromTab.setProcessor(imageFromTab.getProcessor().convertToFloat());
+                ImagePlus secondImage = new ImagePlus(fc.getSelectedFile().getAbsolutePath());                
+                System.out.println(Compare.pearsonCorrelation(imageFromTab, secondImage));
+            }
+
+    }//GEN-LAST:event_b_compareActionPerformed
+
+    private void b_filterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_filterActionPerformed
+
+        EdgeOperator operator = (EdgeOperator) cb_filter.getSelectedItem();
+
+        // If it was processed before, create a new SwingWorker
+        if (operator.getResultingImage() != null) {
+            operator = operator.clone();
+        }
+
+        operator.execute();
+    }//GEN-LAST:event_b_filterActionPerformed
+
+    public void createEdgeResultWindow(EdgeOperator operator){
+                
+        String filterName = cb_filter.getSelectedItem().toString();
+        
+        JFrame newFrame = new JFrame(filterName + " Filter");
+        ImagePanel newPanel = new ImagePanel(operator.getResultingImage());
+        
+        newFrame.add(newPanel);
+        newFrame.setSize(new Dimension(800, 600));
+        newFrame.setVisible(true);
+    }
+    
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -235,12 +330,11 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
      * Loads the algorithms implemented into an array.
      */
     private void loadPreProcessingAlgorithms() {
-        int numberAlgorithms = 4;
+        int numberAlgorithms = 3;
         algorithms = new Algorithm[numberAlgorithms];
         algorithms[0] = new MeanFilter(this);        
         algorithms[1] = new WeightedMeanFilter(this);
         algorithms[2] = new GeometricFilter(this);
-        algorithms[3] = new LinearScalingFilter(this);
     }
     
     public Rectangle getROISelected(){
@@ -305,12 +399,7 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
                 GeometricFilterParams p_MeanFilterParams = new GeometricFilterParams(this, (GeometricFilter) selectedAlgorithm);
                 p_BaseParams.add(p_MeanFilterParams, BorderLayout.NORTH);
                 break;
-            }            
-            case "Linear Scaling Filter": {
-                LinearScalingFilterParams p_FrostFilterParams = new LinearScalingFilterParams(this, (LinearScalingFilter) selectedAlgorithm);
-                p_BaseParams.add(p_FrostFilterParams, BorderLayout.NORTH);
-                break;
-            }
+            }    
         }
         // Recalculates space in the component.    
         p_BaseParams.revalidate();
@@ -325,16 +414,26 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
         return p_OriginalImage.getImage();
     }
     
-    public ImagePlus getImageFromTab(String tabName)
+    public ImagePlus getCurrentImageInTab()
     {
+        String tabName = tp_Images.getTitleAt(tp_Images.getSelectedIndex());
         int index = tp_Images.indexOfTab(tabName);
         if(index != -1) {
             ImagePanel tab = (ImagePanel) tp_Images.getComponentAt(index);
-            return tab.getImage();
+            return tab.getImage().duplicate();
         }
         return null;
     }
 
+    public void loadEdgeOperators(){
+        EdgeOperator operators[] = {
+            new Sobel(this) };
+        
+        for (EdgeOperator operator : operators) {
+            cb_filter.addItem(operator);
+        }
+    }
+    
     /**
      * Updates progress bar, while algorithm is being run.
      *
@@ -348,6 +447,9 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton b_compare;
+    private javax.swing.JButton b_filter;
+    private javax.swing.JComboBox cb_filter;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
@@ -361,6 +463,7 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
     private javax.swing.JPanel p_Options;
     private immt.ui.ImagePanel p_OriginalImage;
     private javax.swing.JPanel p_StatusBar;
+    private javax.swing.JPanel p_actions;
     private javax.swing.JProgressBar pb_Status;
     private javax.swing.JTabbedPane tp_Images;
     // End of variables declaration//GEN-END:variables

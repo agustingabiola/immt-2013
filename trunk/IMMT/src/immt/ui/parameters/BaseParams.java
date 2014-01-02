@@ -1,11 +1,15 @@
 package immt.ui.parameters;
 
 public class BaseParams extends javax.swing.JPanel {
-    
+
+    /**
+     * *
+     * Constructor for the parameters panel of the algorithms
+     */
     public BaseParams() {
-        initComponents();        
+        initComponents();
     }
-  
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
