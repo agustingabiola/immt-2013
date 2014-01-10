@@ -2,10 +2,11 @@ package immt.algorithms;
 
 import ij.ImagePlus;
 import immt.ui.ShellWindow;
-import java.awt.Rectangle;
+import immt.ui.parameters.GeometricFilterParams;
 
 public class GeometricFilter extends Algorithm {
 
+    // The number of iterations for the algorithm
     private int iterations;
 
     /**
@@ -22,11 +23,9 @@ public class GeometricFilter extends Algorithm {
      * *
      * Runs the geometric filter
      *
-     * @param roi the selected Region of interest. If null, the whole image will
-     * be processed
      */
     @Override
-    public void runAlgorithm(Rectangle roi) {
+    public void runAlgorithm() {
         // Methods needed by ImageJ
         ImagePlus originalImage = getOriginalImage();
         originalImage.setProcessor(originalImage.getProcessor().convertToFloat());
@@ -172,5 +171,15 @@ public class GeometricFilter extends Algorithm {
         GeometricFilter newAlgorithm = new GeometricFilter(getParent());
         newAlgorithm.setOriginalImage(getOriginalImage());
         return newAlgorithm;
+    }
+
+    /**
+     * *
+     * Shows the options for the Algorithm
+     */
+    @Override
+    public void showAlgorithmOptions() {
+        GeometricFilterParams p_MeanFilterParams = new GeometricFilterParams(parent, this);
+        parent.showAlgorithmOption(p_MeanFilterParams);
     }
 }

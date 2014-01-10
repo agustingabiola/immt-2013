@@ -8,9 +8,6 @@ import immt.algorithms.MeanFilter;
 import immt.edge.EdgeOperator;
 import immt.edge.Sobel;
 import immt.ui.parameters.BaseParams;
-import immt.ui.parameters.WeightedMeanFilterParams;
-import immt.ui.parameters.GeometricFilterParams;
-import immt.ui.parameters.MeanFilterParams;
 import immt.util.Compare;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -22,17 +19,13 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
-public class ShellWindow extends javax.swing.JFrame implements PropertyChangeListener {
+public final class ShellWindow extends javax.swing.JFrame implements PropertyChangeListener {
 
     private Algorithm algorithms[];
     private BaseParams p_BaseParams;
-    
-    Rectangle captureRect;
-    Point start;
-    BufferedImage imageCopy;
-    BufferedImage image;
-    boolean imageLoaded = false;
+    private BufferedImage image;
 
     public ShellWindow() {
         loadPreProcessingAlgorithms();
@@ -41,12 +34,62 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
         loadEdgeOperators();
     }
     
+    /**
+     * Loads the edge operators into the ComboBox
+     */
+    public void loadEdgeOperators() {
+        // Create all the EdgeOperators
+        EdgeOperator operators[] = {
+            new Sobel(this)};
+
+        // Put them inside the ComboBox
+        for (EdgeOperator operator : operators) {
+            cb_filter.addItem(operator);
+        }
+    }
+
+    /**
+     * Loads the algorithms implemented into an array.
+     */
+    private void loadPreProcessingAlgorithms() {
+        // Create all the EdgeOperators
+        algorithms = new Algorithm[] {
+            new MeanFilter(this),
+            new WeightedMeanFilter(this),
+            new GeometricFilter(this)};
+    }   
+    
+    /***
+     * Enables/Disables some controls, depending on the value passed as parameter
+     * @param value if true, it enables the controls.
+     */
     public void changeButtonsEnabled(boolean value){        
         b_filter.setEnabled(value);
         cb_filter.setEnabled(value);
         b_compare.setEnabled(value);
     }
 
+    
+    /**
+     * Displays the options of the algorithm chosen. This method gets called from inside the algorithms.
+     *
+     * @param options options to display in the screen.
+     */
+    public void showAlgorithmOption(JPanel options){
+        // Add the options panel inside the shell window
+        if (p_BaseParams != null) {
+            p_Options.remove(p_BaseParams);
+        }
+        p_BaseParams = new BaseParams();
+        p_Options.add(p_BaseParams);
+        
+        // Add the options to the panel
+        p_BaseParams.add(options, BorderLayout.NORTH);
+
+        // Recalculates space in the component.    
+        p_BaseParams.revalidate();
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -244,8 +287,7 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     * Opens the menu to select an image. By default, it opens to project root /
-     * Images
+     * Opens the menu to select an image. By default, it opens to root/Images
      *
      * @param evt
      */
@@ -253,15 +295,11 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
         final JFileChooser fc = new JFileChooser("./Images/");
         int returnVal = fc.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-            imageLoaded = true;
+            //imageLoaded = true;
             ImagePlus originalImage = new ImagePlus(fc.getSelectedFile().getAbsolutePath());
             p_OriginalImage.setImage(originalImage);
             p_OriginalImage.repaint();
             image = originalImage.getBufferedImage();
-            imageCopy = new BufferedImage(
-                image.getWidth(),
-                image.getHeight(),
-                image.getType());
             changeButtonsEnabled(true);
         }
     }//GEN-LAST:event_openMenuItemActionPerformed
@@ -277,7 +315,7 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
         if (image != null) {
             int clickIndex = li_Algorithms.locationToIndex(evt.getPoint());
             Algorithm selectedAlgorithm = (Algorithm) li_Algorithms.getModel().getElementAt(clickIndex);
-            showAlgorithmOptions(selectedAlgorithm);
+            selectedAlgorithm.showAlgorithmOptions();
         }
     }//GEN-LAST:event_li_AlgorithmsMouseClicked
 
@@ -286,7 +324,7 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
     final JFileChooser fc = new JFileChooser("./Images/");
             int returnVal = fc.showOpenDialog(this);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
-                ImagePlus imageFromTab = getCurrentImageInTab();
+                ImagePlus imageFromTab = getCurrentImagePanelSelected().getImage();
                 imageFromTab.setProcessor(imageFromTab.getProcessor().convertToFloat());
                 ImagePlus secondImage = new ImagePlus(fc.getSelectedFile().getAbsolutePath());                
                 System.out.println(Compare.pearsonCorrelation(imageFromTab, secondImage));
@@ -295,24 +333,27 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
     }//GEN-LAST:event_b_compareActionPerformed
 
     private void b_filterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_filterActionPerformed
-
+        // Gets the currently selected edge operator from the combo box
         EdgeOperator operator = (EdgeOperator) cb_filter.getSelectedItem();
-
+        
         // If it was processed before, create a new SwingWorker
         if (operator.getResultingImage() != null) {
             operator = operator.clone();
         }
-
+        
+        // Executes it
         operator.execute();
     }//GEN-LAST:event_b_filterActionPerformed
 
     public void createEdgeResultWindow(EdgeOperator operator){
-                
-        String filterName = cb_filter.getSelectedItem().toString();
+        // Create new Jframe to display the resulting image  
+        String filterName = cb_filter.getSelectedItem().toString();        
+        JFrame newFrame = new JFrame(filterName + " & " + operator.getName() + " edge operator");
         
-        JFrame newFrame = new JFrame(filterName + " Filter");
+        // Set the resulting image in a new ImagePanel
         ImagePanel newPanel = new ImagePanel(operator.getResultingImage());
         
+        // Add the ImagePanel to the Jframe
         newFrame.add(newPanel);
         newFrame.setSize(new Dimension(800, 600));
         newFrame.setVisible(true);
@@ -325,25 +366,7 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
             }
         });
     }
-
-    /**
-     * Loads the algorithms implemented into an array.
-     */
-    private void loadPreProcessingAlgorithms() {
-        int numberAlgorithms = 3;
-        algorithms = new Algorithm[numberAlgorithms];
-        algorithms[0] = new MeanFilter(this);        
-        algorithms[1] = new WeightedMeanFilter(this);
-        algorithms[2] = new GeometricFilter(this);
-    }
     
-    public Rectangle getROISelected(){
-        return captureRect;
-    }
-            
-
-
-
     /**
      * Updates the status label.
      */
@@ -371,39 +394,6 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
         tp_Images.setSelectedIndex(index);
     }
 
-    /**
-     * Displays the options of the algorithm chosen.
-     *
-     * @param selectedAlgorithm the chosen algorithm
-     */
-    private void showAlgorithmOptions(Algorithm selectedAlgorithm) {
-
-        if (p_BaseParams != null) {
-            p_Options.remove(p_BaseParams);
-        }
-
-        p_BaseParams = new BaseParams();
-        p_Options.add(p_BaseParams);
-        switch (selectedAlgorithm.getName()) {
-            case "Media": {
-                MeanFilterParams p_MeanFilterParams = new MeanFilterParams(this, (MeanFilter) selectedAlgorithm);
-                p_BaseParams.add(p_MeanFilterParams, BorderLayout.NORTH);
-                break;
-            }
-            case "Media Ponderada": {
-                WeightedMeanFilterParams p_FrostFilterParams = new WeightedMeanFilterParams(this, (WeightedMeanFilter) selectedAlgorithm);
-                p_BaseParams.add(p_FrostFilterParams, BorderLayout.NORTH);
-                break;
-            }
-            case "Filtro Geometrico": {
-                GeometricFilterParams p_MeanFilterParams = new GeometricFilterParams(this, (GeometricFilter) selectedAlgorithm);
-                p_BaseParams.add(p_MeanFilterParams, BorderLayout.NORTH);
-                break;
-            }    
-        }
-        // Recalculates space in the component.    
-        p_BaseParams.revalidate();
-    }
 
     /**
      * Obtain the original image opened by the user.
@@ -411,28 +401,27 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
      * @return Original Image opened.
      */
     public ImagePlus getOriginalImage() {
-        return p_OriginalImage.getImage();
+        Rectangle roi = p_OriginalImage.getSelectedRoi();
+        if(roi == null)
+            return p_OriginalImage.getImage();
+        else{
+            ImagePlus originalImage = p_OriginalImage.getImage();
+            originalImage.setRoi(roi);
+            return new ImagePlus("",originalImage.getProcessor().crop());
+        }
     }
     
-    public ImagePlus getCurrentImageInTab()
-    {
+    public ImagePanel getCurrentImagePanelSelected(){
         String tabName = tp_Images.getTitleAt(tp_Images.getSelectedIndex());
         int index = tp_Images.indexOfTab(tabName);
         if(index != -1) {
             ImagePanel tab = (ImagePanel) tp_Images.getComponentAt(index);
-            return tab.getImage().duplicate();
+            return tab;
         }
         return null;
     }
 
-    public void loadEdgeOperators(){
-        EdgeOperator operators[] = {
-            new Sobel(this) };
-        
-        for (EdgeOperator operator : operators) {
-            cb_filter.addItem(operator);
-        }
-    }
+
     
     /**
      * Updates progress bar, while algorithm is being run.
