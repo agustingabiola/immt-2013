@@ -2,6 +2,7 @@ package immt.algorithms;
 
 import ij.ImagePlus;
 import immt.ui.ShellWindow;
+import immt.ui.parameters.MeanFilterParams;
 import immt.util.Functions;
 import immt.util.Matrix;
 import immt.util.Point;
@@ -49,11 +50,9 @@ public class MeanFilter extends Algorithm {
      * *
      * Runs the mean filter
      *
-     * @param roi the selected Region of interest. If null, the whole image will
-     * be processed
      */
     @Override
-    public void runAlgorithm(Rectangle roi) {
+    public void runAlgorithm() {
         ImagePlus originalImage = getOriginalImage().duplicate();
         originalImage.setProcessor(originalImage.getProcessor().convertToFloat());
 
@@ -125,6 +124,12 @@ public class MeanFilter extends Algorithm {
         newAlgorithm.setWindowSize(windowSize);
         newAlgorithm.setOriginalImage(getOriginalImage());
         return newAlgorithm;
+    }
+
+    @Override
+    public void showAlgorithmOptions() {
+        MeanFilterParams p_MeanFilterParams = new MeanFilterParams(parent, this);
+        parent.showAlgorithmOption(p_MeanFilterParams);
     }
 
 }

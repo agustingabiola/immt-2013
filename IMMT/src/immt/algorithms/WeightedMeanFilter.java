@@ -2,6 +2,7 @@ package immt.algorithms;
 
 import ij.ImagePlus;
 import immt.ui.ShellWindow;
+import immt.ui.parameters.WeightedMeanFilterParams;
 import immt.util.Functions;
 import immt.util.Matrix;
 import immt.util.Point;
@@ -51,7 +52,7 @@ public class WeightedMeanFilter extends Algorithm {
      * be processed
      */
     @Override
-    public void runAlgorithm(Rectangle roi) {
+    public void runAlgorithm() {
         ImagePlus originalImage = getOriginalImage().duplicate();
         originalImage.setProcessor(originalImage.getProcessor().convertToFloat());
 
@@ -133,5 +134,11 @@ public class WeightedMeanFilter extends Algorithm {
         newAlgorithm.setKernel(kernel);
         newAlgorithm.setOriginalImage(getOriginalImage());
         return newAlgorithm;
+    }
+
+    @Override
+    public void showAlgorithmOptions() {
+        WeightedMeanFilterParams p_WeightedMeanFilterParams = new WeightedMeanFilterParams(parent, this);
+        parent.showAlgorithmOption(p_WeightedMeanFilterParams);
     }
 }

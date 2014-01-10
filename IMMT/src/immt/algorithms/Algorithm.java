@@ -2,7 +2,6 @@ package immt.algorithms;
 
 import ij.ImagePlus;
 import immt.ui.ShellWindow;
-import java.awt.Rectangle;
 import java.util.concurrent.ExecutionException;
 import javax.swing.SwingWorker;
 
@@ -12,7 +11,7 @@ public abstract class Algorithm extends SwingWorker<Boolean, String> {
     private String description;
     private ImagePlus resultingImage;
     private ImagePlus originalImage;
-    private ShellWindow parent;
+    protected ShellWindow parent;
 
     /**
      * Constructor for an Algorithm. Keep in mind that this is an abstract
@@ -32,15 +31,18 @@ public abstract class Algorithm extends SwingWorker<Boolean, String> {
      * Runs the algorithm based on the originalImage. After its completed, it
      * sets the resulting image.
      */
-    public abstract void runAlgorithm(Rectangle roi);
+    public abstract void runAlgorithm();
 
+    public abstract void showAlgorithmOptions();
+    
+    
     /**
      * Computes a result in a new Thread Throws an exception if unable to do so.
      */
     @Override
     protected Boolean doInBackground() {
         parent.setStatus("Running " + getName());
-        this.runAlgorithm(parent.getROISelected());
+        this.runAlgorithm();
         return true;
     }
 
