@@ -115,7 +115,7 @@ public abstract class EdgeOperator extends SwingWorker<Boolean, String> {
         Rectangle roi = panel.getSelectedRoi();
         // if there is no ROI, just return the image
         if (roi == null) {
-            return panel.getImage();
+            return panel.getImage().duplicate();
         } else {
             ImagePlus image = panel.getImage();
             image.setRoi(roi);

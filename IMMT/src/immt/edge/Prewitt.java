@@ -3,29 +3,29 @@ package immt.edge;
 import ij.ImagePlus;
 import immt.ui.ShellWindow;
 
-public class Sobel extends EdgeOperator {
+public class Prewitt extends EdgeOperator {
 
     int sobel_x[][] = {{-1,0,1},
-                       {-2,0,2},
+                       {-1,0,1},
                        {-1,0,1}};
 
-    int sobel_y[][] = {{-1,-2,-1},
+    int sobel_y[][] = {{1,1,1},
                        { 0, 0, 0},
-                       { 1, 2, 1}};
+                       { -1, -1, -1}};
     
     /**
      * *
-     * Sobel Constructor
+     * Prewitt Constructor
      *
      * @param parent main window of the application
      */
-    public Sobel(ShellWindow parent) {
-        super("Sobel", parent);
+    public Prewitt(ShellWindow parent) {
+        super("Prewitt", parent);
     }
 
     /**
      * *
-     * Runs the Sobel Operator
+     * Runs the Prewitt Operator
      */
     @Override
     public void runOperator() {
@@ -89,11 +89,11 @@ public class Sobel extends EdgeOperator {
      * *
      * Clones the EdgeOperator
      *
-     * @return a clone of the Sobel Operator
+     * @return a clone of the Prewitt Operator
      */
     @Override
     public EdgeOperator clone() {
-        Sobel clone = new Sobel(parent);
+        Prewitt clone = new Prewitt(parent);
         return clone;
     }
 

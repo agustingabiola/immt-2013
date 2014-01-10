@@ -6,6 +6,7 @@ import immt.algorithms.WeightedMeanFilter;
 import immt.algorithms.GeometricFilter;
 import immt.algorithms.MeanFilter;
 import immt.edge.EdgeOperator;
+import immt.edge.Prewitt;
 import immt.edge.Sobel;
 import immt.ui.parameters.BaseParams;
 import immt.util.Compare;
@@ -40,7 +41,8 @@ public final class ShellWindow extends javax.swing.JFrame implements PropertyCha
     public void loadEdgeOperators() {
         // Create all the EdgeOperators
         EdgeOperator operators[] = {
-            new Sobel(this)};
+            new Sobel(this),
+            new Prewitt(this)};
 
         // Put them inside the ComboBox
         for (EdgeOperator operator : operators) {
