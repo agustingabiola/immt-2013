@@ -12,7 +12,6 @@ import immt.ui.parameters.BaseParams;
 import immt.util.Compare;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -98,7 +97,7 @@ public final class ShellWindow extends javax.swing.JFrame implements PropertyCha
 
         p_Main = new javax.swing.JPanel();
         tp_Images = new javax.swing.JTabbedPane();
-        p_OriginalImage = new immt.ui.ImagePanel();
+        p_OriginalImage = new immt.ui.ImagePanel(this);
         p_Options = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         li_Algorithms = new javax.swing.JList(algorithms){
@@ -120,10 +119,18 @@ public final class ShellWindow extends javax.swing.JFrame implements PropertyCha
         b_compare = new javax.swing.JButton();
         b_filter = new javax.swing.JButton();
         cb_filter = new javax.swing.JComboBox();
+        jLabel1 = new javax.swing.JLabel();
+        punto1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        punto2 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        distancia = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Intima-Media Measurment Tool");
@@ -234,6 +241,19 @@ public final class ShellWindow extends javax.swing.JFrame implements PropertyCha
                 .addGap(23, 23, 23))
         );
 
+        jLabel1.setText("Punto 1:");
+
+        jLabel3.setText("Punto 2:");
+
+        jButton1.setText("Borrar Puntos");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setText("Distancia:");
+
         javax.swing.GroupLayout p_MainLayout = new javax.swing.GroupLayout(p_Main);
         p_Main.setLayout(p_MainLayout);
         p_MainLayout.setHorizontalGroup(
@@ -242,26 +262,54 @@ public final class ShellWindow extends javax.swing.JFrame implements PropertyCha
                 .addContainerGap()
                 .addComponent(tp_Images, javax.swing.GroupLayout.PREFERRED_SIZE, 916, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(p_MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(p_Options, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                    .addComponent(p_actions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(p_MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(p_MainLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(punto1))
+                    .addGroup(p_MainLayout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(distancia))
+                    .addGroup(p_MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(p_MainLayout.createSequentialGroup()
+                            .addComponent(jLabel3)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(punto2)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton1))
+                        .addComponent(p_Options, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                        .addComponent(p_actions, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(p_StatusBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         p_MainLayout.setVerticalGroup(
             p_MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, p_MainLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(p_MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(p_MainLayout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(tp_Images, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 1, Short.MAX_VALUE))
                     .addGroup(p_MainLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(p_actions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(50, 50, 50)
-                        .addComponent(p_Options, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(p_Options, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(p_MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(punto1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(p_MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(punto2)
+                            .addComponent(jButton1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(p_MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(distancia))))
+                .addGap(66, 66, 66)
                 .addComponent(p_StatusBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -280,7 +328,16 @@ public final class ShellWindow extends javax.swing.JFrame implements PropertyCha
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Edit");
+        jMenu2.setText("Run");
+
+        jMenuItem1.setText("Snakes...");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem1);
+
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -347,13 +404,39 @@ public final class ShellWindow extends javax.swing.JFrame implements PropertyCha
         operator.execute();
     }//GEN-LAST:event_b_filterActionPerformed
 
+    public ImagePlus getImageToProcess() {
+        ImagePanel panel = getCurrentImagePanelSelected();
+        Rectangle roi = panel.getSelectedRoi();
+        // if there is no ROI, just return the image
+        if (roi == null) {
+            return panel.getImage().duplicate();
+        } else {
+            ImagePlus image = panel.getImage();
+            image.setRoi(roi);
+            return new ImagePlus("", image.getProcessor().crop());
+        }
+    }
+    
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        punto1.setText("");
+        punto2.setText("");
+        distancia.setText("");
+        getCurrentImagePanelSelected().ClearPoints();
+        getCurrentImagePanelSelected().repaint();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        Snakes snakeWindow = new Snakes(getCurrentImagePanelSelected().getImage());
+        snakeWindow.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     public void createEdgeResultWindow(EdgeOperator operator){
         // Create new Jframe to display the resulting image  
         String filterName = cb_filter.getSelectedItem().toString();        
         JFrame newFrame = new JFrame(filterName + " & " + operator.getName() + " edge operator");
         
         // Set the resulting image in a new ImagePanel
-        ImagePanel newPanel = new ImagePanel(operator.getResultingImage());
+        ImagePanel newPanel = new ImagePanel(operator.getResultingImage(), this);
         
         // Add the ImagePanel to the Jframe
         newFrame.add(newPanel);
@@ -375,7 +458,22 @@ public final class ShellWindow extends javax.swing.JFrame implements PropertyCha
     public void setStatus(String status) {
         l_Status.setText(status);
     }
+    
+    public void SetPunto1(String value)
+    {
+        punto1.setText(value);
+    }
+    
+    public void SetPunto2(String value)
+    {
+        punto2.setText(value);
+    }
 
+    public void SetDistance(String value)
+    {
+        distancia.setText(value);
+    }
+    
     /**
      * Creates a new Tab with the result of the algorithm selected. If that
      * algorithm was already run before, it only changes de image of the tab
@@ -385,7 +483,7 @@ public final class ShellWindow extends javax.swing.JFrame implements PropertyCha
         String name = currentAlgorithm.getName();
         int index = tp_Images.indexOfTab(name);
         if (index == -1) {
-            tp_Images.add(currentAlgorithm.getName(), new ImagePanel(currentAlgorithm.getResultingImage()));
+            tp_Images.add(currentAlgorithm.getName(), new ImagePanel(currentAlgorithm.getResultingImage(), this));
             index = tp_Images.indexOfTab(name);
 
         } else {
@@ -441,9 +539,15 @@ public final class ShellWindow extends javax.swing.JFrame implements PropertyCha
     private javax.swing.JButton b_compare;
     private javax.swing.JButton b_filter;
     private javax.swing.JComboBox cb_filter;
+    private javax.swing.JLabel distancia;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel l_Status;
@@ -456,6 +560,8 @@ public final class ShellWindow extends javax.swing.JFrame implements PropertyCha
     private javax.swing.JPanel p_StatusBar;
     private javax.swing.JPanel p_actions;
     private javax.swing.JProgressBar pb_Status;
+    private javax.swing.JLabel punto1;
+    private javax.swing.JLabel punto2;
     private javax.swing.JTabbedPane tp_Images;
     // End of variables declaration//GEN-END:variables
 }
