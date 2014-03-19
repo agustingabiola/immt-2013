@@ -7,6 +7,8 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -15,7 +17,7 @@ import javax.swing.JPanel;
 /**
  * Panel to paint an image of type ImagePlus
  */
-public class ImagePanel extends JPanel implements MouseListener, MouseMotionListener {
+public class ImagePanel extends JPanel implements MouseListener, MouseMotionListener, KeyListener {
 
     // The image displayed in the panel
     private ImagePlus image;
@@ -27,27 +29,42 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
     int currentX, currentY, startX, startY;
     boolean dragMode = false;
 
+    private boolean isControlPressed = false;
+    
+    private ShellWindow parent;
+    
     /**
      * *
      * Constructor for the ImagePanel, with a default image
+     * @param parent
      */
-    public ImagePanel() {
+    public ImagePanel(ShellWindow parent) {
         addMouseListener(new RightClickListener(this));
         addMouseListener(this);
         addMouseMotionListener(this);
+        addKeyListener(this);
+        this.parent = parent;
     }
 
+        public ImagePanel() {
+        addMouseListener(new RightClickListener(this));
+        addMouseListener(this);
+        addMouseMotionListener(this);
+        addKeyListener(this);
+    }
+    
     /**
      * *
      * Constructor for the ImagePanel, with a default image
      *
      * @param image image to be shown inside panel
      */
-    public ImagePanel(ImagePlus image) {
+    public ImagePanel(ImagePlus image, ShellWindow parent) {
         addMouseListener(new RightClickListener(this));
         addMouseListener(this);
         addMouseMotionListener(this);
         this.image = image;
+        this.parent = parent;
     }
 
     /**
@@ -112,9 +129,35 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
                 g.drawRect(beginX, beginY, width, height);
                 selectedRoi = new Rectangle(new Point(startX, startY), new Dimension(width, height));
             }
+            if(point1 != null)
+            {
+                g.setColor(Color.YELLOW);
+                g.fillRect((int) point1.getX(), (int) point1.getY(), 6, 6);
+                parent.SetPunto1(point1.getX() + ", " + point1.getY());                
+            }
+            if(point2 != null)
+            {
+                g.setColor(Color.YELLOW);
+                g.fillRect((int) point2.getX(), (int) point2.getY(), 6, 6);
+                parent.SetPunto2(point2.getX() + ", " + point2.getY());
+                distanceBetweenPoints();
+            }            
+            this.requestFocus();
         }
     }
 
+    public void ClearPoints()
+    {
+        point1 = null;
+        point2 = null;        
+    }
+    
+    private void distanceBetweenPoints()
+    {
+       double distance = Math.sqrt(Math.pow(point2.x - point1.x, 2) + Math.pow(point2.y - point1.y, 2));
+       parent.SetDistance(String.valueOf(distance));
+    }
+    
     @Override
     public void mouseDragged(MouseEvent me) {
         if (image != null) {
@@ -126,12 +169,31 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
         }
     }
 
+    private Point point1;
+    private Point point2;
+    
     @Override
     public void mousePressed(MouseEvent me) {
         if (image != null) {
-            dragMode = true;
-            startX = me.getX();
-            startY = me.getY();
+            if(isControlPressed)
+            {
+                if(point1 == null)
+                {
+                    point1 = new Point(me.getX(), me.getY());
+                    repaint();
+                }
+                else if (point2 == null)
+                {
+                    point2 = new Point(me.getX(), me.getY());
+                    repaint();                
+                }
+            }
+            else
+            {
+                dragMode = true;
+                startX = me.getX();
+                startY = me.getY();
+            }
         }
     }
 
@@ -155,5 +217,21 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
 
     @Override
     public void mouseMoved(MouseEvent me) {
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if(e.getKeyCode()==KeyEvent.VK_CONTROL)
+            isControlPressed = true;
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        if(e.getKeyCode()==KeyEvent.VK_CONTROL)
+            isControlPressed = false;
     }
 }

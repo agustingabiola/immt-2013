@@ -89,7 +89,7 @@ public class GeometricFilterParams extends javax.swing.JPanel {
             }
 
             algorithm.setIterations(Integer.parseInt(iterations));
-            algorithm.setOriginalImage(parent.getOriginalImage());
+            algorithm.setOriginalImage(parent.getImageToProcess());
 
             // The ShellWindow listens for updates of progress
             algorithm.addPropertyChangeListener(parent);
