@@ -5,6 +5,7 @@ import immt.algorithms.Algorithm;
 import immt.algorithms.WeightedMeanFilter;
 import immt.algorithms.GeometricFilter;
 import immt.algorithms.MeanFilter;
+import immt.algorithms.MedianFilter;
 import immt.edge.EdgeOperator;
 import immt.edge.Prewitt;
 import immt.edge.Sobel;
@@ -15,8 +16,16 @@ import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
+import java.awt.image.WritableRaster;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -56,6 +65,7 @@ public final class ShellWindow extends javax.swing.JFrame implements PropertyCha
         // Create all the EdgeOperators
         algorithms = new Algorithm[] {
             new MeanFilter(this),
+            new MedianFilter(this),
             new WeightedMeanFilter(this),
             new GeometricFilter(this)};
     }   
@@ -353,8 +363,19 @@ public final class ShellWindow extends javax.swing.JFrame implements PropertyCha
     private void openMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMenuItemActionPerformed
         final JFileChooser fc = new JFileChooser("./Images/");
         int returnVal = fc.showOpenDialog(this);
+        DataBufferByte data;
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             //imageLoaded = true;
+            BufferedImage img;
+            try {
+                File file = new File(fc.getSelectedFile().getAbsolutePath());
+                byte[] fileContent = Files.readAllBytes(file.toPath());
+                img = ImageIO.read(file);
+                WritableRaster raster = img.getRaster();
+                 data   = (DataBufferByte) raster.getDataBuffer();
+            } catch (IOException ex) {
+                Logger.getLogger(ShellWindow.class.getName()).log(Level.SEVERE, null, ex);
+            }
             ImagePlus originalImage = new ImagePlus(fc.getSelectedFile().getAbsolutePath());
             p_OriginalImage.setImage(originalImage);
             p_OriginalImage.repaint();
