@@ -7,13 +7,17 @@
 package immt.ui;
 
 import ij.ImagePlus;
+import ij.process.FloatProcessor;
 import immt.algorithms.snakes.externalforces.PotentialMcInerney99YDirection;
 import immt.algorithms.snakes.imagedatafunction.FMcInerney99SignModified;
 import immt.algorithms.snakes.tsnake.polar.TSnakePolar;
 import immt.algorithms.structures.GreyScaleImage;
 import immt.algorithms.structures.UndeterminedColumns;
+import immt.util.Functions;
+import immt.util.Matrix;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -29,6 +33,8 @@ public class Snakes extends javax.swing.JFrame {
     
     private ImagePlus currentImage;
 
+    private ShellWindow parent;
+    
         /**
      * Creates new form Snakes
      */
@@ -39,9 +45,11 @@ public class Snakes extends javax.swing.JFrame {
     /**
      * Creates new form Snakes
      */
-    public Snakes(ImagePlus image) {
+    public Snakes(ImagePlus image, ShellWindow parent) {
         initComponents();
         currentImage = image;
+        this.parent = parent;
+                
     }
 
     /**
@@ -63,6 +71,7 @@ public class Snakes extends javax.swing.JFrame {
         thresh = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         thresh1 = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
         FuerzasInternas = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -128,6 +137,13 @@ public class Snakes extends javax.swing.JFrame {
 
         thresh1.setText("180");
 
+        jButton2.setText("Use Points");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout FLayout = new javax.swing.GroupLayout(F);
         F.setLayout(FLayout);
         FLayout.setHorizontalGroup(
@@ -142,18 +158,25 @@ public class Snakes extends javax.swing.JFrame {
                         .addComponent(jLabel3)
                         .addGap(27, 27, 27)
                         .addComponent(thresh, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         FLayout.setVerticalGroup(
             FLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(FLayout.createSequentialGroup()
-                .addGroup(FLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(thresh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(FLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10)
-                    .addComponent(thresh1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(FLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(FLayout.createSequentialGroup()
+                        .addGroup(FLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(thresh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(FLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel10)
+                            .addComponent(thresh1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(FLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jButton2)))
                 .addContainerGap())
         );
 
@@ -242,7 +265,7 @@ public class Snakes extends javax.swing.JFrame {
         OtrosLayout.setHorizontalGroup(
             OtrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(OtrosLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(0, 47, Short.MAX_VALUE)
                 .addGroup(OtrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, OtrosLayout.createSequentialGroup()
                         .addComponent(jLabel8)
@@ -272,17 +295,17 @@ public class Snakes extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(151, 151, 151)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(FuerzasInternas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(P, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(F, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(Otros, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(151, 151, 151)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Otros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(F, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -372,6 +395,40 @@ public class Snakes extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        currentImage.setProcessor(currentImage.getProcessor().convertToFloat());
+        float[] imagePixels = (float[]) currentImage.getProcessor().getPixelsCopy();
+
+        Matrix imageMatrix = new Matrix(currentImage.getHeight(), currentImage.getWidth(), imagePixels);
+        
+        Point point1 = parent.GetPoint1();
+        Matrix window1;
+        if(point1 != null)
+        {
+            window1 = Functions.GetWindow(imageMatrix, new immt.util.Point(point1.x, point1.y), 3);
+            thresh.setText(String.valueOf((int)Math.floor(GetAverageIntensityInWindow(window1))));    
+        }
+        Point point2 = parent.GetPoint2();
+        Matrix window2;
+        if(point2 != null)
+        {
+            window2 = Functions.GetWindow(imageMatrix, new immt.util.Point(point2.x, point2.y), 3);
+            thresh1.setText(String.valueOf((int)Math.floor(GetAverageIntensityInWindow(window2))));
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    
+    private float GetAverageIntensityInWindow(Matrix window)
+    {
+      float sum = 0;
+        for (int i = 0; i < 3 ; i++) {
+            for (int j = 0; j < 3 ; j++) {
+                sum += window.getElementAt(i, j);
+            }
+        }
+        return sum / 9;
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -419,6 +476,7 @@ public class Snakes extends javax.swing.JFrame {
     private javax.swing.JTextField gauss;
     private javax.swing.JTextField i;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;

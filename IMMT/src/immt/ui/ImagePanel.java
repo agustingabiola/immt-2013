@@ -62,7 +62,8 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
     public ImagePanel(ImagePlus image, ShellWindow parent) {
         addMouseListener(new RightClickListener(this));
         addMouseListener(this);
-        addMouseMotionListener(this);
+        addMouseMotionListener(this);        
+        addKeyListener(this);
         this.image = image;
         this.parent = parent;
     }
@@ -171,6 +172,16 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
 
     private Point point1;
     private Point point2;
+    
+    public Point GetPoint1()
+    {
+        return point1;
+    }
+    
+    public Point GetPoint2()
+    {
+        return point2;
+    }
     
     @Override
     public void mousePressed(MouseEvent me) {

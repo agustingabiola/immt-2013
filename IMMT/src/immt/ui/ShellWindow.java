@@ -13,6 +13,7 @@ import immt.ui.parameters.BaseParams;
 import immt.util.Compare;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -447,7 +448,7 @@ public final class ShellWindow extends javax.swing.JFrame implements PropertyCha
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        Snakes snakeWindow = new Snakes(getCurrentImagePanelSelected().getImage());
+        Snakes snakeWindow = new Snakes(getCurrentImagePanelSelected().getImage(), this);
         snakeWindow.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
@@ -488,6 +489,16 @@ public final class ShellWindow extends javax.swing.JFrame implements PropertyCha
     public void SetPunto2(String value)
     {
         punto2.setText(value);
+    }
+    
+    public Point GetPoint1()
+    {
+        return getCurrentImagePanelSelected().GetPoint1();    
+    }
+    
+      public Point GetPoint2()
+    {
+        return getCurrentImagePanelSelected().GetPoint2();    
     }
 
     public void SetDistance(String value)
