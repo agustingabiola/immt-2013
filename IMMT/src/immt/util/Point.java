@@ -12,8 +12,8 @@ package immt.util;
  */
 public class Point {
     
-    private int xCoord;
-    private int yCoord;
+    private double xCoord;
+    private double yCoord;
 
     public Point(int x, int y)
     {
@@ -21,20 +21,34 @@ public class Point {
         yCoord = y;
     }
     
-    public int getxCoord() {
+    public Point(double x, double y)
+    {
+        xCoord = x;
+        yCoord = y;
+    }
+    
+    public Point(){};
+            
+    public double getxCoord() {
         return xCoord;
     }
 
-    public void setxCoord(int xCoord) {
+    public void setxCoord(double xCoord) {
         this.xCoord = xCoord;
     }
 
-    public int getyCoord() {
+    public double getyCoord() {
         return yCoord;
     }
 
-    public void setyCoord(int yCoord) {
+    public void setyCoord(double yCoord) {
         this.yCoord = yCoord;
+    }
+    
+    @Override
+    public String toString()
+    {
+       return "x: " + xCoord + "  y: " + yCoord;        
     }
     
 }

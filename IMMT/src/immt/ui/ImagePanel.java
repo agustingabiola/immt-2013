@@ -12,6 +12,8 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JPanel;
 
 /**
@@ -33,6 +35,8 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
     
     private ShellWindow parent;
     
+    ArrayList<Point> points;
+    
     /**
      * *
      * Constructor for the ImagePanel, with a default image
@@ -44,6 +48,7 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
         addMouseMotionListener(this);
         addKeyListener(this);
         this.parent = parent;
+        points = new ArrayList<Point>();
     }
 
         public ImagePanel() {
@@ -51,6 +56,7 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
         addMouseListener(this);
         addMouseMotionListener(this);
         addKeyListener(this);
+         points = new ArrayList<Point>();
     }
     
     /**
@@ -66,6 +72,7 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
         addKeyListener(this);
         this.image = image;
         this.parent = parent;
+         points = new ArrayList<Point>();
     }
 
     /**
@@ -110,6 +117,19 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
         return selectedRoi;
     }
 
+    boolean paintMappedPoints = false;
+    
+    ArrayList<immt.util.Point> pointsMapped;
+    
+    
+    public void paintPoints(ArrayList<immt.util.Point> pointsMapped)
+    {      
+        paintMappedPoints = true;
+        this.pointsMapped = pointsMapped;
+        repaint();
+    }
+    
+    
     /**
      * *
      * Paints the image inside the panel
@@ -118,9 +138,26 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
      */
     @Override
     protected void paintComponent(Graphics g) {
-        if (image != null) {
+        if (image != null) {        
+           
             g.drawImage(image.getBufferedImage(), 0, 0, getSize().width, getSize().height, this);
+            
+            for(Point p : points)
+            {                
+                g.setColor(Color.BLUE);
+                g.fillRect((int) p.getX(), (int) p.getY(), 4, 4);
+            }
+            
+            if(paintMappedPoints)
+            {
+                paintMappedPoints = false;
+                g.setColor(Color.PINK);
+                for(immt.util.Point p: pointsMapped)
+                    g.fillRect((int) p.getxCoord(),(int) p.getyCoord(), 4, 4);
+            }
+                        
             int beginX, beginY, width, height;
+            
             if (dragMode == true) {
                 beginX = Math.min(startX, currentX);
                 beginY = Math.min(startY, currentY);
@@ -133,16 +170,22 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
             if(point1 != null)
             {
                 g.setColor(Color.YELLOW);
-                g.fillRect((int) point1.getX(), (int) point1.getY(), 6, 6);
-                parent.SetPunto1(point1.getX() + ", " + point1.getY());                
+                g.fillRect((int) point1.getX(), (int) point1.getY(), 4, 4);
+                if(!points.contains(point1))
+                    points.add(point1);
+                if(parent != null)
+                    parent.SetPunto1(point1.getX() + ", " + point1.getY());                
             }
             if(point2 != null)
             {
                 g.setColor(Color.YELLOW);
-                g.fillRect((int) point2.getX(), (int) point2.getY(), 6, 6);
-                parent.SetPunto2(point2.getX() + ", " + point2.getY());
+                g.fillRect((int) point2.getX(), (int) point2.getY(), 4, 4);
+                if(parent != null)
+                    parent.SetPunto2(point2.getX() + ", " + point2.getY());
+                points.add(point2);
                 distanceBetweenPoints();
-            }            
+            }                 
+            
             this.requestFocus();
         }
     }
@@ -150,13 +193,15 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
     public void ClearPoints()
     {
         point1 = null;
-        point2 = null;        
+        point2 = null; 
+        repaint();
     }
     
     private void distanceBetweenPoints()
     {
        double distance = Math.sqrt(Math.pow(point2.x - point1.x, 2) + Math.pow(point2.y - point1.y, 2));
-       parent.SetDistance(String.valueOf(distance));
+       if(parent != null)
+        parent.SetDistance(String.valueOf(distance));
     }
     
     @Override
@@ -172,6 +217,11 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
 
     private Point point1;
     private Point point2;
+    
+    public ArrayList<Point> GetPoints()
+    {
+        return points;
+    }
     
     public Point GetPoint1()
     {

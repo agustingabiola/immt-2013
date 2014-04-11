@@ -357,16 +357,16 @@ public class Snakes extends javax.swing.JFrame {
                 
         BufferedImage img = tsnake.ejecutar(filtrada, new UndeterminedColumns(), P, F, damping, amplitude, stretching, bending, 0, 1., iterations, initialCountour,false , TSnakePolar.GRADIENTE_LIBRE);
 
-        double[] ys = tsnake.getY();
+        double[] topSnakeY = tsnake.getY();
 
         // Media - Adventicia : 180
         F = new FMcInerney99SignModified(filtrada, Integer.parseInt(thresh1.getText()), true);        
         
         img = tsnake.ejecutar(filtrada, new UndeterminedColumns(), P, F, damping, amplitude, stretching, bending, 0, 1., iterations, initialCountour,false , TSnakePolar.GRADIENTE_LIBRE);
 
-        for(int i = 0; i < ys.length ; i++)
+        for(int i = 0; i < topSnakeY.length ; i++)
         {
-            img.setRGB(i, (int)ys[i], Color.YELLOW.getRGB());
+            img.setRGB(i, (int)topSnakeY[i], Color.YELLOW.getRGB());
         }
         
         try {
@@ -378,19 +378,21 @@ public class Snakes extends javax.swing.JFrame {
         }
         
         ImagePanel panel = new ImagePanel(new ImagePlus("snakes", img), null);
-         panel.setPreferredSize(new Dimension(img.getWidth(), img.getHeight()));
-        JFrame frame=new JFrame("Create a JPanel");  
-
-         //ADD JPanel INTO JFrame  
-         frame.add(panel);  
+         //panel.setPreferredSize(new Dimension(img.getWidth(), img.getHeight()));
+        
+        double[] botSnakeY = tsnake.getY();
+        
+         SnakesResult resultFrame = new SnakesResult(new ImagePlus("snakes", img), topSnakeY, botSnakeY);
+         
+          
 
          //Set default close operation for JFrame  
-         frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);  
+         resultFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);  
  
          //frame.setSize(panel.getWidth(),panel.getHeight());  
-         frame.pack();
+        // resultFrame.pack();
          //Make JFrame visible. So we can see it  
-         frame.setVisible(true);  
+         resultFrame.setVisible(true);  
              
         
     }//GEN-LAST:event_jButton1ActionPerformed
