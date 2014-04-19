@@ -20,10 +20,16 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="b_Execute" max="32767" attributes="0"/>
-                  <Group type="102" attributes="0">
-                      <Component id="l_Size" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="l_Size1" alignment="0" max="32767" attributes="0"/>
+                          <Component id="l_Size" alignment="0" max="32767" attributes="0"/>
+                      </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="cb_radio" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="cb_radio" max="32767" attributes="0"/>
+                          <Component id="tf_iterations" max="32767" attributes="0"/>
+                      </Group>
                       <EmptySpace min="0" pref="5" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -39,9 +45,14 @@
                   <Component id="l_Size" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="cb_radio" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="l_Size1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="tf_iterations" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="20" max="32767" attributes="0"/>
               <Component id="b_Execute" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="70" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -74,6 +85,19 @@
           </StringArray>
         </Property>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="l_Size1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Iterations"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="tf_iterations">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="1"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tf_iterationsActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

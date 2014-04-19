@@ -36,6 +36,8 @@ public class MedianFilterParams extends javax.swing.JPanel {
         l_Size = new javax.swing.JLabel();
         b_Execute = new javax.swing.JButton();
         cb_radio = new javax.swing.JComboBox();
+        l_Size1 = new javax.swing.JLabel();
+        tf_iterations = new javax.swing.JTextField();
 
         l_Size.setText("Size of window");
 
@@ -48,6 +50,15 @@ public class MedianFilterParams extends javax.swing.JPanel {
 
         cb_radio.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1x1", "3x3", "5x5", "7x7", "9x9", "11x11", "13x13" }));
 
+        l_Size1.setText("Iterations");
+
+        tf_iterations.setText("1");
+        tf_iterations.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tf_iterationsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -57,9 +68,13 @@ public class MedianFilterParams extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(b_Execute, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(l_Size)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(l_Size1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(l_Size, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
-                        .addComponent(cb_radio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cb_radio, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tf_iterations))
                         .addGap(0, 5, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -70,9 +85,13 @@ public class MedianFilterParams extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(l_Size)
                     .addComponent(cb_radio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(l_Size1)
+                    .addComponent(tf_iterations, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addComponent(b_Execute)
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addGap(37, 37, 37))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -91,6 +110,7 @@ public class MedianFilterParams extends javax.swing.JPanel {
             }
 
             algorithm.setWindowSize(size);
+            algorithm.setNumberOfIterations(Integer.parseInt(tf_iterations.getText()));
             algorithm.setOriginalImage(parent.getOriginalImage());
 
             // The ShellWindow listens for updates of progress
@@ -103,9 +123,15 @@ public class MedianFilterParams extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_b_ExecuteActionPerformed
 
+    private void tf_iterationsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_iterationsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tf_iterationsActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton b_Execute;
     private javax.swing.JComboBox cb_radio;
     private javax.swing.JLabel l_Size;
+    private javax.swing.JLabel l_Size1;
+    private javax.swing.JTextField tf_iterations;
     // End of variables declaration//GEN-END:variables
 }
