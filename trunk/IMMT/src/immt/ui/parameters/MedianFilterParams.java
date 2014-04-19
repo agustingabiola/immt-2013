@@ -49,6 +49,7 @@ public class MedianFilterParams extends javax.swing.JPanel {
         });
 
         cb_radio.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1x1", "3x3", "5x5", "7x7", "9x9", "11x11", "13x13" }));
+        cb_radio.setSelectedIndex(2);
 
         l_Size1.setText("Iterations");
 
