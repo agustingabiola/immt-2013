@@ -73,6 +73,7 @@
             <StringItem index="6" value="13x13"/>
           </StringArray>
         </Property>
+        <Property name="selectedIndex" type="int" value="2"/>
       </Properties>
     </Component>
   </SubComponents>
