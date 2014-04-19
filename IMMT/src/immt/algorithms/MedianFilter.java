@@ -16,9 +16,11 @@ public class MedianFilter extends Algorithm {
      */
     private int windowSize;
 
+    private int numberOfIterations;
+    
     /**
      * *
-     * Mean Filter
+     * Median Filter
      *
      * @param parent The main window of the application
      */
@@ -46,6 +48,12 @@ public class MedianFilter extends Algorithm {
         return windowSize;
     }
 
+    public void setNumberOfIterations(int number)
+    {
+        numberOfIterations = number;
+    
+    }
+    
     /**
      * *
      * Runs the mean filter
@@ -79,13 +87,20 @@ public class MedianFilter extends Algorithm {
         // The radius of the window
         int radius = (int) Math.floor(windowSize / 2);
 
-        for (int i = radius; i < imageWidth - 1 - radius; i++) {
-            for (int j = radius; j < imageHeight - 1 - radius; j++) {
+        // For each iteration
+        for (int it = 1; it <= numberOfIterations; it++) {
+        
+            Matrix currentMatrix =  new Matrix(imageHeight, imageWidth, resultingImage);
+            
+            for (int i = radius; i < imageWidth - 1 - radius; i++) {
+                for (int j = radius; j < imageHeight - 1 - radius; j++) {
 
-                window = Functions.GetWindow(imageMatrix, new Point(j, i), windowSize);
+                    window = Functions.GetWindow(currentMatrix, new Point(j, i), windowSize);
 
-                resultingImage[imageWidth * j + i] = applyFilter(window, kernel);
+                    resultingImage[imageWidth * j + i] = applyFilter(window, kernel);
+                }
             }
+        
         }
 
         // Show the resulting image in the screen
