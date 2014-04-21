@@ -49,6 +49,7 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
         addKeyListener(this);
         this.parent = parent;
         points = new ArrayList<Point>();
+         toPaintPoints = new ArrayList<immt.util.Point>();
     }
 
         public ImagePanel() {
@@ -57,6 +58,7 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
         addMouseMotionListener(this);
         addKeyListener(this);
          points = new ArrayList<Point>();
+          toPaintPoints = new ArrayList<immt.util.Point>();
     }
     
     /**
@@ -73,8 +75,11 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
         this.image = image;
         this.parent = parent;
          points = new ArrayList<Point>();
+         toPaintPoints = new ArrayList<immt.util.Point>();
     }
 
+    
+    
     /**
      * *
      * Save the image as an BMP
@@ -129,6 +134,13 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
         repaint();
     }
     
+    private ArrayList<immt.util.Point> toPaintPoints;
+    
+    public void PaintPoint(double x, double y)
+    {
+        toPaintPoints.add(new immt.util.Point(x, y));
+        repaint();
+    }
     
     /**
      * *
@@ -141,6 +153,13 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
         if (image != null) {        
            
             g.drawImage(image.getBufferedImage(), 0, 0, getSize().width, getSize().height, this);
+            
+       if(toPaintPoints != null)
+            for(immt.util.Point p: toPaintPoints)
+            {
+                g.setColor(Color.red);
+                g.fillRect((int)p.getxCoord(), (int)p.getyCoord(), 1, 1);
+            }
             
             for(Point p : points)
             {                
