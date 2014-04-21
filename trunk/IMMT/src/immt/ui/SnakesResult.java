@@ -55,6 +55,7 @@ public class SnakesResult extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         promedio = new javax.swing.JLabel();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -100,6 +101,13 @@ public class SnakesResult extends javax.swing.JFrame {
 
         jLabel2.setText("Promedio:");
 
+        jButton4.setText("Otro Metodo");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -107,18 +115,23 @@ public class SnakesResult extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(imagePanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel2)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(promedio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addComponent(jLabel2)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(promedio, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(58, 58, 58)
+                        .addComponent(jButton4)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -139,7 +152,9 @@ public class SnakesResult extends javax.swing.JFrame {
                             .addComponent(jLabel2)
                             .addComponent(promedio, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(36, 36, 36)
-                        .addComponent(jButton3))
+                        .addComponent(jButton3)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton4))
                     .addComponent(imagePanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -177,28 +192,110 @@ public class SnakesResult extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        double ppm = Double.parseDouble(ConfigurationManager.getAppSetting("ppm"));
-        
-        double sumOfDistances = 0;
-        
         if(mappedPoints != null)
         {
+            CalculateStatistics(mappedPoints);
+        }        
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void CalculateStatistics(ArrayList<immt.util.Point> points)
+    {
+        double ppm = Double.parseDouble(ConfigurationManager.getAppSetting("ppm"));
+        immt.util.Point firstPoint = null;
+        double sumOfDistances = 0;
+        
+        for(immt.util.Point p : points)
+        {
+            if (firstPoint == null)
+                firstPoint = p;
+            else
+            {                    
+                sumOfDistances += EuclidianDistance(firstPoint, p.getxCoord(), p.getyCoord()) * ppm;
+                firstPoint = null;
+            }
+        }
+        double mean = sumOfDistances / (points.size()/2);
+        promedio.setText(String.valueOf(mean));  
+    
+    }
+    
+    int offset = 5;
+    
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        if(mappedPoints != null)
+        {
+            ArrayList<immt.util.Point> newPoints =  new ArrayList<immt.util.Point>();
+            
             immt.util.Point firstPoint = null;
             for(immt.util.Point p : mappedPoints)
             {
                 if (firstPoint == null)
+                {
                     firstPoint = p;
+                    
+                    double left = topSnakeValues[(int)firstPoint.getxCoord() - offset];                    
+                    
+                    double right = topSnakeValues[(int)firstPoint.getxCoord() + offset];
+                                      
+                    // y = ax + b
+                    
+                    // a = (y2 - y1) / (x2 - x1)
+                    double a =  (left - right) / (((int)firstPoint.getxCoord() - offset) - ((int)firstPoint.getxCoord() + offset));
+                    
+                    // b = y - (a * x)
+                    double b = topSnakeValues[(int)firstPoint.getxCoord() - offset] - (a * ((int)firstPoint.getxCoord() - offset));
+
+                    // Perpedincular line is with 1/ -a
+                    double aPerp = (1/a) * -1;                    
+                    
+                    double newB = topSnakeValues[(int)firstPoint.getxCoord()] - (aPerp * ((int)firstPoint.getxCoord()));
+                    
+                    /*
+                    for(int i = 0; i < 600; i++)
+                    {
+                        double yy = a * i + b;
+                        imagePanel1.PaintPoint(i, yy);
+                    }
+                    
+                     for(int i = 0; i < 1000; i++)
+                    {
+                        double yy = aPerp * i + newB;
+                        imagePanel1.PaintPoint(i, yy);
+                    }
+                    */
+                    double lowest = 999999;
+                    int lowestX = -1;
+                    
+                    int it = 0;
+                    for(double d : botSnakeValues)
+                    {
+                        // y = a x + b                        
+                        double y = (aPerp * it) + newB;
+                        
+                        double diff = d - y;
+                        diff = Math.abs(diff);
+                        
+                        if (diff < lowest)
+                        {
+                            lowest = diff;
+                            lowestX = it;
+                        }
+                        it++;                        
+                    }
+                    System.out.println("LOWEST =" + lowestX);
+                    
+                    newPoints.add(firstPoint);
+                    newPoints.add(new immt.util.Point(lowestX, botSnakeValues[lowestX]));
+                }
                 else
                 {                    
-                    sumOfDistances += EuclidianDistance(firstPoint, p.getxCoord(), p.getyCoord()) * ppm;
                     firstPoint = null;
                 }
             }
-            double mean = sumOfDistances / (mappedPoints.size()/2);
-            promedio.setText(String.valueOf(mean));
+            
+            CalculateStatistics(newPoints);
         }
-        
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     immt.util.Point MapPointToSnake(Point p, double[] points)
     {       
@@ -269,6 +366,7 @@ public class SnakesResult extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
