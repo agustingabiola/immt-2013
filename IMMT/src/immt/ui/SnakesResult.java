@@ -56,6 +56,12 @@ public class SnakesResult extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         promedio = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        maximo = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        minimo = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        desviacion = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -92,7 +98,7 @@ public class SnakesResult extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Actualizar Estadisticas");
+        jButton3.setText("Metodo Simple");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -101,37 +107,60 @@ public class SnakesResult extends javax.swing.JFrame {
 
         jLabel2.setText("Promedio:");
 
-        jButton4.setText("Otro Metodo");
+        promedio.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+
+        jButton4.setText("Metodo Rectas");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
             }
         });
 
+        jLabel3.setText("Maximo:");
+
+        maximo.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+
+        jLabel4.setText("Minimo:");
+
+        minimo.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+
+        jLabel5.setText("Desviacion:");
+
+        desviacion.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(22, Short.MAX_VALUE)
                 .addComponent(imagePanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addComponent(jLabel2)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(promedio, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(58, 58, 58)
-                        .addComponent(jButton4)))
+                    .addComponent(jLabel1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jButton4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addComponent(jLabel5)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(desviacion, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addComponent(jLabel4)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(minimo, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel3)
+                                .addComponent(jLabel2))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(promedio, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
+                                .addComponent(maximo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -151,7 +180,19 @@ public class SnakesResult extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(promedio, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(36, 36, 36)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(maximo, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(minimo, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(desviacion, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(15, 15, 15)
                         .addComponent(jButton3)
                         .addGap(18, 18, 18)
                         .addComponent(jButton4))
@@ -204,19 +245,60 @@ public class SnakesResult extends javax.swing.JFrame {
         immt.util.Point firstPoint = null;
         double sumOfDistances = 0;
         
+        // Need points??
+        immt.util.Point maxPoint = new immt.util.Point(0,0);
+        immt.util.Point minPoint = new immt.util.Point(9999,9999);
+        
+        double minDistance = Double.MAX_VALUE;
+        double maxDistance = Double.MIN_VALUE;
+        
+        for(immt.util.Point p : points)
+        {
+            if(p.getyCoord() < minPoint.getyCoord())
+                minPoint = p;
+            if(p.getyCoord() > maxPoint.getyCoord())
+                maxPoint = p;
+            
+            if (firstPoint == null)
+                firstPoint = p;
+            else
+            {              
+                double distance = EuclidianDistance(firstPoint, p.getxCoord(), p.getyCoord()) * ppm;
+                if(distance > maxDistance )
+                    maxDistance = distance;
+                if(distance < minDistance)
+                    minDistance = distance;
+                sumOfDistances += distance;
+                firstPoint = null;
+            }
+        }
+        double mean = sumOfDistances / (points.size()/2);
+        promedio.setText(String.valueOf(mean).substring(0, 5)); 
+        minimo.setText(String.valueOf(minDistance).substring(0,5));
+        maximo.setText(String.valueOf(maxDistance).substring(0, 5));
+        desviacion.setText(String.valueOf(GetStandarDeviation(mean, points)));    
+    }
+
+    private double GetStandarDeviation(double mean, ArrayList<immt.util.Point> points)
+    {     
+        double ppm = Double.parseDouble(ConfigurationManager.getAppSetting("ppm"));
+        double result = 0;
+        immt.util.Point firstPoint = null;
+    
         for(immt.util.Point p : points)
         {
             if (firstPoint == null)
                 firstPoint = p;
             else
-            {                    
-                sumOfDistances += EuclidianDistance(firstPoint, p.getxCoord(), p.getyCoord()) * ppm;
+            {              
+                double distance = EuclidianDistance(firstPoint, p.getxCoord(), p.getyCoord()) * ppm;
+                System.out.println("DISTANCE:" + distance);
+                System.out.println("MEAN:" + mean);
+                result += Math.pow((distance - mean), 2);
                 firstPoint = null;
             }
         }
-        double mean = sumOfDistances / (points.size()/2);
-        promedio.setText(String.valueOf(mean));  
-    
+        return Math.sqrt(result / (points.size() / 2));
     }
     
     int offset = 5;
@@ -282,7 +364,7 @@ public class SnakesResult extends javax.swing.JFrame {
                         }
                         it++;                        
                     }
-                    System.out.println("LOWEST =" + lowestX);
+                    //System.out.println("LOWEST =" + lowestX);
                     
                     newPoints.add(firstPoint);
                     newPoints.add(new immt.util.Point(lowestX, botSnakeValues[lowestX]));
@@ -362,6 +444,7 @@ public class SnakesResult extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel desviacion;
     private immt.ui.ImagePanel imagePanel1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -369,8 +452,13 @@ public class SnakesResult extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JLabel maximo;
+    private javax.swing.JLabel minimo;
     private javax.swing.JLabel promedio;
     // End of variables declaration//GEN-END:variables
 }
