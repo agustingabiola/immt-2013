@@ -31,11 +31,11 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public final class ShellWindow extends javax.swing.JFrame implements PropertyChangeListener {
+public class ShellWindow extends javax.swing.JFrame implements PropertyChangeListener {
 
-    private Algorithm algorithms[];
-    private BaseParams p_BaseParams;
-    private BufferedImage image;
+    public Algorithm algorithms[];
+    public BaseParams p_BaseParams;
+    public BufferedImage image;
 
     public ShellWindow() {
         loadPreProcessingAlgorithms();
@@ -598,7 +598,7 @@ public final class ShellWindow extends javax.swing.JFrame implements PropertyCha
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenuBar jMenuBar1;
+    public javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -607,7 +607,7 @@ public final class ShellWindow extends javax.swing.JFrame implements PropertyCha
     private javax.swing.JLabel l_StatusTitle;
     private javax.swing.JList li_Algorithms;
     private javax.swing.JMenuItem openMenuItem;
-    private javax.swing.JPanel p_Main;
+    public javax.swing.JPanel p_Main;
     private javax.swing.JPanel p_Options;
     private immt.ui.ImagePanel p_OriginalImage;
     private javax.swing.JPanel p_StatusBar;

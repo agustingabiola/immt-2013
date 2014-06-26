@@ -5,7 +5,7 @@ import immt.ui.ShellWindow;
 import immt.ui.parameters.GeometricFilterParams;
 
 public class GeometricFilter extends Algorithm {
-
+    
     // The number of iterations for the algorithm
     private int iterations;
 

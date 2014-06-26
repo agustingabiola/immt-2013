@@ -1,6 +1,7 @@
 package immt;
 
 import immt.ui.ShellWindow;
+import immt.ui.WizardWindow;
 import immt.util.ConfigurationManager;
 import java.io.File;
 import java.io.IOException;
@@ -10,8 +11,11 @@ public class IMMT {
     public static void main(String[] args) {     
         initializeLogger();
         
-        ShellWindow shell = new ShellWindow();
-        shell.setVisible(true);
+        WizardWindow wizard = new WizardWindow();
+        wizard.setVisible(true);
+        
+        //ShellWindow shell = new ShellWindow();
+        //shell.setVisible(true);
     }
     
     private static void initializeLogger(){

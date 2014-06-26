@@ -369,6 +369,7 @@ public class Snakes extends javax.swing.JFrame {
             img.setRGB(i, (int)topSnakeY[i], Color.YELLOW.getRGB());
         }
         
+        /*
         try {
             // retrieve image
             File outputfile = new File("D:\\snake.bmp");
@@ -376,7 +377,7 @@ public class Snakes extends javax.swing.JFrame {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
+        */
         ImagePanel panel = new ImagePanel(new ImagePlus("snakes", img), null);
          //panel.setPreferredSize(new Dimension(img.getWidth(), img.getHeight()));
         

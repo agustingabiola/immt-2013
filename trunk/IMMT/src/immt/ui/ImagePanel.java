@@ -122,6 +122,11 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
         return selectedRoi;
     }
 
+    public void resetRoi()
+    {
+        selectedRoi = null;
+    }
+    
     boolean paintMappedPoints = false;
     
     ArrayList<immt.util.Point> pointsMapped;
@@ -142,6 +147,16 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
         repaint();
     }
     
+    int left = 0;
+    int top = 0;
+    
+    public void setImageWithRoi(ImagePlus img, Rectangle roi)
+    {
+        image = img;
+        left = roi.x + 1;
+        top = roi.y + 1;           
+    }
+    
     /**
      * *
      * Paints the image inside the panel
@@ -150,9 +165,8 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
      */
     @Override
     protected void paintComponent(Graphics g) {
-        if (image != null) {        
-           
-            g.drawImage(image.getBufferedImage(), 0, 0, getSize().width, getSize().height, this);
+        if (image != null) {              
+            g.drawImage(image.getBufferedImage(), left, top, image.getWidth(), image.getHeight(), this);
             
        if(toPaintPoints != null)
             for(immt.util.Point p: toPaintPoints)
