@@ -152,9 +152,9 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
     
     public void setImageWithRoi(ImagePlus img, Rectangle roi)
     {
-        image = img;
-        left = roi.x + 1;
-        top = roi.y + 1;           
+        left = 400 - (roi.width / 2) + 1;
+        top = 327 - (roi.height / 2) + 1; 
+        image = img;          
     }
     
     /**

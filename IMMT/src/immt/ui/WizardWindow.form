@@ -36,6 +36,29 @@
                   <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
                       <Component id="step4_2" alignment="0" min="-2" pref="181" max="-2" attributes="0"/>
                       <Component id="step4_1" alignment="0" max="32767" attributes="0"/>
+                      <Component id="step4_3" alignment="0" max="32767" attributes="0"/>
+                      <Component id="step4_4" alignment="0" max="32767" attributes="0"/>
+                      <Component id="step5_1" alignment="0" min="-2" pref="181" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="step6_2" min="-2" pref="72" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="media" min="-2" pref="72" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="step6_3" min="-2" pref="72" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="minimo" min="-2" pref="72" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="step6_4" min="-2" pref="72" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="maximo" min="-2" pref="72" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="step6_5" min="-2" pref="72" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="desviacion" min="-2" pref="72" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
               </Group>
               <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
@@ -63,7 +86,33 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="step4_1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
+                      <Component id="step4_3" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="step4_4" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                       <Component id="step4_2" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="step5_1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="step6_2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="media" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="step6_3" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="minimo" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="step6_4" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="maximo" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="step6_5" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="desviacion" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
                   <Component id="p_OriginalImage" max="32767" attributes="0"/>
@@ -142,6 +191,69 @@
     <Component class="javax.swing.JLabel" name="step4_1">
       <Properties>
         <Property name="text" type="java.lang.String" value="Se ha aplicado el filtro."/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="step4_3">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Seleccione los puntos para calcular"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="step4_4">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="las intensidades. (CTRL + click)"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="step5_1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Aplicar Medicion"/>
+        <Property name="opaque" type="boolean" value="false"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="step5_1ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="step6_2">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+        <Property name="text" type="java.lang.String" value="Media:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="step6_3">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+        <Property name="text" type="java.lang.String" value="Minimo:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="step6_4">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+        <Property name="text" type="java.lang.String" value="Maximo"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="step6_5">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+        <Property name="text" type="java.lang.String" value="Desviacion:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="media">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="0"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="minimo">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="0"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="maximo">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="0"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="desviacion">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="0"/>
       </Properties>
     </Component>
   </SubComponents>
