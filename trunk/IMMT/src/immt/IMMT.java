@@ -9,7 +9,7 @@ import java.io.IOException;
 public class IMMT {
 
     public static void main(String[] args) {     
-        initializeLogger();
+        //initializeLogger();
         
         WizardWindow wizard = new WizardWindow();
         wizard.setVisible(true);

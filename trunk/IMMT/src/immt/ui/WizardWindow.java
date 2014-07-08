@@ -14,7 +14,11 @@ import immt.algorithms.snakes.imagedatafunction.FMcInerney99SignModified;
 import immt.algorithms.snakes.tsnake.polar.TSnakePolar;
 import immt.algorithms.structures.GreyScaleImage;
 import immt.algorithms.structures.UndeterminedColumns;
+import immt.util.ConfigurationManager;
+import immt.util.Functions;
+import immt.util.Matrix;
 import java.awt.Color;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
@@ -22,6 +26,7 @@ import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -36,9 +41,11 @@ public class WizardWindow extends ShellWindow {
 
     private ImagePlus imagePlus;
     
-    private Rectangle roi1;
+    private Rectangle roi1; 
     
-    private Rectangle roi2;
+    private double[] topSnakeY;
+    
+    private double[] botSnakeY;
     
     /**
      * Creates new form WizardWindow
@@ -51,7 +58,8 @@ public class WizardWindow extends ShellWindow {
         ShowStep1(true);
         ShowStep2(false);
         ShowStep4(false);
-        
+        ShowStep5(false);
+        ShowStep6(false);
     }
 
     private void ShowAdvancedMethod(boolean value)
@@ -77,6 +85,17 @@ public class WizardWindow extends ShellWindow {
         step2_4 = new javax.swing.JButton();
         step4_2 = new javax.swing.JButton();
         step4_1 = new javax.swing.JLabel();
+        step4_3 = new javax.swing.JLabel();
+        step4_4 = new javax.swing.JLabel();
+        step5_1 = new javax.swing.JButton();
+        step6_2 = new javax.swing.JLabel();
+        step6_3 = new javax.swing.JLabel();
+        step6_4 = new javax.swing.JLabel();
+        step6_5 = new javax.swing.JLabel();
+        media = new javax.swing.JLabel();
+        minimo = new javax.swing.JLabel();
+        maximo = new javax.swing.JLabel();
+        desviacion = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -125,6 +144,38 @@ public class WizardWindow extends ShellWindow {
 
         step4_1.setText("Se ha aplicado el filtro.");
 
+        step4_3.setText("Seleccione los puntos para calcular");
+
+        step4_4.setText("las intensidades. (CTRL + click)");
+
+        step5_1.setText("Aplicar Medicion");
+        step5_1.setOpaque(false);
+        step5_1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                step5_1ActionPerformed(evt);
+            }
+        });
+
+        step6_2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        step6_2.setText("Media:");
+
+        step6_3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        step6_3.setText("Minimo:");
+
+        step6_4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        step6_4.setText("Maximo");
+
+        step6_5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        step6_5.setText("Desviacion:");
+
+        media.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        minimo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        maximo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        desviacion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -140,7 +191,26 @@ public class WizardWindow extends ShellWindow {
                         .addComponent(step2_4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(step4_2, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(step4_1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(step4_1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(step4_3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(step4_4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(step5_1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(step6_2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(media, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(step6_3, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(minimo, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(step6_4, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(maximo, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(step6_5, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(desviacion, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(p_OriginalImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -164,7 +234,29 @@ public class WizardWindow extends ShellWindow {
                         .addGap(18, 18, 18)
                         .addComponent(step4_1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(step4_3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(step4_4)
+                        .addGap(14, 14, 14)
                         .addComponent(step4_2)
+                        .addGap(18, 18, 18)
+                        .addComponent(step5_1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(step6_2)
+                            .addComponent(media))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(step6_3)
+                            .addComponent(minimo))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(step6_4)
+                            .addComponent(maximo))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(step6_5)
+                            .addComponent(desviacion))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(p_OriginalImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(26, Short.MAX_VALUE))
@@ -208,10 +300,54 @@ public class WizardWindow extends ShellWindow {
             ExecuteDefaultFilter();
     }//GEN-LAST:event_step2_4ActionPerformed
 
+    int thresh1 = 53, thresh2 = 180;
+    
+    private float GetAverageIntensityInWindow(Matrix window)
+    {
+      float sum = 0;
+        for (int i = 0; i < 3 ; i++) {
+            for (int j = 0; j < 3 ; j++) {
+                sum += window.getElementAt(i, j);
+            }
+        }
+        return sum / 9;
+    }
+    
+    void GetPointsIntensity()
+    {
+        
+        //p_.setProcessor(currentImage.getProcessor().convertToFloat());
+        ImagePlus currentImage = p_OriginalImage.getImage();
+        float[] imagePixels = (float[]) currentImage.getProcessor().getPixelsCopy();
+
+        Matrix imageMatrix = new Matrix(currentImage.getHeight(), currentImage.getWidth(), imagePixels);
+        
+        Point point1 = p_OriginalImage.GetPoint1();
+        Matrix window1;
+        if(point1 != null)
+        {
+            window1 = Functions.GetWindow(imageMatrix, new immt.util.Point(point1.x, point1.y), 3);
+            thresh1 = (int)Math.floor(GetAverageIntensityInWindow(window1));    
+        }
+        Point point2 = p_OriginalImage.GetPoint2();
+        Matrix window2;
+        if(point2 != null)
+        {
+            window2 = Functions.GetWindow(imageMatrix, new immt.util.Point(point2.x, point2.y), 3);
+            thresh2 = (int)Math.floor(GetAverageIntensityInWindow(window2));
+        }
+    }
+    
+    
     private void step4_2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_step4_2ActionPerformed
-       ShowStep5(true);
-       ExecuteDefaultSegmentation();
+        ShowStep5(true);
+        ExecuteDefaultSegmentation();
+        
     }//GEN-LAST:event_step4_2ActionPerformed
+
+    private void step5_1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_step5_1ActionPerformed
+       ExecuteDefaultMeasurments();
+    }//GEN-LAST:event_step5_1ActionPerformed
 
     private void ExecuteDefaultFilter()
     {        
@@ -227,7 +363,141 @@ public class WizardWindow extends ShellWindow {
         
         filter.addPropertyChangeListener(this);
         
-        filter.execute();
+        filter.execute();  
+    }
+                
+    int offset = 5;
+    
+    void ExecuteDefaultMeasurments()
+    {
+        ArrayList<immt.util.Point> newPoints =  new ArrayList<immt.util.Point>();
+    
+        for(int i = offset; i < roi1.width - offset; i++)
+        {
+            double left = topSnakeY[i - offset];
+            double right = topSnakeY[i + offset];
+                                      
+            // y = ax + b
+
+            // a = (y2 - y1) / (x2 - x1)
+            double a =  (left - right) / ((i - offset) - (i + offset));
+
+            // b = y - (a * x)
+            double b = topSnakeY[i - offset] - (a * (i - offset));
+
+            
+            double lowest = Integer.MAX_VALUE;
+            int lowestX = -1;   
+            
+            // Straight line
+            if(a == -0 || a == 0)
+            {
+                lowestX = i;
+            }        
+            else
+            {
+                // Perpedincular line is with 1/ -a
+                double aPerp = (1/a) * -1;                    
+
+                double newB = topSnakeY[i] - (aPerp * (i));
+                
+                int it = 0;
+                for(double d : botSnakeY)
+                {
+                    // y = a x + b                        
+                    double y = (aPerp * it) + newB;
+
+                    double diff = d - y;
+                    diff = Math.abs(diff);
+
+                    if (diff < lowest)
+                    {
+                        lowest = diff;
+                        lowestX = it;
+                    }             
+                    it++;                        
+                }
+            }
+            
+            newPoints.add(new immt.util.Point(i, topSnakeY[i]));
+            newPoints.add(new immt.util.Point(lowestX, botSnakeY[lowestX]));
+        }
+        CalculateStatistics(newPoints);
+    }
+    
+    double EuclidianDistance(Point originalPoint, double x, double y)
+    {
+      return Math.sqrt(Math.pow(originalPoint.x - x,2) + Math.pow(originalPoint.y - y, 2));    
+    }
+    
+    double EuclidianDistance(immt.util.Point originalPoint, double x, double y)
+    {
+      return Math.sqrt(Math.pow(originalPoint.getxCoord() - x,2) + Math.pow(originalPoint.getyCoord()- y, 2));    
+    }
+    
+    private void CalculateStatistics(ArrayList<immt.util.Point> points)
+    {
+        double ppm = Double.parseDouble(ConfigurationManager.getAppSetting("ppm"));
+        immt.util.Point firstPoint = null;
+        double sumOfDistances = 0;
+        
+        // Need points??
+        immt.util.Point maxPoint = new immt.util.Point(0,0);
+        immt.util.Point minPoint = new immt.util.Point(9999,9999);
+        
+        double minDistance = Double.MAX_VALUE;
+        double maxDistance = Double.MIN_VALUE;
+        
+        for(immt.util.Point p : points)
+        {
+            if(p.getyCoord() < minPoint.getyCoord())
+                minPoint = p;
+            if(p.getyCoord() > maxPoint.getyCoord())
+                maxPoint = p;
+            
+            if (firstPoint == null)
+                firstPoint = p;
+            else
+            {              
+                double distance = EuclidianDistance(firstPoint, p.getxCoord(), p.getyCoord()) * ppm;
+                if(distance > maxDistance )
+                    maxDistance = distance;
+                if(distance < minDistance)
+                    minDistance = distance;
+                sumOfDistances += distance;
+                firstPoint = null;
+            }
+        }
+
+        ShowStep6(true);
+        
+        double mean = sumOfDistances / (points.size()/2);
+        media.setText(String.valueOf(mean).substring(0, 5));
+        minimo.setText(String.valueOf(minDistance).substring(0,5));
+        maximo.setText(String.valueOf(maxDistance).substring(0, 5));
+        desviacion.setText(String.valueOf(GetStandarDeviation(mean, points)).substring(0,5));  
+    }
+    
+    
+
+    private double GetStandarDeviation(double mean, ArrayList<immt.util.Point> points)
+    {     
+        double ppm = Double.parseDouble(ConfigurationManager.getAppSetting("ppm"));
+        double result = 0;
+        immt.util.Point firstPoint = null;
+    
+        for(immt.util.Point p : points)
+        {
+            if (firstPoint == null)
+                firstPoint = p;
+            else
+            {              
+                double distance = EuclidianDistance(firstPoint, p.getxCoord(), p.getyCoord()) * ppm;                
+                result += Math.pow((distance - mean), 2);
+                firstPoint = null;
+            }
+        }
+        return Math.sqrt(result / (points.size() / 2));
     }
     
     @Override
@@ -275,6 +545,10 @@ public class WizardWindow extends ShellWindow {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel desviacion;
+    private javax.swing.JLabel maximo;
+    private javax.swing.JLabel media;
+    private javax.swing.JLabel minimo;
     private immt.ui.ImagePanel p_OriginalImage;
     private javax.swing.JButton step1_1;
     private javax.swing.JLabel step2_1;
@@ -283,6 +557,13 @@ public class WizardWindow extends ShellWindow {
     private javax.swing.JButton step2_4;
     private javax.swing.JLabel step4_1;
     private javax.swing.JButton step4_2;
+    private javax.swing.JLabel step4_3;
+    private javax.swing.JLabel step4_4;
+    private javax.swing.JButton step5_1;
+    private javax.swing.JLabel step6_2;
+    private javax.swing.JLabel step6_3;
+    private javax.swing.JLabel step6_4;
+    private javax.swing.JLabel step6_5;
     // End of variables declaration//GEN-END:variables
 
     private void ShowStep1(boolean b) {
@@ -299,10 +580,19 @@ public class WizardWindow extends ShellWindow {
     private void ShowStep4(boolean b) {
         step4_1.setVisible(b);
         step4_2.setVisible(b);
+        step4_3.setVisible(b);
+        step4_4.setVisible(b);
     }
 
     private void ShowStep5(boolean b) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        step5_1.setVisible(b);
+    }
+    
+    private void ShowStep6(boolean b){        
+        step6_2.setVisible(b);
+        step6_4.setVisible(b);
+        step6_5.setVisible(b);
+        step6_3.setVisible(b);
     }
 
     private void ExecuteDefaultSegmentation() {
@@ -317,11 +607,7 @@ public class WizardWindow extends ShellWindow {
         int amplitude = 10;
         int iterations = 250;
         int contour = 0;
-        
-        // These should be modifiable
-        int thresh1 = 53;
-        int thresh2 = 180;
-                       
+                               
         int[] initialCountour = new int[filtrada.getWidth()];        
         for(int i = 0; i < filtrada.getWidth() ; i++)
             initialCountour[i] = contour;
@@ -335,7 +621,7 @@ public class WizardWindow extends ShellWindow {
                 
         BufferedImage img = tsnake.ejecutar(filtrada, new UndeterminedColumns(), P, F, damping, amplitude, stretching, bending, 0, 1., iterations, initialCountour,false , TSnakePolar.GRADIENTE_LIBRE);
 
-        double[] topSnakeY = tsnake.getY();
+        topSnakeY = tsnake.getY();
 
         
         // Media - Adventicia : 180
@@ -350,9 +636,10 @@ public class WizardWindow extends ShellWindow {
         
         ImagePanel panel = new ImagePanel(new ImagePlus("snakes", img), null);
         
-        double[] botSnakeY = tsnake.getY();        
+        botSnakeY = tsnake.getY();        
         
         p_OriginalImage.setImage(new ImagePlus("snakes", img));
         p_OriginalImage.repaint();   
+        
     }
 }
