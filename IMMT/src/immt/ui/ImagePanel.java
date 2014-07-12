@@ -99,6 +99,17 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
         // Save the image as .BMP
         fs.saveAsBmp(path + ".bmp");
     }
+    
+    public void resetPanel()
+    {
+        image = null;
+        selectedRoi = null;
+        top = 0;
+        left = 0;
+        ClearPoints();
+        points = new ArrayList<Point>();
+         toPaintPoints = new ArrayList<immt.util.Point>();
+    }
 
     /**
      * *

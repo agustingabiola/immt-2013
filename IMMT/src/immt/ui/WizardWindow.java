@@ -99,6 +99,7 @@ public class WizardWindow extends ShellWindow {
         maximo = new javax.swing.JLabel();
         desviacion = new javax.swing.JLabel();
         step6_6 = new javax.swing.JButton();
+        step6_7 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -118,6 +119,7 @@ public class WizardWindow extends ShellWindow {
         );
 
         step1_1.setText("Cargar Imagen");
+        step1_1.setOpaque(false);
         step1_1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 step1_1ActionPerformed(evt);
@@ -131,6 +133,7 @@ public class WizardWindow extends ShellWindow {
         step2_3.setText("boton para aplicar el filtro.");
 
         step2_4.setText("Terminar con el marcado");
+        step2_4.setOpaque(false);
         step2_4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 step2_4ActionPerformed(evt);
@@ -180,9 +183,18 @@ public class WizardWindow extends ShellWindow {
         desviacion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         step6_6.setText("Guardar Resultados");
+        step6_6.setOpaque(false);
         step6_6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 step6_6ActionPerformed(evt);
+            }
+        });
+
+        step6_7.setText("Empezar de nuevo");
+        step6_7.setOpaque(false);
+        step6_7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                step6_7ActionPerformed(evt);
             }
         });
 
@@ -219,7 +231,8 @@ public class WizardWindow extends ShellWindow {
                         .addComponent(step6_5, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(desviacion, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(step6_6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(step6_6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(step6_7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(p_OriginalImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -268,6 +281,8 @@ public class WizardWindow extends ShellWindow {
                             .addComponent(desviacion))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(step6_6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(step6_7)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(p_OriginalImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(26, Short.MAX_VALUE))
@@ -376,9 +391,18 @@ public class WizardWindow extends ShellWindow {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-        }
-        p_OriginalImage.saveImage(fc.getSelectedFile().getAbsolutePath());
+            p_OriginalImage.saveImage(fc.getSelectedFile().getAbsolutePath());
+        }        
     }//GEN-LAST:event_step6_6ActionPerformed
+
+    private void step6_7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_step6_7ActionPerformed
+        p_OriginalImage.resetPanel();
+        ShowStep1(true);
+        ShowStep2(false);
+        ShowStep4(false);
+        ShowStep5(false);
+        ShowStep6(false);
+    }//GEN-LAST:event_step6_7ActionPerformed
 
     private void ExecuteDefaultFilter()
     {        
@@ -596,6 +620,7 @@ public class WizardWindow extends ShellWindow {
     private javax.swing.JLabel step6_4;
     private javax.swing.JLabel step6_5;
     private javax.swing.JButton step6_6;
+    private javax.swing.JButton step6_7;
     // End of variables declaration//GEN-END:variables
 
     private void ShowStep1(boolean b) {
@@ -626,6 +651,11 @@ public class WizardWindow extends ShellWindow {
         step6_5.setVisible(b);
         step6_3.setVisible(b);
         step6_6.setVisible(b);
+        step6_7.setVisible(b);
+        minimo.setVisible(b);
+        maximo.setVisible(b);
+        media.setVisible(b);
+        desviacion.setVisible(b);
     }
 
     private void ExecuteDefaultSegmentation() {
