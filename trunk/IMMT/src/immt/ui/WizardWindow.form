@@ -57,6 +57,7 @@
                       <Component id="desviacion" min="-2" pref="72" max="-2" attributes="0"/>
                   </Group>
                   <Component id="step6_6" alignment="0" max="32767" attributes="0"/>
+                  <Component id="step6_7" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="p_OriginalImage" max="32767" attributes="0"/>
@@ -112,6 +113,8 @@
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="step6_6" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="step6_7" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
                   <Component id="p_OriginalImage" max="32767" attributes="0"/>
@@ -150,6 +153,7 @@
     <Component class="javax.swing.JButton" name="step1_1">
       <Properties>
         <Property name="text" type="java.lang.String" value="Cargar Imagen"/>
+        <Property name="opaque" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="step1_1ActionPerformed"/>
@@ -173,6 +177,7 @@
     <Component class="javax.swing.JButton" name="step2_4">
       <Properties>
         <Property name="text" type="java.lang.String" value="Terminar con el marcado"/>
+        <Property name="opaque" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="step2_4ActionPerformed"/>
@@ -258,9 +263,19 @@
     <Component class="javax.swing.JButton" name="step6_6">
       <Properties>
         <Property name="text" type="java.lang.String" value="Guardar Resultados"/>
+        <Property name="opaque" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="step6_6ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="step6_7">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Empezar de nuevo"/>
+        <Property name="opaque" type="boolean" value="false"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="step6_7ActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
