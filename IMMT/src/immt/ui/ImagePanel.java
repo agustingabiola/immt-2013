@@ -106,11 +106,17 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
         selectedRoi = null;
         top = 0;
         left = 0;
-        ClearPoints();
-        points = new ArrayList<Point>();
-         toPaintPoints = new ArrayList<immt.util.Point>();
+        ResetAllPoints();
     }
 
+    public void ResetAllPoints()
+    {
+        ClearPoints();
+        points = new ArrayList<Point>();
+        toPaintPoints = new ArrayList<immt.util.Point>();
+    }
+    
+    
     /**
      * *
      * Get the image of the panel

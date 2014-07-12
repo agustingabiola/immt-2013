@@ -100,6 +100,7 @@ public class WizardWindow extends ShellWindow {
         desviacion = new javax.swing.JLabel();
         step6_6 = new javax.swing.JButton();
         step6_7 = new javax.swing.JButton();
+        step4_5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -198,6 +199,14 @@ public class WizardWindow extends ShellWindow {
             }
         });
 
+        step4_5.setText("Borrar Puntos marcados");
+        step4_5.setOpaque(false);
+        step4_5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                step4_5ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -232,7 +241,8 @@ public class WizardWindow extends ShellWindow {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(desviacion, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(step6_6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(step6_7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(step6_7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(step4_5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(p_OriginalImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -259,9 +269,11 @@ public class WizardWindow extends ShellWindow {
                         .addComponent(step4_3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(step4_4)
-                        .addGap(14, 14, 14)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(step4_5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(step4_2)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(step5_1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -403,6 +415,10 @@ public class WizardWindow extends ShellWindow {
         ShowStep5(false);
         ShowStep6(false);
     }//GEN-LAST:event_step6_7ActionPerformed
+
+    private void step4_5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_step4_5ActionPerformed
+        p_OriginalImage.ResetAllPoints();
+    }//GEN-LAST:event_step4_5ActionPerformed
 
     private void ExecuteDefaultFilter()
     {        
@@ -614,6 +630,7 @@ public class WizardWindow extends ShellWindow {
     private javax.swing.JButton step4_2;
     private javax.swing.JLabel step4_3;
     private javax.swing.JLabel step4_4;
+    private javax.swing.JButton step4_5;
     private javax.swing.JButton step5_1;
     private javax.swing.JLabel step6_2;
     private javax.swing.JLabel step6_3;
@@ -639,6 +656,7 @@ public class WizardWindow extends ShellWindow {
         step4_2.setVisible(b);
         step4_3.setVisible(b);
         step4_4.setVisible(b);
+        step4_5.setVisible(b);
     }
 
     private void ShowStep5(boolean b) {
