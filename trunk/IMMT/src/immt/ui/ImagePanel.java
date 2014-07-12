@@ -91,6 +91,14 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
         // Save the image as .BMP
         fs.saveAsBmp();
     }
+    
+    public void saveImage(String path){
+        // We create a FileSaver, implemented in ImageJ
+        FileSaver fs = new FileSaver(image);
+
+        // Save the image as .BMP
+        fs.saveAsBmp(path + ".bmp");
+    }
 
     /**
      * *
