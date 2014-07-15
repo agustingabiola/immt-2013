@@ -182,6 +182,13 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
         image = img;          
     }
     
+    public int getYofPoints (){
+        if ((point1.y-top)< (point2.y-top))
+            return point1.y-top;
+        return point2.y-top;
+    }
+    
+    
     /**
      * *
      * Paints the image inside the panel

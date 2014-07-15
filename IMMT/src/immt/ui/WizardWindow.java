@@ -30,7 +30,7 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.stage.FileChooser;
+//import javafx.stage.FileChooser;
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -687,7 +687,7 @@ public class WizardWindow extends ShellWindow {
         int damping = 30;
         int amplitude = 10;
         int iterations = 250;
-        int contour = 0;
+        int contour = p_OriginalImage.getYofPoints();
                                
         int[] initialCountour = new int[filtrada.getWidth()];        
         for(int i = 0; i < filtrada.getWidth() ; i++)
