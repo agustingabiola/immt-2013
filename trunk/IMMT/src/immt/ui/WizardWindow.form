@@ -25,40 +25,47 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="step2_1" max="32767" attributes="0"/>
-                  <Component id="step2_2" max="32767" attributes="0"/>
-                  <Component id="step2_3" max="32767" attributes="0"/>
-                  <Component id="step1_1" alignment="0" max="32767" attributes="0"/>
-                  <Component id="step2_4" alignment="0" max="32767" attributes="0"/>
-                  <Component id="step4_2" alignment="0" max="32767" attributes="0"/>
-                  <Component id="step4_1" alignment="0" max="32767" attributes="0"/>
-                  <Component id="step4_3" alignment="0" max="32767" attributes="0"/>
-                  <Component id="step4_4" alignment="0" max="32767" attributes="0"/>
-                  <Component id="step5_1" alignment="0" max="32767" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="step6_2" min="-2" pref="72" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="media" min="-2" pref="72" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="step2_1" max="32767" attributes="0"/>
+                      <Component id="step2_2" max="32767" attributes="0"/>
+                      <Component id="step2_3" max="32767" attributes="0"/>
+                      <Component id="step1_1" alignment="0" max="32767" attributes="0"/>
+                      <Component id="step2_4" alignment="0" max="32767" attributes="0"/>
+                      <Component id="step4_2" alignment="0" max="32767" attributes="0"/>
+                      <Component id="step4_1" alignment="0" max="32767" attributes="0"/>
+                      <Component id="step4_3" alignment="0" max="32767" attributes="0"/>
+                      <Component id="step4_4" alignment="0" max="32767" attributes="0"/>
+                      <Component id="step5_1" alignment="0" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="step6_2" min="-2" pref="72" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="media" min="-2" pref="72" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="step6_3" min="-2" pref="72" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="minimo" min="-2" pref="72" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="step6_4" min="-2" pref="72" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="maximo" min="-2" pref="72" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="step6_5" min="-2" pref="72" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="desviacion" min="-2" pref="72" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="step6_6" alignment="0" max="32767" attributes="0"/>
+                      <Component id="step6_7" alignment="0" max="32767" attributes="0"/>
+                      <Component id="step4_5" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="step6_3" min="-2" pref="72" max="-2" attributes="0"/>
+                      <Component id="step6_8" min="-2" pref="72" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="minimo" min="-2" pref="72" max="-2" attributes="0"/>
+                      <Component id="mediciones_realizadas" min="-2" pref="72" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="step6_4" min="-2" pref="72" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="maximo" min="-2" pref="72" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="step6_5" min="-2" pref="72" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="desviacion" min="-2" pref="72" max="-2" attributes="0"/>
-                  </Group>
-                  <Component id="step6_6" alignment="0" max="32767" attributes="0"/>
-                  <Component id="step6_7" alignment="0" max="32767" attributes="0"/>
-                  <Component id="step4_5" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="p_OriginalImage" max="32767" attributes="0"/>
@@ -100,9 +107,9 @@
                           <Component id="media" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="step6_3" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="minimo" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="step6_3" max="32767" attributes="0"/>
+                          <Component id="minimo" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -114,7 +121,12 @@
                           <Component id="step6_5" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="desviacion" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="step6_8" alignment="0" max="32767" attributes="0"/>
+                          <Component id="mediciones_realizadas" alignment="0" min="-2" pref="14" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
                       <Component id="step6_6" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="step6_7" min="-2" max="-2" attributes="0"/>
@@ -289,6 +301,17 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="step4_5ActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="step6_8">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+        <Property name="text" type="java.lang.String" value="Mediciones:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="mediciones_realizadas">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="0"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

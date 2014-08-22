@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package immt.ui;
 
 import ij.ImagePlus;
@@ -33,7 +32,6 @@ import java.util.logging.Logger;
 //import javafx.stage.FileChooser;
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 
 /**
  *
@@ -42,21 +40,18 @@ import javax.swing.JFrame;
 public class WizardWindow extends ShellWindow {
 
     private ImagePlus imagePlus;
-    
-    private Rectangle roi1; 
-    
+    private Rectangle roi1;
     private double[] topSnakeY;
-    
     private double[] botSnakeY;
-    
+
     /**
      * Creates new form WizardWindow
      */
     public WizardWindow() {
         initComponents();
-        
+
         ShowAdvancedMethod(false);
-        
+
         ShowStep1(true);
         ShowStep2(false);
         ShowStep4(false);
@@ -64,12 +59,11 @@ public class WizardWindow extends ShellWindow {
         ShowStep6(false);
     }
 
-    private void ShowAdvancedMethod(boolean value)
-    {    
+    private void ShowAdvancedMethod(boolean value) {
         p_Main.setVisible(value);
         jMenuBar1.setVisible(value);
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -101,6 +95,8 @@ public class WizardWindow extends ShellWindow {
         step6_6 = new javax.swing.JButton();
         step6_7 = new javax.swing.JButton();
         step4_5 = new javax.swing.JButton();
+        step6_8 = new javax.swing.JLabel();
+        mediciones_realizadas = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -207,42 +203,52 @@ public class WizardWindow extends ShellWindow {
             }
         });
 
+        step6_8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        step6_8.setText("Mediciones:");
+
+        mediciones_realizadas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(step2_1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(step2_2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(step2_3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(step1_1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(step2_4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(step4_2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(step4_1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(step4_3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(step4_4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(step5_1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(step2_1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(step2_2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(step2_3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(step1_1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(step2_4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(step4_2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(step4_1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(step4_3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(step4_4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(step5_1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(step6_2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(media, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(step6_3, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(minimo, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(step6_4, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(maximo, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(step6_5, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(desviacion, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(step6_6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(step6_7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(step4_5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(step6_2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(step6_8, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(media, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(step6_3, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(minimo, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(step6_4, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(maximo, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(step6_5, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(desviacion, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(step6_6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(step6_7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(step4_5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(mediciones_realizadas, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(p_OriginalImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -280,9 +286,9 @@ public class WizardWindow extends ShellWindow {
                             .addComponent(step6_2)
                             .addComponent(media))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(step6_3)
-                            .addComponent(minimo))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(step6_3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(minimo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(step6_4)
@@ -291,7 +297,11 @@ public class WizardWindow extends ShellWindow {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(step6_5)
                             .addComponent(desviacion))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(step6_8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(mediciones_realizadas, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(48, 48, 48)
                         .addComponent(step6_6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(step6_7)
@@ -312,10 +322,9 @@ public class WizardWindow extends ShellWindow {
             BufferedImage img;
             try {
                 File file = new File(fc.getSelectedFile().getAbsolutePath());
-                byte[] fileContent = Files.readAllBytes(file.toPath());
                 img = ImageIO.read(file);
                 WritableRaster raster = img.getRaster();
-                 data   = (DataBufferByte) raster.getDataBuffer();
+                data = (DataBufferByte) raster.getDataBuffer();
             } catch (IOException ex) {
                 Logger.getLogger(ShellWindow.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -325,86 +334,78 @@ public class WizardWindow extends ShellWindow {
             image = originalImage.getBufferedImage();
             imagePlus = originalImage;
             changeButtonsEnabled(true);
-            
+
             ShowStep2(true);
         }
     }//GEN-LAST:event_step1_1ActionPerformed
-
     private boolean canContinue = false;
-    
+
     private void step2_4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_step2_4ActionPerformed
         roi1 = p_OriginalImage.getSelectedRoi();
-        if( roi1 != null)
+        if (roi1 != null) {
             ExecuteDefaultFilter();
+        }
     }//GEN-LAST:event_step2_4ActionPerformed
-
     int thresh1 = 53, thresh2 = 180;
-    
-    private float GetAverageIntensityInWindow(Matrix window)
-    {
-      float sum = 0;
-        for (int i = 0; i < 3 ; i++) {
-            for (int j = 0; j < 3 ; j++) {
+
+    private float GetAverageIntensityInWindow(Matrix window) {
+        float sum = 0;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
                 sum += window.getElementAt(i, j);
             }
         }
         return sum / 9;
     }
-    
-    void GetPointsIntensity()
-    {
-        
+
+    void GetPointsIntensity() {
+
         //p_.setProcessor(currentImage.getProcessor().convertToFloat());
         ImagePlus currentImage = p_OriginalImage.getImage();
         float[] imagePixels = (float[]) currentImage.getProcessor().getPixelsCopy();
 
         Matrix imageMatrix = new Matrix(currentImage.getHeight(), currentImage.getWidth(), imagePixels);
-        
+
         Point point1 = p_OriginalImage.GetPoint1();
         Matrix window1;
-        if(point1 != null)
-        {
+        if (point1 != null) {
             window1 = Functions.GetWindow(imageMatrix, new immt.util.Point(point1.x, point1.y), 3);
-            thresh1 = (int)Math.floor(GetAverageIntensityInWindow(window1));    
+            thresh1 = (int) Math.floor(GetAverageIntensityInWindow(window1));
         }
         Point point2 = p_OriginalImage.GetPoint2();
         Matrix window2;
-        if(point2 != null)
-        {
+        if (point2 != null) {
             window2 = Functions.GetWindow(imageMatrix, new immt.util.Point(point2.x, point2.y), 3);
-            thresh2 = (int)Math.floor(GetAverageIntensityInWindow(window2));
+            thresh2 = (int) Math.floor(GetAverageIntensityInWindow(window2));
         }
     }
-    
-    
+
     private void step4_2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_step4_2ActionPerformed
         ShowStep5(true);
         ExecuteDefaultSegmentation();
-        
+
     }//GEN-LAST:event_step4_2ActionPerformed
 
     private void step5_1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_step5_1ActionPerformed
-       ExecuteDefaultMeasurments();
+        ExecuteDefaultMeasurments();
     }//GEN-LAST:event_step5_1ActionPerformed
 
     private void step6_6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_step6_6ActionPerformed
         JFileChooser fc = new JFileChooser("./Resultados/");
         int returnVal = fc.showSaveDialog(null);
-        if(returnVal == JFileChooser.APPROVE_OPTION)
-        {
-            try {
-                FileWriter fw = new FileWriter(fc.getSelectedFile()+".txt");
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            try (FileWriter fw = new FileWriter(fc.getSelectedFile() + ".txt")) {
                 String s = "Media: " + media.getText() + "\n";
-                s += "Minimo: " + minimo.getText() + "\n"; 
-                s += "Maximo: " + maximo.getText() + "\n"; 
-                s += "Desviacion: " + desviacion.getText() + "\n"; 
+                s += "Minimo: " + minimo.getText() + "\n";
+                s += "Maximo: " + maximo.getText() + "\n";
+                s += "Desviacion: " + desviacion.getText() + "\n";
                 fw.write(s);
                 fw.close();
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
             p_OriginalImage.saveImage(fc.getSelectedFile().getAbsolutePath());
-        }        
+        }
     }//GEN-LAST:event_step6_6ActionPerformed
 
     private void step6_7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_step6_7ActionPerformed
@@ -420,166 +421,152 @@ public class WizardWindow extends ShellWindow {
         p_OriginalImage.ResetAllPoints();
     }//GEN-LAST:event_step4_5ActionPerformed
 
-    private void ExecuteDefaultFilter()
-    {        
+    private void ExecuteDefaultFilter() {
         int numberOfIterations = 10;
-        
+
         GeometricFilter filter = new GeometricFilter(this);
-        
+
         filter.setIterations(numberOfIterations);
-        
-            
+
+
         imagePlus.setRoi(roi1);
         filter.setOriginalImage(new ImagePlus("", imagePlus.getProcessor().crop()));
-        
+
         filter.addPropertyChangeListener(this);
-        
-        filter.execute();  
+
+        filter.execute();
     }
-                
     int offset = 5;
-    
-    void ExecuteDefaultMeasurments()
-    {
-        ArrayList<immt.util.Point> newPoints =  new ArrayList<immt.util.Point>();
-    
-        for(int i = offset; i < roi1.width - offset; i++)
-        {
+
+    void ExecuteDefaultMeasurments() {
+        ArrayList<immt.util.Point> newPoints = new ArrayList<>();
+
+        for (int i = offset; i < roi1.width - offset; i++) {
             double left = topSnakeY[i - offset];
             double right = topSnakeY[i + offset];
-                                      
+
             // y = ax + b
 
             // a = (y2 - y1) / (x2 - x1)
-            double a =  (left - right) / ((i - offset) - (i + offset));
+            double a = (left - right) / ((i - offset) - (i + offset));
 
             // b = y - (a * x)
             double b = topSnakeY[i - offset] - (a * (i - offset));
 
-            
+
             double lowest = Integer.MAX_VALUE;
-            int lowestX = -1;   
-            
+            int lowestX = -1;
+
             // Straight line
-            if(a == -0 || a == 0)
-            {
+            if (a == -0 || a == 0) {
                 lowestX = i;
-            }        
-            else
-            {
+            } else {
                 // Perpedincular line is with 1/ -a
-                double aPerp = (1/a) * -1;                    
+                double aPerp = (1 / a) * -1;
 
                 double newB = topSnakeY[i] - (aPerp * (i));
-                
+
                 int it = 0;
-                for(double d : botSnakeY)
-                {
+                for (double d : botSnakeY) {
                     // y = a x + b                        
                     double y = (aPerp * it) + newB;
 
                     double diff = d - y;
                     diff = Math.abs(diff);
 
-                    if (diff < lowest)
-                    {
+                    if (diff < lowest) {
                         lowest = diff;
                         lowestX = it;
-                    }             
-                    it++;                        
+                    }
+                    it++;
                 }
             }
-            
+
             newPoints.add(new immt.util.Point(i, topSnakeY[i]));
             newPoints.add(new immt.util.Point(lowestX, botSnakeY[lowestX]));
         }
         CalculateStatistics(newPoints);
     }
-    
-    double EuclidianDistance(Point originalPoint, double x, double y)
-    {
-      return Math.sqrt(Math.pow(originalPoint.x - x,2) + Math.pow(originalPoint.y - y, 2));    
+
+    double EuclidianDistance(Point originalPoint, double x, double y) {
+        return Math.sqrt(Math.pow(originalPoint.x - x, 2) + Math.pow(originalPoint.y - y, 2));
     }
-    
-    double EuclidianDistance(immt.util.Point originalPoint, double x, double y)
-    {
-      return Math.sqrt(Math.pow(originalPoint.getxCoord() - x,2) + Math.pow(originalPoint.getyCoord()- y, 2));    
+
+    double EuclidianDistance(immt.util.Point originalPoint, double x, double y) {
+        return Math.sqrt(Math.pow(originalPoint.getxCoord() - x, 2) + Math.pow(originalPoint.getyCoord() - y, 2));
     }
-    
-    private void CalculateStatistics(ArrayList<immt.util.Point> points)
-    {
+
+    private void CalculateStatistics(ArrayList<immt.util.Point> points) {
         double ppm = Double.parseDouble(ConfigurationManager.getAppSetting("ppm"));
         immt.util.Point firstPoint = null;
         double sumOfDistances = 0;
-        
+
         // Need points??
-        immt.util.Point maxPoint = new immt.util.Point(0,0);
-        immt.util.Point minPoint = new immt.util.Point(9999,9999);
-        
+        immt.util.Point maxPoint = new immt.util.Point(0, 0);
+        immt.util.Point minPoint = new immt.util.Point(9999, 9999);
+
         double minDistance = Double.MAX_VALUE;
         double maxDistance = Double.MIN_VALUE;
-        
-        for(immt.util.Point p : points)
-        {
-            if(p.getyCoord() < minPoint.getyCoord())
+
+        for (immt.util.Point p : points) {
+            if (p.getyCoord() < minPoint.getyCoord()) {
                 minPoint = p;
-            if(p.getyCoord() > maxPoint.getyCoord())
+            }
+            if (p.getyCoord() > maxPoint.getyCoord()) {
                 maxPoint = p;
-            
-            if (firstPoint == null)
+            }
+
+            if (firstPoint == null) {
                 firstPoint = p;
-            else
-            {              
+            } else {
                 double distance = EuclidianDistance(firstPoint, p.getxCoord(), p.getyCoord()) * ppm;
-                if(distance > maxDistance )
+                if (distance > maxDistance) {
                     maxDistance = distance;
-                if(distance < minDistance)
+                }
+                if (distance < minDistance) {
                     minDistance = distance;
+                }
                 sumOfDistances += distance;
                 firstPoint = null;
             }
         }
 
-        ShowStep6(true);
-        
-        double mean = sumOfDistances / (points.size()/2);
+        double mean = sumOfDistances / (points.size() / 2);
         media.setText(String.valueOf(mean).substring(0, 5));
-        minimo.setText(String.valueOf(minDistance).substring(0,5));
+        minimo.setText(String.valueOf(minDistance).substring(0, 5));
         maximo.setText(String.valueOf(maxDistance).substring(0, 5));
-        desviacion.setText(String.valueOf(GetStandarDeviation(mean, points)).substring(0,5));  
-    }
-    
-    
+        desviacion.setText(String.valueOf(GetStandarDeviation(mean, points)).substring(0, 5));
+        mediciones_realizadas.setText(String.valueOf(points.size()));
 
-    private double GetStandarDeviation(double mean, ArrayList<immt.util.Point> points)
-    {     
+        ShowStep6(true);
+    }
+
+    private double GetStandarDeviation(double mean, ArrayList<immt.util.Point> points) {
         double ppm = Double.parseDouble(ConfigurationManager.getAppSetting("ppm"));
         double result = 0;
         immt.util.Point firstPoint = null;
-    
-        for(immt.util.Point p : points)
-        {
-            if (firstPoint == null)
+
+        for (immt.util.Point p : points) {
+            if (firstPoint == null) {
                 firstPoint = p;
-            else
-            {              
-                double distance = EuclidianDistance(firstPoint, p.getxCoord(), p.getyCoord()) * ppm;                
+            } else {
+                double distance = EuclidianDistance(firstPoint, p.getxCoord(), p.getyCoord()) * ppm;
                 result += Math.pow((distance - mean), 2);
                 firstPoint = null;
             }
         }
         return Math.sqrt(result / (points.size() / 2));
     }
-    
+
     @Override
     public void createNewTab(Algorithm currentAlgorithm) {
         ShowStep4(true);
         ImagePlus img = currentAlgorithm.getResultingImage();
-        p_OriginalImage.setImageWithRoi(img, roi1);        
-        p_OriginalImage.repaint(); 
-        
+        p_OriginalImage.setImageWithRoi(img, roi1);
+        p_OriginalImage.repaint();
+
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -609,16 +596,17 @@ public class WizardWindow extends ShellWindow {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new WizardWindow().setVisible(true);
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel desviacion;
     private javax.swing.JLabel maximo;
     private javax.swing.JLabel media;
+    private javax.swing.JLabel mediciones_realizadas;
     private javax.swing.JLabel minimo;
     private immt.ui.ImagePanel p_OriginalImage;
     private javax.swing.JButton step1_1;
@@ -638,10 +626,11 @@ public class WizardWindow extends ShellWindow {
     private javax.swing.JLabel step6_5;
     private javax.swing.JButton step6_6;
     private javax.swing.JButton step6_7;
+    private javax.swing.JLabel step6_8;
     // End of variables declaration//GEN-END:variables
 
     private void ShowStep1(boolean b) {
-       step1_1.setVisible(b);
+        step1_1.setVisible(b);
     }
 
     private void ShowStep2(boolean b) {
@@ -662,65 +651,67 @@ public class WizardWindow extends ShellWindow {
     private void ShowStep5(boolean b) {
         step5_1.setVisible(b);
     }
-    
-    private void ShowStep6(boolean b){        
+
+    private void ShowStep6(boolean b) {
         step6_2.setVisible(b);
         step6_4.setVisible(b);
         step6_5.setVisible(b);
         step6_3.setVisible(b);
         step6_6.setVisible(b);
         step6_7.setVisible(b);
+        step6_8.setVisible(b);
         minimo.setVisible(b);
         maximo.setVisible(b);
         media.setVisible(b);
         desviacion.setVisible(b);
+        mediciones_realizadas.setVisible(b);
     }
 
     private void ExecuteDefaultSegmentation() {
         GreyScaleImage filtrada = new GreyScaleImage(p_OriginalImage.getImage().getBufferedImage());
-                
+
         // Default values
-        int gauss = 5;        
+        int gauss = 5;
         int potential = 0;
         int stretching = 20;
         int bending = 0;
-        int damping = 30;
+        int damping = 28;
         int amplitude = 10;
         int iterations = 250;
         int contour = p_OriginalImage.getYofPoints();
-                               
-        int[] initialCountour = new int[filtrada.getWidth()];        
-        for(int i = 0; i < filtrada.getWidth() ; i++)
+
+        int[] initialCountour = new int[filtrada.getWidth()];
+        for (int i = 0; i < filtrada.getWidth(); i++) {
             initialCountour[i] = contour;
-        
+        }
+
         PotentialMcInerney99YDirection P = new PotentialMcInerney99YDirection(filtrada, gauss, potential); //Aca pongan potentialScale=0, no vamos a usar el gradiente de la imagen
-        
+
         //Lumen - Intima : 53
-        FMcInerney99SignModified F = new FMcInerney99SignModified(filtrada, thresh1, true);
-        
+        FMcInerney99SignModified F= new FMcInerney99SignModified(filtrada, thresh1, true);
+
         TSnakePolar tsnake = new TSnakePolar();
-                
-        BufferedImage img = tsnake.ejecutar(filtrada, new UndeterminedColumns(), P, F, damping, amplitude, stretching, bending, 0, 1., iterations, initialCountour,false , TSnakePolar.GRADIENTE_LIBRE);
+
+        BufferedImage img= tsnake.ejecutar(filtrada, new UndeterminedColumns(), P, F, damping, amplitude, stretching, bending, 0, 1., iterations, initialCountour, false, TSnakePolar.GRADIENTE_LIBRE);
 
         topSnakeY = tsnake.getY();
 
-        
+
         // Media - Adventicia : 180
-        F = new FMcInerney99SignModified(filtrada, thresh2, true);        
-        
-        img = tsnake.ejecutar(filtrada, new UndeterminedColumns(), P, F, damping, amplitude, stretching, bending, 0, 1., iterations, initialCountour,false , TSnakePolar.GRADIENTE_LIBRE);
-        
-        for(int i = 0; i < topSnakeY.length - 1 ; i++)
-        {
-            img.setRGB(i, (int)topSnakeY[i], Color.YELLOW.getRGB());            
+        F = new FMcInerney99SignModified(filtrada, thresh2, true);
+
+        img = tsnake.ejecutar(filtrada, new UndeterminedColumns(), P, F, damping, amplitude, stretching, bending, 0, 1., iterations, initialCountour, false, TSnakePolar.GRADIENTE_LIBRE);
+
+        for (int i = 0; i < topSnakeY.length - 1; i++) {
+            img.setRGB(i, (int) topSnakeY[i], Color.YELLOW.getRGB());
         }
-        
-        ImagePanel panel = new ImagePanel(new ImagePlus("snakes", img), null);
-        
-        botSnakeY = tsnake.getY();        
-        
+
+        //ImagePanel panel = new ImagePanel(new ImagePlus("snakes", img), null);
+
+        botSnakeY = tsnake.getY();
+
         p_OriginalImage.setImage(new ImagePlus("snakes", img));
-        p_OriginalImage.repaint();   
-        
+        p_OriginalImage.repaint();
+
     }
 }

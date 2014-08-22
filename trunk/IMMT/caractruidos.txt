@@ -1,0 +1,11 @@
+Salt and Pepper calidad baja
+
+Adds salt and pepper noise to the image or selection by randomly replacing 2.5% of the pixels 
+with black pixels and 2.5% with white pixels. This command only works with 8-bit images.
+
+
+
+Ruido para las de calidad media
+
+Adds random noise to the image or selection. The noise is Gaussian (normally) distributed with a mean 
+of zero and standard deviation of 25.
