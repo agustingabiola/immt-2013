@@ -25,7 +25,6 @@ import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -402,7 +401,6 @@ public class WizardWindow extends ShellWindow {
                 fw.write(s);
                 fw.close();
             } catch (Exception ex) {
-                ex.printStackTrace();
             }
             p_OriginalImage.saveImage(fc.getSelectedFile().getAbsolutePath());
         }
@@ -583,13 +581,7 @@ public class WizardWindow extends ShellWindow {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(WizardWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(WizardWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(WizardWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(WizardWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
@@ -675,7 +667,7 @@ public class WizardWindow extends ShellWindow {
         int potential = 0;
         int stretching = 20;
         int bending = 0;
-        int damping = 28;
+        int damping = 26;
         int amplitude = 10;
         int iterations = 250;
         int contour = p_OriginalImage.getYofPoints();
