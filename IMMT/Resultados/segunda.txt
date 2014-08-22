@@ -1,0 +1,4 @@
+Media: 21.44
+Minimo: 3.999
+Maximo: 27.02
+Desviacion: 6.212
