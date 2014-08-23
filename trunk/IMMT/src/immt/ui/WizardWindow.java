@@ -26,6 +26,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 //import javafx.stage.FileChooser;
@@ -335,10 +336,15 @@ public class WizardWindow extends ShellWindow {
             changeButtonsEnabled(true);
 
             ShowStep2(true);
+            
+            startingDate = new Date();
+            
         }
     }//GEN-LAST:event_step1_1ActionPerformed
     private boolean canContinue = false;
 
+    Date startingDate;
+    
     private void step2_4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_step2_4ActionPerformed
         roi1 = p_OriginalImage.getSelectedRoi();
         if (roi1 != null) {
@@ -392,12 +398,15 @@ public class WizardWindow extends ShellWindow {
     private void step6_6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_step6_6ActionPerformed
         JFileChooser fc = new JFileChooser("./Resultados/");
         int returnVal = fc.showSaveDialog(null);
+        String newline = System.getProperty("line.separator");
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             try (FileWriter fw = new FileWriter(fc.getSelectedFile() + ".txt")) {
-                String s = "Media: " + media.getText() + "\n";
-                s += "Minimo: " + minimo.getText() + "\n";
-                s += "Maximo: " + maximo.getText() + "\n";
-                s += "Desviacion: " + desviacion.getText() + "\n";
+                String s = "Media: " + media.getText() + newline;
+                s += "Minimo: " + minimo.getText() + newline;
+                s += "Maximo: " + maximo.getText() + newline;
+                s += "Desviacion: " + desviacion.getText() + newline;
+                s += "Cantidad de puntos medidos: "  + mediciones_realizadas.getText() + newline;
+                s += "Tiempo Total de Medicion (segundos): " + elapsedTime + newline;
                 fw.write(s);
                 fw.close();
             } catch (Exception ex) {
@@ -426,6 +435,8 @@ public class WizardWindow extends ShellWindow {
 
         filter.setIterations(numberOfIterations);
 
+        offsetRoiX = (int) roi1.getMinX();
+        offsetRoiY = (int) roi1.getMinY();
 
         imagePlus.setRoi(roi1);
         filter.setOriginalImage(new ImagePlus("", imagePlus.getProcessor().crop()));
@@ -436,10 +447,19 @@ public class WizardWindow extends ShellWindow {
     }
     int offset = 5;
 
+    int offsetRoiX, offsetRoiY;
+    
+    
     void ExecuteDefaultMeasurments() {
         ArrayList<immt.util.Point> newPoints = new ArrayList<>();
 
-        for (int i = offset; i < roi1.width - offset; i++) {
+        Rectangle r = p_OriginalImage.getSelectedRoi();
+                
+        int aa = (int)r.getMinX() - offsetRoiX;
+        int bb = (int)r.getMaxX() - offsetRoiX;        
+
+        //for (int i = offset; i < roi1.width - offset; i++) {
+        for (int i = aa + offset; i < bb - offset; i++) {
             double left = topSnakeY[i - offset];
             double right = topSnakeY[i + offset];
 
@@ -536,9 +556,16 @@ public class WizardWindow extends ShellWindow {
         desviacion.setText(String.valueOf(GetStandarDeviation(mean, points)).substring(0, 5));
         mediciones_realizadas.setText(String.valueOf(points.size()));
 
+        Date currentDate = new Date();
+        
+        elapsedTime = ((currentDate.getMinutes() * 60) + currentDate.getSeconds()) - ((startingDate.getMinutes()*60) +startingDate.getSeconds());
+        
         ShowStep6(true);
     }
 
+    // in seconds
+    int elapsedTime;
+    
     private double GetStandarDeviation(double mean, ArrayList<immt.util.Point> points) {
         double ppm = Double.parseDouble(ConfigurationManager.getAppSetting("ppm"));
         double result = 0;
