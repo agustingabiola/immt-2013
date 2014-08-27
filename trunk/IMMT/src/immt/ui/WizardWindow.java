@@ -347,7 +347,9 @@ public class WizardWindow extends ShellWindow {
     
     private void step2_4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_step2_4ActionPerformed
         roi1 = p_OriginalImage.getSelectedRoi();
-        if (roi1 != null) {
+        if (roi1 != null) {            
+            offsetRoiX = (int) roi1.getMinX();
+            widthRoi = (int) roi1.getWidth();
             ExecuteDefaultFilter();
         }
     }//GEN-LAST:event_step2_4ActionPerformed
@@ -435,31 +437,37 @@ public class WizardWindow extends ShellWindow {
 
         filter.setIterations(numberOfIterations);
 
-        offsetRoiX = (int) roi1.getMinX();
-        offsetRoiY = (int) roi1.getMinY();
+        
 
         imagePlus.setRoi(roi1);
         filter.setOriginalImage(new ImagePlus("", imagePlus.getProcessor().crop()));
 
+               
         filter.addPropertyChangeListener(this);
 
         filter.execute();
     }
     int offset = 5;
 
-    int offsetRoiX, offsetRoiY;
+    int offsetRoiX, widthRoi;
     
     
     void ExecuteDefaultMeasurments() {
         ArrayList<immt.util.Point> newPoints = new ArrayList<>();
 
         Rectangle r = p_OriginalImage.getSelectedRoi();
+        
+        // Total size = 800 x 652
+        
+        int halfOfTheScreen = (800 / 2);
+        System.out.println(widthRoi);
+        int leftSideOfImage = halfOfTheScreen - (widthRoi / 2);
                 
-        int aa = (int)r.getMinX() - offsetRoiX;
-        int bb = (int)r.getMaxX() - offsetRoiX;        
-
+        int realOffset1 = (int) r.getMinX() - leftSideOfImage;
+        int realOffset2 = (int) r.getMaxX() - leftSideOfImage;
+        
         //for (int i = offset; i < roi1.width - offset; i++) {
-        for (int i = aa + offset; i < bb - offset; i++) {
+        for (int i = realOffset1 + offset; i < realOffset2 - offset; i++) {
             double left = topSnakeY[i - offset];
             double right = topSnakeY[i + offset];
 
@@ -503,6 +511,7 @@ public class WizardWindow extends ShellWindow {
             newPoints.add(new immt.util.Point(i, topSnakeY[i]));
             newPoints.add(new immt.util.Point(lowestX, botSnakeY[lowestX]));
         }
+        mediciones_realizadas.setText(String.valueOf(realOffset2 - realOffset1));
         CalculateStatistics(newPoints);
     }
 
@@ -554,7 +563,7 @@ public class WizardWindow extends ShellWindow {
         minimo.setText(String.valueOf(minDistance).substring(0, 5));
         maximo.setText(String.valueOf(maxDistance).substring(0, 5));
         desviacion.setText(String.valueOf(GetStandarDeviation(mean, points)).substring(0, 5));
-        mediciones_realizadas.setText(String.valueOf(points.size()));
+        //mediciones_realizadas.setText(String.valueOf(points.size()));
 
         Date currentDate = new Date();
         
