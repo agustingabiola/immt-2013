@@ -462,16 +462,29 @@ public class WizardWindow extends ShellWindow {
 
         Rectangle r = p_OriginalImage.getSelectedRoi();
         
-        // Total size = 800 x 652
+        int realOffset1, realOffset2;
+        //didnt select a new roi
+        if(r.width == widthRoi)
+        {
+            realOffset2 = widthRoi;
+            realOffset1 = 0;
+        }   
+        else
+        {
+            int halfOfTheScreen = (800 / 2);
+            int leftSideOfImage = halfOfTheScreen - (widthRoi / 2);
+
+            realOffset1 = (int) r.getMinX() - leftSideOfImage;
+            realOffset2 = (int) r.getMaxX() - leftSideOfImage;
+        }
+
+        if(r.getWidth() < 10)
+        {
+            realOffset1 = 0;
+            realOffset2 = 15;
+        }
         
-        int halfOfTheScreen = (800 / 2);
-        System.out.println(widthRoi);
-        int leftSideOfImage = halfOfTheScreen - (widthRoi / 2);
-                
-        int realOffset1 = (int) r.getMinX() - leftSideOfImage;
-        int realOffset2 = (int) r.getMaxX() - leftSideOfImage;
-        
-        //for (int i = offset; i < roi1.width - offset; i++) {
+//for (int i = offset; i < roi1.width - offset; i++) {
         for (int i = realOffset1 + offset; i < realOffset2 - offset; i++) {
             double left = topSnakeY[i - offset];
             double right = topSnakeY[i + offset];
