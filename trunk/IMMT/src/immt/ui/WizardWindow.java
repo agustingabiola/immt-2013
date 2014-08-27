@@ -419,6 +419,11 @@ public class WizardWindow extends ShellWindow {
 
     private void step6_7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_step6_7ActionPerformed
         p_OriginalImage.resetPanel();
+        step1_1.setEnabled(true);
+        step2_4.setEnabled(true);
+        step4_5.setEnabled(true);
+        step4_2.setEnabled(true);
+        step5_1.setEnabled(true);
         ShowStep1(true);
         ShowStep2(false);
         ShowStep4(false);
@@ -662,6 +667,8 @@ public class WizardWindow extends ShellWindow {
     }
 
     private void ShowStep2(boolean b) {
+        if(b)
+            step1_1.setEnabled(false);
         step2_1.setVisible(b);
         step2_2.setVisible(b);
         step2_3.setVisible(b);
@@ -669,6 +676,8 @@ public class WizardWindow extends ShellWindow {
     }
 
     private void ShowStep4(boolean b) {
+        if(b)
+            step2_4.setEnabled(false);
         step4_1.setVisible(b);
         step4_2.setVisible(b);
         step4_3.setVisible(b);
@@ -677,10 +686,17 @@ public class WizardWindow extends ShellWindow {
     }
 
     private void ShowStep5(boolean b) {
+       if(b)
+       {
+           step4_2.setEnabled(false);
+           step4_5.setEnabled(false);
+       }
         step5_1.setVisible(b);
     }
 
     private void ShowStep6(boolean b) {
+        if(b)
+            step5_1.setEnabled(false);
         step6_2.setVisible(b);
         step6_4.setVisible(b);
         step6_5.setVisible(b);
