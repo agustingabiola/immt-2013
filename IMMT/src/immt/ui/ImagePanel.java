@@ -198,6 +198,7 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
      */
     @Override
     protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
         if (image != null) {              
             g.drawImage(image.getBufferedImage(), left, top, image.getWidth(), image.getHeight(), this);
             
@@ -231,23 +232,20 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
                 height = Math.abs(currentY - startY);
                 g.setColor(Color.YELLOW);
                 g.drawRect(beginX, beginY, width, height);
-                selectedRoi = new Rectangle(new Point(startX, startY), new Dimension(width, height));
+                selectedRoi = new Rectangle(new Point(startX, startY), new Dimension(width, height));  
+                MinXRoi = startX;
             }
             if(point1 != null)
             {
                 g.setColor(Color.YELLOW);
                 g.fillRect((int) point1.getX(), (int) point1.getY(), 4, 4);
                 if(!points.contains(point1))
-                    points.add(point1);
-                if(parent != null)
-                    parent.SetPunto1(point1.getX() + ", " + point1.getY());                
+                    points.add(point1);               
             }
             if(point2 != null)
             {
                 g.setColor(Color.YELLOW);
                 g.fillRect((int) point2.getX(), (int) point2.getY(), 4, 4);
-                if(parent != null)
-                    parent.SetPunto2(point2.getX() + ", " + point2.getY());
                 points.add(point2);
                 distanceBetweenPoints();
             }                 
@@ -266,8 +264,6 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
     private void distanceBetweenPoints()
     {
        double distance = Math.sqrt(Math.pow(point2.x - point1.x, 2) + Math.pow(point2.y - point1.y, 2));
-       if(parent != null)
-        parent.SetDistance(String.valueOf(distance));
     }
     
     @Override
@@ -283,6 +279,8 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
 
     private Point point1;
     private Point point2;
+    
+    public int MinXRoi;
     
     public ArrayList<Point> GetPoints()
     {

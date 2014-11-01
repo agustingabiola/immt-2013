@@ -359,14 +359,22 @@ public class Snakes extends javax.swing.JFrame {
 
         double[] topSnakeY = tsnake.getY();
 
-        // Media - Adventicia : 180
-        F = new FMcInerney99SignModified(filtrada, Integer.parseInt(thresh1.getText()), true);        
+         System.out.println("SNAKE: " + topSnakeY.length);
         
-        img = tsnake.ejecutar(filtrada, new UndeterminedColumns(), P, F, damping, amplitude, stretching, bending, 0, 1., iterations, initialCountour,false , TSnakePolar.GRADIENTE_LIBRE);
-
-        for(int i = 0; i < topSnakeY.length ; i++)
+        System.out.println("WIDTH: " + img.getWidth());
+        
+        System.out.println("HEITH: " + img.getHeight());
+        
+        System.out.println("MIN X: " + parent.MinRoiX);
+        
+         System.out.println("MIN Y: " + parent.MinRoiY);
+        
+        for(int i = 0; i < img.getWidth() - 1 ; i++)
         {
-            img.setRGB(i, (int)topSnakeY[i], Color.YELLOW.getRGB());
+            System.out.println("SNAKE: " + (int)topSnakeY[i]);
+            
+            System.out.println("DIFF: " + ((int)topSnakeY[i] -  parent.MinRoiY));
+            img.setRGB(i, (int)topSnakeY[i] -  parent.MinRoiY, Color.YELLOW.getRGB());
         }
         
         /*
@@ -378,6 +386,14 @@ public class Snakes extends javax.swing.JFrame {
             e.printStackTrace();
         }
         */
+        // Media - Adventicia : 180
+        F = new FMcInerney99SignModified(filtrada, Integer.parseInt(thresh1.getText()), true);        
+        
+        img = tsnake.ejecutar(filtrada, new UndeterminedColumns(), P, F, damping, amplitude, stretching, bending, 0, 1., iterations, initialCountour,false , TSnakePolar.GRADIENTE_LIBRE);
+
+       
+        
+        
         ImagePanel panel = new ImagePanel(new ImagePlus("snakes", img), null);
          //panel.setPreferredSize(new Dimension(img.getWidth(), img.getHeight()));
         
