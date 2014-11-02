@@ -50,6 +50,9 @@ public class Snakes extends javax.swing.JFrame {
         currentImage = image;
         this.parent = parent;
                 
+        
+        if(parent.MinRoiX != 0 || parent.MinRoiY != 0)
+            contour.setText("0");
     }
 
     /**
@@ -359,23 +362,17 @@ public class Snakes extends javax.swing.JFrame {
 
         double[] topSnakeY = tsnake.getY();
 
-         System.out.println("SNAKE: " + topSnakeY.length);
+         //System.out.println("SNAKE: " + topSnakeY.length);
         
-        System.out.println("WIDTH: " + img.getWidth());
+        //System.out.println("WIDTH: " + img.getWidth());
         
-        System.out.println("HEITH: " + img.getHeight());
+        //System.out.println("HEITH: " + img.getHeight());
         
-        System.out.println("MIN X: " + parent.MinRoiX);
+        //System.out.println("MIN X: " + parent.MinRoiX);
         
-         System.out.println("MIN Y: " + parent.MinRoiY);
+         //System.out.println("MIN Y: " + parent.MinRoiY);
         
-        for(int i = 0; i < img.getWidth() - 1 ; i++)
-        {
-            System.out.println("SNAKE: " + (int)topSnakeY[i]);
-            
-            System.out.println("DIFF: " + ((int)topSnakeY[i] -  parent.MinRoiY));
-            img.setRGB(i, (int)topSnakeY[i], Color.YELLOW.getRGB());
-        }
+
         
         /*
         try {
@@ -394,14 +391,24 @@ public class Snakes extends javax.swing.JFrame {
        
         
         
-        ImagePanel panel = new ImagePanel(new ImagePlus("snakes", img), null);
          //panel.setPreferredSize(new Dimension(img.getWidth(), img.getHeight()));
         
         double[] botSnakeY = tsnake.getY();
         
+        for(int i = 0; i < img.getWidth() - 1 ; i++)
+        {
+           // System.out.println("SNAKE: " + (int)topSnakeY[i]);
+            
+            //System.out.println("DIFF: " + ((int)topSnakeY[i] -  parent.MinRoiY));+
+             img.setRGB(i, (int)topSnakeY[i], Color.YELLOW.getRGB());
+            img.setRGB(i, (int)botSnakeY[i], Color.BLUE.getRGB());
+        }
+                
+        
          SnakesResult resultFrame = new SnakesResult(new ImagePlus("snakes", img), topSnakeY, botSnakeY);
          
           
+        ImagePanel panel = new ImagePanel(new ImagePlus("snakes", img), null);
 
          //Set default close operation for JFrame  
          resultFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);  
