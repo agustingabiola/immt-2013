@@ -374,7 +374,7 @@ public class Snakes extends javax.swing.JFrame {
             System.out.println("SNAKE: " + (int)topSnakeY[i]);
             
             System.out.println("DIFF: " + ((int)topSnakeY[i] -  parent.MinRoiY));
-            img.setRGB(i, (int)topSnakeY[i] -  parent.MinRoiY, Color.YELLOW.getRGB());
+            img.setRGB(i, (int)topSnakeY[i], Color.YELLOW.getRGB());
         }
         
         /*
