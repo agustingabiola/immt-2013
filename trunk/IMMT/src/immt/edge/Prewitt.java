@@ -1,9 +1,11 @@
 package immt.edge;
 
 import ij.ImagePlus;
+import immt.algorithms.Algorithm;
 import immt.ui.ShellWindow;
+import immt.ui.parameters.PrewitParams;
 
-public class Prewitt extends EdgeOperator {
+public class Prewitt extends Algorithm {
 
     int sobel_x[][] = {{-1,0,1},
                        {-1,0,1},
@@ -20,50 +22,9 @@ public class Prewitt extends EdgeOperator {
      * @param parent main window of the application
      */
     public Prewitt(ShellWindow parent) {
-        super("Prewitt", parent);
+         super("Prewitt", "Prewitt Description", parent);
     }
 
-    /**
-     * *
-     * Runs the Prewitt Operator
-     */
-    @Override
-    public void runOperator() {
-        ImagePlus image = getImageToProcess();
-
-        image.setProcessor(image.getProcessor().convertToFloat());
-        
-        float[] pixelsCopy = (float[])image.getProcessor().getPixelsCopy();
-        
-        int pixelX, pixelY;
-        
-        int width = image.getWidth();
-        int height = image.getHeight();
-        
-        for (int i=1; i < width-2; i++){
-            for (int j=1; j < height-2; j++){
-                
-                pixelX = calculatePixelValue(i,j,sobel_x, pixelsCopy, width);
-                
-                pixelY = calculatePixelValue(i,j,sobel_y, pixelsCopy, width);
-                
-                int val =  (int)Math.sqrt((pixelX * pixelX) + (pixelY * pixelY));
-                
-                if(val < 0)
-                {
-                   val = 0;
-                }
-
-                if(val > 255)
-                {
-                   val = 255;
-                }
-
-                image.getProcessor().putPixelValue(i,j,val);
-            }
-        }       
-        resultingImage = image;
-    }
     
     public int calculatePixelValue(int i, int j,int[][] matrix, float[] pixels, int w ){
         int sobelI = 0;
@@ -85,14 +46,51 @@ public class Prewitt extends EdgeOperator {
         
     }
 
-    /**
-     * *
-     * Clones the EdgeOperator
-     *
-     * @return a clone of the Prewitt Operator
-     */
+
     @Override
-    public EdgeOperator clone() {
+    public void runAlgorithm() {
+       ImagePlus originalImage = getOriginalImage();
+        originalImage.setProcessor(originalImage.getProcessor().convertToFloat());
+        
+        float[] pixelsCopy = (float[])originalImage.getProcessor().getPixelsCopy();
+        
+        int pixelX, pixelY;
+        
+        int width = originalImage.getWidth();
+        int height = originalImage.getHeight();
+        
+        for (int i=1; i < width-2; i++){
+            for (int j=1; j < height-2; j++){
+                
+                pixelX = calculatePixelValue(i,j,sobel_x, pixelsCopy, width);
+                
+                pixelY = calculatePixelValue(i,j,sobel_y, pixelsCopy, width);
+                
+                int val =  (int)Math.sqrt((pixelX * pixelX) + (pixelY * pixelY));
+                
+                if(val < 0)
+                {
+                   val = 0;
+                }
+
+                if(val > 255)
+                {
+                   val = 255;
+                }
+
+                originalImage.getProcessor().putPixelValue(i,j,val);
+            }
+        }       
+       setResultingImage(originalImage);
+    }
+
+    @Override
+    public void showAlgorithmOptions() {
+        PrewitParams p_MeanFilterParams = new PrewitParams(parent, this);
+        parent.showAlgorithmOption(p_MeanFilterParams);}
+
+    @Override
+    public Algorithm clone() {
         Prewitt clone = new Prewitt(parent);
         return clone;
     }

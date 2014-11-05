@@ -85,7 +85,7 @@
   <SubComponents>
     <Container class="javax.swing.JPanel" name="p_Main">
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="4"/>
       </AuxValues>
 
       <Layout>

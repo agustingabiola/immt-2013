@@ -418,7 +418,7 @@ public class Snakes extends javax.swing.JFrame {
          //Make JFrame visible. So we can see it  
          resultFrame.setVisible(true);  
              
-        
+        this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
