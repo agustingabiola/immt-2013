@@ -52,7 +52,17 @@ public class Snakes extends javax.swing.JFrame {
                 
         
         if(parent.MinRoiX != 0 || parent.MinRoiY != 0)
-            contour.setText("0");
+            if(parent.GetPoint1() == null && parent.GetPoint2() == null)
+                contour.setText("0");
+            else
+            {
+                Point point1 = parent.GetPoint1();
+                Point point2 = parent.GetPoint2();
+                if (point1.y < point2.y)
+                    contour.setText(String.valueOf(point1.y));
+                else
+                    contour.setText(String.valueOf(point2.y));
+            }
     }
 
     /**
