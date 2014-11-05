@@ -342,7 +342,7 @@ public class WizardWindow extends ShellWindow {
             p_OriginalImage.repaint();
             image = originalImage.getBufferedImage();
             imagePlus = originalImage;
-            changeButtonsEnabled(true);
+            //changeButtonsEnabled(true);
 
             ShowStep2(true);
             
@@ -723,8 +723,8 @@ public class WizardWindow extends ShellWindow {
     }
 
     private void ShowStep6(boolean b) {
-        if(b)
-            step5_1.setEnabled(false);
+        //if(b)
+        //    step5_1.setEnabled(false);
         step6_2.setVisible(b);
         step6_4.setVisible(b);
         step6_5.setVisible(b);

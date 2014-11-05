@@ -40,7 +40,6 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
     public ShellWindow() {
         loadPreProcessingAlgorithms();
         initComponents();
-        changeButtonsEnabled(false);
         //loadEdgeOperators();
     }
  /*     
@@ -73,16 +72,7 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
             new GeometricFilter(this),
             new Sobel (this),
             new Prewitt(this)};
-    }   
-    
-    /***
-     * Enables/Disables some controls, depending on the value passed as parameter
-     * @param value if true, it enables the controls.
-     */
-    public void changeButtonsEnabled(boolean value){        
-        b_filter.setEnabled(value);
-        cb_filter.setEnabled(value);
-    }
+    }     
 
     
     /**
@@ -113,6 +103,11 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
         tp_Images = new javax.swing.JTabbedPane();
         p_OriginalImage = new immt.ui.ImagePanel(this);
         p_Options = new javax.swing.JPanel();
+        p_StatusBar = new javax.swing.JPanel();
+        jSeparator1 = new javax.swing.JSeparator();
+        l_StatusTitle = new javax.swing.JLabel();
+        l_Status = new javax.swing.JLabel();
+        pb_Status = new javax.swing.JProgressBar();
         jScrollPane1 = new javax.swing.JScrollPane();
         li_Algorithms = new javax.swing.JList(algorithms){
             @Override
@@ -124,14 +119,6 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
                 return toolTip;
             }
         };
-        p_StatusBar = new javax.swing.JPanel();
-        jSeparator1 = new javax.swing.JSeparator();
-        l_StatusTitle = new javax.swing.JLabel();
-        l_Status = new javax.swing.JLabel();
-        pb_Status = new javax.swing.JProgressBar();
-        p_actions = new javax.swing.JPanel();
-        b_filter = new javax.swing.JButton();
-        cb_filter = new javax.swing.JComboBox();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
@@ -166,19 +153,6 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
         p_Options.setMaximumSize(new java.awt.Dimension(32773, 593));
         p_Options.setLayout(new javax.swing.BoxLayout(p_Options, javax.swing.BoxLayout.PAGE_AXIS));
 
-        jScrollPane1.setMaximumSize(new java.awt.Dimension(32767, 150));
-
-        li_Algorithms.setBorder(javax.swing.BorderFactory.createTitledBorder("Algorithms"));
-        li_Algorithms.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        li_Algorithms.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                li_AlgorithmsMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(li_Algorithms);
-
-        p_Options.add(jScrollPane1);
-
         l_StatusTitle.setText("Status:");
 
         l_Status.setText("IDLE");
@@ -209,35 +183,16 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
                 .addContainerGap())
         );
 
-        p_actions.setBorder(javax.swing.BorderFactory.createTitledBorder("Actions"));
+        jScrollPane1.setMaximumSize(new java.awt.Dimension(32767, 150));
 
-        b_filter.setText("Apply Filter");
-        b_filter.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                b_filterActionPerformed(evt);
+        li_Algorithms.setBorder(javax.swing.BorderFactory.createTitledBorder("Algorithms"));
+        li_Algorithms.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        li_Algorithms.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                li_AlgorithmsMouseClicked(evt);
             }
         });
-
-        javax.swing.GroupLayout p_actionsLayout = new javax.swing.GroupLayout(p_actions);
-        p_actions.setLayout(p_actionsLayout);
-        p_actionsLayout.setHorizontalGroup(
-            p_actionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(p_actionsLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(p_actionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(b_filter, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
-                    .addComponent(cb_filter, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        p_actionsLayout.setVerticalGroup(
-            p_actionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(p_actionsLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(cb_filter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(b_filter)
-                .addGap(23, 23, 23))
-        );
+        jScrollPane1.setViewportView(li_Algorithms);
 
         javax.swing.GroupLayout p_MainLayout = new javax.swing.GroupLayout(p_Main);
         p_Main.setLayout(p_MainLayout);
@@ -247,9 +202,9 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
                 .addContainerGap()
                 .addComponent(tp_Images, javax.swing.GroupLayout.PREFERRED_SIZE, 916, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(p_MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(p_Options, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                    .addComponent(p_actions, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(p_MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(p_Options, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(p_StatusBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -263,10 +218,10 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
                         .addGap(0, 67, Short.MAX_VALUE))
                     .addGroup(p_MainLayout.createSequentialGroup()
                         .addGap(33, 33, 33)
-                        .addComponent(p_actions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(p_Options, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(124, 124, 124)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(p_StatusBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -339,7 +294,6 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
             p_OriginalImage.setImage(originalImage);
             p_OriginalImage.repaint();
             image = originalImage.getBufferedImage();
-            changeButtonsEnabled(true);
         }
     }//GEN-LAST:event_openMenuItemActionPerformed
 
@@ -373,19 +327,6 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
         settings.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
-    private void b_filterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_filterActionPerformed
-        // Gets the currently selected edge operator from the combo box
-        EdgeOperator operator = (EdgeOperator) cb_filter.getSelectedItem();
-
-        // If it was processed before, create a new SwingWorker
-        if (operator.getResultingImage() != null) {
-            operator = operator.clone();
-        }
-
-        // Executes it
-        operator.execute();
-    }//GEN-LAST:event_b_filterActionPerformed
-
     /**
      * Shows the options of the selected algorithm. Only works if an image is
      * previously opened.
@@ -400,7 +341,7 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
             selectedAlgorithm.showAlgorithmOptions();
         }
     }//GEN-LAST:event_li_AlgorithmsMouseClicked
-
+/*
     public void createEdgeResultWindow(EdgeOperator operator){
         // Create new Jframe to display the resulting image  
         String filterName = cb_filter.getSelectedItem().toString();        
@@ -415,7 +356,7 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
         newFrame.setSize(new Dimension(800, 600));
         newFrame.setVisible(true);
     }
-    
+    */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -504,8 +445,6 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton b_filter;
-    private javax.swing.JComboBox cb_filter;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -518,11 +457,10 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
     private javax.swing.JLabel l_StatusTitle;
     private javax.swing.JList li_Algorithms;
     private javax.swing.JMenuItem openMenuItem;
-    protected javax.swing.JPanel p_Main;
+    public javax.swing.JPanel p_Main;
     private javax.swing.JPanel p_Options;
     private immt.ui.ImagePanel p_OriginalImage;
     private javax.swing.JPanel p_StatusBar;
-    private javax.swing.JPanel p_actions;
     private javax.swing.JProgressBar pb_Status;
     private javax.swing.JTabbedPane tp_Images;
     // End of variables declaration//GEN-END:variables

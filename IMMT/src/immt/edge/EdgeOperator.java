@@ -87,7 +87,7 @@ public abstract class EdgeOperator extends SwingWorker<Boolean, String> {
             get();
             setProgress(100);
             parent.setStatus("Completed with " + getName());
-            parent.createEdgeResultWindow(this);
+           // parent.createEdgeResultWindow(this);
         } catch (InterruptedException | ExecutionException e) {
             // TODO: Code here after the SW was cancelled
         }
