@@ -41,24 +41,26 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
         loadPreProcessingAlgorithms();
         initComponents();
         changeButtonsEnabled(false);
-        loadEdgeOperators();
+        //loadEdgeOperators();
     }
-    
+ /*     
     /**
      * Loads the edge operators into the ComboBox
-     */
+    
     public void loadEdgeOperators() {
-        // Create all the EdgeOperators
+      
+// Create all the EdgeOperators
         EdgeOperator operators[] = {
-            new Sobel(this),
-            new Prewitt(this)};
+            //new Sobel(this),
+            //new Prewitt(this)};
 
         // Put them inside the ComboBox
         for (EdgeOperator operator : operators) {
             cb_filter.addItem(operator);
         }
+        
     }
-
+*/
     /**
      * Loads the algorithms implemented into an array.
      */
@@ -68,7 +70,9 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
             new MeanFilter(this),
             new MedianFilter(this),
             new WeightedMeanFilter(this),
-            new GeometricFilter(this)};
+            new GeometricFilter(this),
+            new Sobel (this),
+            new Prewitt(this)};
     }   
     
     /***
@@ -339,34 +343,6 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
         }
     }//GEN-LAST:event_openMenuItemActionPerformed
 
-    /**
-     * Shows the options of the selected algorithm. Only works if an image is
-     * previously opened.
-     *
-     * @param evt
-     */
-    private void li_AlgorithmsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_li_AlgorithmsMouseClicked
-        ImagePlus image = p_OriginalImage.getImage();
-        if (image != null) {
-            int clickIndex = li_Algorithms.locationToIndex(evt.getPoint());
-            Algorithm selectedAlgorithm = (Algorithm) li_Algorithms.getModel().getElementAt(clickIndex);
-            selectedAlgorithm.showAlgorithmOptions();
-        }
-    }//GEN-LAST:event_li_AlgorithmsMouseClicked
-
-    private void b_filterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_filterActionPerformed
-        // Gets the currently selected edge operator from the combo box
-        EdgeOperator operator = (EdgeOperator) cb_filter.getSelectedItem();
-        
-        // If it was processed before, create a new SwingWorker
-        if (operator.getResultingImage() != null) {
-            operator = operator.clone();
-        }
-        
-        // Executes it
-        operator.execute();
-    }//GEN-LAST:event_b_filterActionPerformed
-
     public int MinRoiX;
     
      public int MinRoiY;
@@ -396,6 +372,34 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
         SettingsPanel settings = new SettingsPanel();
         settings.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void b_filterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_filterActionPerformed
+        // Gets the currently selected edge operator from the combo box
+        EdgeOperator operator = (EdgeOperator) cb_filter.getSelectedItem();
+
+        // If it was processed before, create a new SwingWorker
+        if (operator.getResultingImage() != null) {
+            operator = operator.clone();
+        }
+
+        // Executes it
+        operator.execute();
+    }//GEN-LAST:event_b_filterActionPerformed
+
+    /**
+     * Shows the options of the selected algorithm. Only works if an image is
+     * previously opened.
+     *
+     * @param evt
+     */
+    private void li_AlgorithmsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_li_AlgorithmsMouseClicked
+        ImagePlus image = p_OriginalImage.getImage();
+        if (image != null) {
+            int clickIndex = li_Algorithms.locationToIndex(evt.getPoint());
+            Algorithm selectedAlgorithm = (Algorithm) li_Algorithms.getModel().getElementAt(clickIndex);
+            selectedAlgorithm.showAlgorithmOptions();
+        }
+    }//GEN-LAST:event_li_AlgorithmsMouseClicked
 
     public void createEdgeResultWindow(EdgeOperator operator){
         // Create new Jframe to display the resulting image  
@@ -514,7 +518,7 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
     private javax.swing.JLabel l_StatusTitle;
     private javax.swing.JList li_Algorithms;
     private javax.swing.JMenuItem openMenuItem;
-    public javax.swing.JPanel p_Main;
+    protected javax.swing.JPanel p_Main;
     private javax.swing.JPanel p_Options;
     private immt.ui.ImagePanel p_OriginalImage;
     private javax.swing.JPanel p_StatusBar;
