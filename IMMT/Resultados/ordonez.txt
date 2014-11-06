@@ -1,0 +1,6 @@
+Media: 0.575
+Minimo: 0.543
+Maximo: 0.627
+Desviacion: 0.021
+Cantidad de puntos medidos: 104
+Tiempo Total de Medicion (segundos): 45

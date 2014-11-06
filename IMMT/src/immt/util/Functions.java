@@ -140,11 +140,11 @@ public class Functions {
             {
                 if((i >= 0 && j >= 0) && (i < image.getWidth() && j < image.getHeight()))
                 {
-                    result.setElementAt(resultX, resultY, image.getElementAt(i, j));
+                    result.setElementAt(resultX, resultY, image.getElementAt(j, i));
                 }
                 else
                 {
-                    result.setElementAt(resultX, resultY, 0);
+                    result.setElementAt(resultY, resultX, 0);
                 }
                 resultY++;
             }
