@@ -607,14 +607,14 @@ public class WizardWindow extends ShellWindow {
         }
 
         double mean = sumOfDistances / (points.size() / 2);
-        media.setText(String.valueOf(mean).substring(0, 5));
-        minimo.setText(String.valueOf(minDistance).substring(0, 5));
-        maximo.setText(String.valueOf(maxDistance).substring(0, 5));
-        desviacion.setText(String.valueOf(GetStandarDeviation(mean, points)).substring(0, 5));
+        media.setText(String.valueOf(mean).substring(0, 5) + " mm.");
+        minimo.setText(String.valueOf(minDistance).substring(0, 5) + " mm.");
+        maximo.setText(String.valueOf(maxDistance).substring(0, 5) + " mm.");
+        desviacion.setText(String.valueOf(GetStandarDeviation(mean, points)).substring(0, 5) + " mm.");
         int cantMediciones = Integer.parseInt(mediciones_realizadas.getText());
         double distancia = cantMediciones * ppm;
                 
-        mediciones_realizadas1.setText(String.valueOf(distancia).substring(0, 5));
+        mediciones_realizadas1.setText(String.valueOf(distancia).substring(0, 5) + " mm.");
         //mediciones_realizadas.setText(String.valueOf(points.size()));
 
         Date currentDate = new Date();
