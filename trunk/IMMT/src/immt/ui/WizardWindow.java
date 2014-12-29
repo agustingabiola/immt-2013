@@ -433,6 +433,7 @@ public class WizardWindow extends ShellWindow {
                 s += "Maximo: " + maximo.getText() + newline;
                 s += "Desviacion: " + desviacion.getText() + newline;
                 s += "Cantidad de puntos medidos: "  + mediciones_realizadas.getText() + newline;
+                s += "Distancia medida: "  + mediciones_realizadas1.getText() + newline;
                 s += "Tiempo Total de Medicion (segundos): " + elapsedTime + newline;
                 fw.write(s);
                 fw.close();
