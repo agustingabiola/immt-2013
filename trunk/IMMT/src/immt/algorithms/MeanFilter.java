@@ -82,7 +82,7 @@ public class MeanFilter extends Algorithm {
         for (int i = radius; i < imageWidth - 1 - radius; i++) {
             for (int j = radius; j < imageHeight - 1 - radius; j++) {
 
-                window = Functions.GetWindow(imageMatrix, new Point(j, i), windowSize);
+                window = Functions.GetWindow(imageMatrix, new Point(i, j), windowSize);
 
                 resultingImage[imageWidth * j + i] = applyFilter(window, kernel);
             }
