@@ -299,7 +299,7 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
 
     public int MinRoiX;
     
-     public int MinRoiY;
+    public int MinRoiY;
      
     public ImagePlus getImageToProcess() {
         ImagePanel panel = getCurrentImagePanelSelected();
