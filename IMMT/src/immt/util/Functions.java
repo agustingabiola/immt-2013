@@ -1,5 +1,6 @@
 package immt.util;
 
+import immt.algorithms.structures.GreyScaleImage;
 import javax.security.sasl.Sasl;
 
 /**
@@ -141,6 +142,34 @@ public class Functions {
                 if((i >= 0 && j >= 0) && (i < image.getWidth() && j < image.getHeight()))
                 {
                     result.setElementAt(resultX, resultY, image.getElementAt(j, i));
+                }
+                else
+                {
+                    result.setElementAt(resultY, resultX, 0);
+                }
+                resultY++;
+            }
+            resultY = 0;
+            resultX++;
+        }
+        return result;
+    }
+    
+    public static Matrix GetWindow(GreyScaleImage img, Point center, int sizeOfWindow)
+    {
+        Matrix result = new Matrix(sizeOfWindow, sizeOfWindow);
+        
+        int offsetOfWindow = (int) Math.floor(sizeOfWindow / 2);
+        int resultX = 0;
+        int resultY = 0;        
+        
+        for(int i= (int)center.getxCoord() - offsetOfWindow ; i <= center.getxCoord() + offsetOfWindow ; i++)
+        {
+            for(int j= (int)center.getyCoord() - offsetOfWindow ; j <= center.getyCoord() + offsetOfWindow ; j++)
+            {
+                if((i >= 0 && j >= 0) && (i < img.getWidth() && j < img.getHeight()))
+                {
+                    result.setElementAt(resultX, resultY, img.getIntensity(i, j));
                 }
                 else
                 {

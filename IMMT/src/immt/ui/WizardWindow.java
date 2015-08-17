@@ -395,24 +395,25 @@ public class WizardWindow extends ShellWindow {
 
         //p_.setProcessor(currentImage.getProcessor().convertToFloat());
         ImagePlus currentImage = p_OriginalImage.getImage();
-        float[] imagePixels = (float[]) currentImage.getProcessor().getPixelsCopy();
-
-        Matrix imageMatrix = new Matrix(currentImage.getHeight(), currentImage.getWidth(), imagePixels);
+       // float[] imagePixels = (float[]) currentImage.getProcessor().getPixelsCopy();
+  
+        BufferedImage buffImage = currentImage.getBufferedImage();
+        
+        GreyScaleImage filtrada = new GreyScaleImage(buffImage);
+        
+        
+       // Matrix imageMatrix = new Matrix(currentImage.getHeight(), currentImage.getWidth(), imagePixels);
 
         Point point1 = p_OriginalImage.GetPoint1();
-        point1.x -= p_OriginalImage.GetLeft();
-        point1.y -= p_OriginalImage.GetTop();
         Matrix window1;
         if (point1 != null) {
-            window1 = Functions.GetWindow(imageMatrix, new immt.util.Point(point1.x, point1.y), 3);
+            window1 = Functions.GetWindow(filtrada, new immt.util.Point(point1.x - p_OriginalImage.GetLeft(), point1.y - p_OriginalImage.GetTop()), 3);
             thresh1 = (int) Math.floor(GetAverageIntensityInWindow(window1));
         }
         Point point2 = p_OriginalImage.GetPoint2();
-        point2.x -= p_OriginalImage.GetLeft();
-        point2.y -= p_OriginalImage.GetTop();
         Matrix window2;
         if (point2 != null) {
-            window2 = Functions.GetWindow(imageMatrix, new immt.util.Point(point2.x, point2.y), 3);
+            window2 = Functions.GetWindow(filtrada, new immt.util.Point(point2.x - p_OriginalImage.GetLeft(), point2.y - p_OriginalImage.GetTop()), 3);
             thresh2 = (int) Math.floor(GetAverageIntensityInWindow(window2));
         }
     }
@@ -789,6 +790,8 @@ public class WizardWindow extends ShellWindow {
         for (int i = 0; i < filtrada.getWidth(); i++) {
             initialCountour[i] = contour;
         }
+        
+        System.out.println("CONTOUR: " + contour);
 
         PotentialMcInerney99YDirection P = new PotentialMcInerney99YDirection(filtrada, gauss, potential); //Aca pongan potentialScale=0, no vamos a usar el gradiente de la imagen
 
