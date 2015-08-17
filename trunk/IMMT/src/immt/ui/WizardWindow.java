@@ -8,6 +8,7 @@ package immt.ui;
 import ij.ImagePlus;
 import immt.algorithms.Algorithm;
 import immt.algorithms.GeometricFilter;
+import immt.algorithms.MeanFilter;
 import immt.algorithms.snakes.externalforces.PotentialMcInerney99YDirection;
 import immt.algorithms.snakes.imagedatafunction.FMcInerney99SignModified;
 import immt.algorithms.snakes.tsnake.polar.TSnakePolar;
@@ -378,7 +379,7 @@ public class WizardWindow extends ShellWindow {
             ExecuteDefaultFilter();
         }
     }//GEN-LAST:event_step2_4ActionPerformed
-    int thresh1 = 53, thresh2 = 180;
+    int thresh1, thresh2;
 
     private float GetAverageIntensityInWindow(Matrix window) {
         float sum = 0;
@@ -399,12 +400,16 @@ public class WizardWindow extends ShellWindow {
         Matrix imageMatrix = new Matrix(currentImage.getHeight(), currentImage.getWidth(), imagePixels);
 
         Point point1 = p_OriginalImage.GetPoint1();
+        point1.x -= p_OriginalImage.GetLeft();
+        point1.y -= p_OriginalImage.GetTop();
         Matrix window1;
         if (point1 != null) {
             window1 = Functions.GetWindow(imageMatrix, new immt.util.Point(point1.x, point1.y), 3);
             thresh1 = (int) Math.floor(GetAverageIntensityInWindow(window1));
         }
         Point point2 = p_OriginalImage.GetPoint2();
+        point2.x -= p_OriginalImage.GetLeft();
+        point2.y -= p_OriginalImage.GetTop();
         Matrix window2;
         if (point2 != null) {
             window2 = Functions.GetWindow(imageMatrix, new immt.util.Point(point2.x, point2.y), 3);
@@ -472,7 +477,6 @@ public class WizardWindow extends ShellWindow {
         GeometricFilter filter = new GeometricFilter(this);
 
         filter.setIterations(numberOfIterations);
-
         
 
         imagePlus.setRoi(roi1);
@@ -767,6 +771,10 @@ public class WizardWindow extends ShellWindow {
     private void ExecuteDefaultSegmentation() {
         GreyScaleImage filtrada = new GreyScaleImage(p_OriginalImage.getImage().getBufferedImage());
 
+        GetPointsIntensity();
+        
+        System.out.println("THRESH 1: " + thresh1 + "  TRESH 2:"  + thresh2 );
+        
         // Default values
         int gauss = 5;
         int potential = 0;
