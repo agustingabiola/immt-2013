@@ -53,7 +53,7 @@ public class MeanFilter extends Algorithm {
      */
     @Override
     public void runAlgorithm() {
-        ImagePlus originalImage = getOriginalImage().duplicate();
+        ImagePlus originalImage = parent.getImageToProcess();
         originalImage.setProcessor(originalImage.getProcessor().convertToFloat());
 
         // Parameters of the original image
