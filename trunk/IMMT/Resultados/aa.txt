@@ -1,0 +1,7 @@
+Media: 0.932 mm.
+Minimo: 0.013 mm. mm.
+Maximo: 5.001 mm. mm.
+Desviacion: 1.078 mm. mm.
+Cantidad de puntos medidos: 304
+Distancia medida: 11.96 mm. mm.
+Tiempo Total de Medicion (segundos): 6

@@ -192,13 +192,29 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
         image = img;          
     }
     
+    int topOffset = 20;
+    
     public int getYofPoints (){
         if (point1==null & point2==null)
-            //return top-5;
             return 0;
         if ((point1.y)< (point2.y))
-            return point1.y - top;
-        return point2.y - top;
+        {
+            int withoutOffset = point1.y - top;
+            int withOffset = withoutOffset - topOffset;
+            if(withOffset > 0)
+                return withOffset;
+            else
+                return 0;
+        }
+        else
+        {
+            int withoutOffset = point2.y - top;
+            int withOffset = withoutOffset - topOffset;
+            if(withOffset > 0)
+                return withOffset;
+            else
+                return 0;
+        }
     }    
     
     /**

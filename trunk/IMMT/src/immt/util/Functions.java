@@ -135,9 +135,10 @@ public class Functions {
         int resultX = 0;
         int resultY = 0;        
         
-        for(int i= (int)center.getxCoord() - offsetOfWindow ; i <= center.getxCoord() + offsetOfWindow ; i++)
+        
+        for(int i= (int)center.getxCoord() - offsetOfWindow ; i < center.getxCoord() + offsetOfWindow ; i++)
         {
-            for(int j= (int)center.getyCoord() - offsetOfWindow ; j <= center.getyCoord() + offsetOfWindow ; j++)
+            for(int j= (int)center.getyCoord() - offsetOfWindow ; j < center.getyCoord() + offsetOfWindow ; j++)
             {
                 if((i >= 0 && j >= 0) && (i < image.getWidth() && j < image.getHeight()))
                 {
@@ -145,7 +146,7 @@ public class Functions {
                 }
                 else
                 {
-                    result.setElementAt(resultY, resultX, 0);
+                    result.setElementAt(resultX, resultY, 0);
                 }
                 resultY++;
             }
