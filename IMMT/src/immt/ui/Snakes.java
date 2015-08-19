@@ -50,6 +50,7 @@ public class Snakes extends javax.swing.JFrame {
         currentImage = image;
         this.parent = parent;
                 
+        int topOffset = 20;
         
         if(parent.MinRoiX != 0 || parent.MinRoiY != 0)
             if(parent.GetPoint1() == null && parent.GetPoint2() == null)
@@ -59,11 +60,25 @@ public class Snakes extends javax.swing.JFrame {
                 Point point1 = parent.GetPoint1();
                 Point point2 = parent.GetPoint2();
                 if (point1.y < point2.y)
-                    contour.setText(String.valueOf(point1.y));
+                {
+                   // int withoutOffset = point1.y - top;
+                    int withOffset = point1.y - topOffset;
+                    if(withOffset > 0)
+                        contour.setText(String.valueOf(withOffset));
+                    else
+                        contour.setText(String.valueOf(0));
+                }                    
                 else
-                    contour.setText(String.valueOf(point2.y));
+                {
+                    int withOffset = point2.y - topOffset;
+                    if(withOffset > 0)
+                        contour.setText(String.valueOf(withOffset));
+                    else
+                        contour.setText(String.valueOf(0));
+                } 
             }
-    }
+    }   
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -431,6 +446,8 @@ public class Snakes extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    int windowSize = 10;
+    
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         currentImage.setProcessor(currentImage.getProcessor().convertToFloat());
         float[] imagePixels = (float[]) currentImage.getProcessor().getPixelsCopy();
@@ -441,14 +458,14 @@ public class Snakes extends javax.swing.JFrame {
         Matrix window1;
         if(point1 != null)
         {
-            window1 = Functions.GetWindow(imageMatrix, new immt.util.Point(point1.x, point1.y), 3);
+            window1 = Functions.GetWindow(imageMatrix, new immt.util.Point(point1.x, point1.y), windowSize);
             thresh.setText(String.valueOf((int)Math.floor(GetAverageIntensityInWindow(window1))));    
         }
         Point point2 = parent.GetPoint2();
         Matrix window2;
         if(point2 != null)
         {
-            window2 = Functions.GetWindow(imageMatrix, new immt.util.Point(point2.x, point2.y), 3);
+            window2 = Functions.GetWindow(imageMatrix, new immt.util.Point(point2.x, point2.y), windowSize);
             thresh1.setText(String.valueOf((int)Math.floor(GetAverageIntensityInWindow(window2))));
         }
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -457,12 +474,12 @@ public class Snakes extends javax.swing.JFrame {
     private float GetAverageIntensityInWindow(Matrix window)
     {
       float sum = 0;
-        for (int i = 0; i < 3 ; i++) {
-            for (int j = 0; j < 3 ; j++) {
+        for (int i = 0; i < windowSize ; i++) {
+            for (int j = 0; j < windowSize ; j++) {
                 sum += window.getElementAt(i, j);
             }
         }
-        return sum / 9;
+        return sum / (windowSize * windowSize);
     }
     
     /**

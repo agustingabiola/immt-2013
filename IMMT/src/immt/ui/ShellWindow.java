@@ -381,6 +381,11 @@ public class ShellWindow extends javax.swing.JFrame implements PropertyChangeLis
     {
         return getCurrentImagePanelSelected().GetPoint2();    
     }
+      
+      public int GetTop()
+      {
+          return getCurrentImagePanelSelected().GetTop();
+      }
 
     
     /**
