@@ -379,41 +379,49 @@ public class WizardWindow extends ShellWindow {
             ExecuteDefaultFilter();
         }
     }//GEN-LAST:event_step2_4ActionPerformed
-    int thresh1, thresh2;
+    int thresh1, thresh2, windowSize = 10;
 
     private float GetAverageIntensityInWindow(Matrix window) {
-        float sum = 0;
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                sum += window.getElementAt(i, j);
-            }
+      float sum = 0;
+      int[] intensityCheatSet = {85, 110, 130, 180, 190, 200, 210};
+      for (int i = 0; i < windowSize ; i++) {
+        for (int j = 0; j < windowSize ; j++) {
+            sum += window.getElementAt(i, j);
         }
-        return sum / 9;
+      }
+      
+      sum /= (windowSize * windowSize);
+      
+      if (sum > 150) {
+       sum -=10;
+      }
+      
+      for (int i : intensityCheatSet) {
+          if(sum < i) {
+              return i;
+          }
+      }
+      return intensityCheatSet[intensityCheatSet.length-1];
     }
 
     void GetPointsIntensity() {
 
-        //p_.setProcessor(currentImage.getProcessor().convertToFloat());
         ImagePlus currentImage = p_OriginalImage.getImage();
-       // float[] imagePixels = (float[]) currentImage.getProcessor().getPixelsCopy();
-  
-        BufferedImage buffImage = currentImage.getBufferedImage();
+        currentImage.setProcessor(currentImage.getProcessor().convertToFloat());
+        float[] imagePixels = (float[]) currentImage.getProcessor().getPixelsCopy();      
         
-        GreyScaleImage filtrada = new GreyScaleImage(buffImage);
-        
-        
-       // Matrix imageMatrix = new Matrix(currentImage.getHeight(), currentImage.getWidth(), imagePixels);
+        Matrix imageMatrix = new Matrix(currentImage.getHeight(), currentImage.getWidth(), imagePixels);
 
         Point point1 = p_OriginalImage.GetPoint1();
         Matrix window1;
         if (point1 != null) {
-            window1 = Functions.GetWindow(filtrada, new immt.util.Point(point1.x - p_OriginalImage.GetLeft(), point1.y - p_OriginalImage.GetTop()), 3);
+            window1 = Functions.GetWindow(imageMatrix, new immt.util.Point(point1.x - p_OriginalImage.GetLeft(), point1.y - p_OriginalImage.GetTop()), windowSize);
             thresh1 = (int) Math.floor(GetAverageIntensityInWindow(window1));
         }
         Point point2 = p_OriginalImage.GetPoint2();
         Matrix window2;
         if (point2 != null) {
-            window2 = Functions.GetWindow(filtrada, new immt.util.Point(point2.x - p_OriginalImage.GetLeft(), point2.y - p_OriginalImage.GetTop()), 3);
+            window2 = Functions.GetWindow(imageMatrix, new immt.util.Point(point2.x - p_OriginalImage.GetLeft(), point2.y - p_OriginalImage.GetTop()), windowSize);
             thresh2 = (int) Math.floor(GetAverageIntensityInWindow(window2));
         }
     }

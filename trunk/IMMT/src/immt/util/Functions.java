@@ -164,13 +164,13 @@ public class Functions {
         int resultX = 0;
         int resultY = 0;        
         
-        for(int i= (int)center.getxCoord() - offsetOfWindow ; i <= center.getxCoord() + offsetOfWindow ; i++)
+        for(int i= (int)center.getxCoord() - offsetOfWindow ; i < center.getxCoord() + offsetOfWindow ; i++)
         {
-            for(int j= (int)center.getyCoord() - offsetOfWindow ; j <= center.getyCoord() + offsetOfWindow ; j++)
+            for(int j= (int)center.getyCoord() - offsetOfWindow ; j < center.getyCoord() + offsetOfWindow ; j++)
             {
                 if((i >= 0 && j >= 0) && (i < img.getWidth() && j < img.getHeight()))
                 {
-                    result.setElementAt(resultX, resultY, img.getIntensity(i, j));
+                    result.setElementAt(resultX, resultY, img.getIntensity(j, i));
                 }
                 else
                 {

@@ -474,7 +474,7 @@ public class Snakes extends javax.swing.JFrame {
     private float GetAverageIntensityInWindow(Matrix window)
     {
       float sum = 0;
-      int[] intensityCheatSet = {53, 110, 130, 180, 190, 200, 210};
+      int[] intensityCheatSet = {85, 110, 130, 180, 190, 200, 210};
       for (int i = 0; i < windowSize ; i++) {
         for (int j = 0; j < windowSize ; j++) {
             sum += window.getElementAt(i, j);
